@@ -1,4 +1,8 @@
-# bosvitaliteit
+# revisie bosvitaliteitsmeetnet 2022
+
+Op vraag van het managementteam wordt het bosvitaliteitsmeetnet onder de loep genomen, om te zien of optimalisaties mogelijk zijn.
+
+# jaarlijks rapport bosvitaliteit
 Scripts ter ondersteuning van de jaarlijkse rapportage van de bosvitaliteit in Vlaanderen
 
 Dit maakt gebruik van interne databronnen op het INBO. 
