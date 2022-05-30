@@ -1,0 +1,37 @@
+
+
+SPEC_EUR_CDE;SPEC_DES;Soort;SoortType;SoortIndeling;SoortEngels;SoortVolgorde
+      999;;totaal;totaal;totaal;total;0
+      9998;;totaal jong;totaal jong;totaal jong;total young;1
+      9999;;totaal oud;totaal oud;totaal oud;total old;2
+      948;;loofbomen;loofbomen;loofbomen;deciduous trees;11
+      9997;;jonge loofbomen;jonge loofbomen;loofbomen jong;deciduous young;12
+      9996;;oude loofbomen;oude loofbomen;loofbomen oud;deciduous old;13
+      998;;naaldbomen;naaldbomen;naaldbomen;conifers;211
+      9995;;jonge naaldbomen;jonge naaldbomen;naaldbomen jong;conifers young;212
+      9994;;oude naaldbomen;oude naaldbomen;naaldbomen oud;conifers old;213
+      51;Quercus robur;zomereik;loofbomen;zomereik;oak;101
+      20;Fagus sylvatica;beuk;loofbomen;beuk;beech;102
+      53;Quercus rubra;Amerikaanse eik;loofbomen;Amerikaanse eik;northern red oak;103
+      947;;overige lbs.;loofbomen;overige lbs.;other deciduous;109
+      33;Populus hybrides;populier;loofbomen;overige lbs.;poplar;111
+      7;Alnus glutinosa;zwarte els;loofbomen;overige lbs.;black alder;112
+      15;Castanea sativa;tamme kastanje;loofbomen;overige lbs.;sweet chestnut;113
+      48;Quercus petraea;wintereik;loofbomen;overige lbs.;sessile oak;114
+      22;Fraxinus excelsior;es;loofbomen;overige lbs.;ash;115
+      5;Acer pseudoplatanus;esdoorn;loofbomen;overige lbs.;sycamore maple;116
+      10;Betula pendula;ruwe berk;loofbomen;overige lbs.;silver berch;117
+      56;Robinia pseudoacacia;valse acacia;loofbomen;overige lbs.;black locust (false acacia);118
+      32;Populus canescens;grauwe abeel;loofbomen;overige lbs.;grey poplar;119
+      13;Carpinus betulus;haagbeuk;loofbomen;overige lbs.;hornbeam;120
+      8;Alnus incana;witte els;loofbomen;overige lbs.;grey alder;121
+      36;Prunus avium;zoete kers;loofbomen;overige lbs.;sweet cherry;122
+      11;Betula pubescens;zachte berk;loofbomen;overige lbs.;downy (moor, white) birch;123
+      72;Ulmus minor;gladde iep;loofbomen;overige lbs.;field elm;124
+      35;Populus tremula;ratelpopulier;loofbomen;overige lbs.;aspen;125
+      134;Pinus sylvestris;grove den;naaldbomen;grove den;Scots pine;301
+      129;Pinus nigra;Corsicaanse den;naaldbomen;Corsicaanse den;black pine;302
+      997;;overige nbs.;naaldbomen;overige nbs.;other conifers;309
+      117;Larix kaempferi;Japanse lork;naaldbomen;overige nbs.;Japanese larch;311
+      118;Picea abies;fijnspar;naaldbomen;overige nbs.;Norway spruce;312
+      136;Pseudotsuga menziesii;douglas;naaldbomen;overige nbs.;douglas fir;313
