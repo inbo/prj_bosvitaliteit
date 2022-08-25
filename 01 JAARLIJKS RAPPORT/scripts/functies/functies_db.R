@@ -138,29 +138,141 @@ tblSoort s on s.SPEC_ID = b.BOOM_SPEC_ID",
 ##########################
 ##########################
 
-
-
-bosvitaliteit_connect <- function(odbc_txt = "_DO_NOT_COPY_/dbcredentials.txt"){
-  require("RODBC")
-  creds <- read.csv2(odbc_txt, header = TRUE, stringsAsFactors = FALSE, strip.white = TRUE)
-  dsn <- as.character(creds[creds$name == "data-source","value"])
-  odbcConnect(dsn)
-}
-
 ###################################################################
 
-get_treedata <- function(channel, jaar, tree_indeling, sql, show_query = TRUE) {
+#' Functie om de instelvariabelen te zetten om de scripts te kunnen runnen
+#'
+#' @param jaar laatste datajaar van de analyse
+#' @param connect_via_db indien TRUE maak een connectie via DB, indien niet haal dit uit een bestaand .Rdata bestand die alle data bevat
+#' @param beginjaar Eerste jaar die meegenomen wordt de heel globale figuren zoals voor de natuurindicatoren
+#' @param beginjaar_meerjaarlijks Eerste jaar die meegenomen wordt voor de meerjaarlijkse analyses
+#' @param fig_width standaard figuurbreedte in inch
+#' @param fig_height standaard figuurhoogote in inch
+#' @param fig_dpi standaard resolutie voor de figuren
+#' @param sen_boot aantal bootstrap samples om betrouwbaarheidsintervallen op de sen slope te bepalen, indien 0 dan wordt geen bootstrap uitgevoerd
+#' @param lmer_boot aantal bootstrap samples om  betrouwbaarheidsintervallen voor de lineaire modellen te bepalen, indien 0 dan wordt geen bootstrap uitgevoerd
+#'
+#' @return maakt verschillende golbale variabelen aan: jaarkeuze, pathkeuze, tweejaarlijks, driejaarlijks, meerjaarlijks, jaren_natuurindicatoren, outdir, connect_via_db, normal_groups, all_groups, extended_groups, groups_multiyear, extra_groups
+#' @export
+#'
+#' @examples
+#' {
+#' definieer_inputvariabelen(jaar = 2021)
+#' }
+
+init_sessie <- 
+  function(jaar, 
+           connect_via_db = TRUE,
+           beginjaar = 1987, 
+           beginjaar_meerjaarlijks = 1995,
+           fig_width = 7, 
+           fig_height = 5, 
+           fig_dpi = 300, 
+           sen_boot = 200, 
+           lmer_boot = 200) {
+    
+    #globale variabelen
+    fig_width <<- fig_width
+    fig_height <<- fig_height
+    fig_dpi <<- fig_dpi
+    jaarkeuze <<- jaar
+    pathkeuze <<- paste0(jaarkeuze + 1, "/") 
+    tweejaarlijks <<- c(jaarkeuze-1, jaarkeuze)
+    driejaarlijks <<- c(jaarkeuze-2, jaarkeuze-1, jaarkeuze)
+    meerjaarlijks <<- 1995:jaarkeuze
+    jaren_natuurindicatoren <<- 1987:jaarkeuze
+    if (!dir.exists(pathkeuze)) try(dir.create(pathkeuze))
+    outdir <<- paste0(pathkeuze, "output")
+    if(!dir.exists(outdir)) try(dir.create(outdir))
+    connect_via_db <<- connect_via_db
+    
+    #extra variabelen
+    
+    normal_groups    <<- list(c("Jaar"),
+                             c("Jaar", "SoortType"),
+                             c("Jaar", "SoortIndeling"))
+    all_groups       <<- list(c("Jaar"),
+                             c("Jaar", "LeeftijdsklasseEur"),
+                             c("Jaar", "SoortType"),
+                             c("Jaar", "SoortIndeling"),
+                             c("Jaar", "LeeftijdsklasseEur", "SoortType"),
+                             c("Jaar", "LeeftijdsklasseEur", "SoortIndeling"))
+    extended_groups <<-  list(c("Jaar"),
+                             c("Jaar", "SoortType"),
+                             c("Jaar", "SoortIndeling"),
+                             c("Jaar", "Soort"))
+    groups_multiyear <<- list(c("Jaar"),
+                             c("Jaar", "LeeftijdsklasseEur"),
+                             c("Jaar", "SoortType"),
+                             c("Jaar", "SoortType", "LeeftijdsklasseEur"),
+                             c("Jaar", "SoortIndeling"))
+    
+    extra_groups     <<- list(c("Jaar"),
+                             c("Jaar", "LeeftijdsklasseEur"),
+                             c("Jaar", "SoortType"),
+                             c("Jaar", "SoortType", "LeeftijdsklasseEur"),
+                             c("Jaar", "SoortIndeling"))
+    
+    #benodigde libraries
+    packages <- c("here", "odbc", "DBI", "tidyverse", "rkt", "rlang", "lme4", "remotes")
+    install.packages(setdiff(packages, rownames(installed.packages())))
+    
+    library(here)
+    library(odbc)
+    library(DBI)
+    library(tidyverse)
+    library(rkt)
+    library(rlang)
+    library(lme4)
+    
+    if(!("INBOtheme" %in% rownames(installed.packages()))) 
+      remotes::install_github("INBO/INBOtheme")
+    library(INBOtheme)
+
+    invisible()  
+  }
+
+#########################################################################
+
+# bosvitaliteit_connect <- function(odbc_txt = "_DO_NOT_COPY_/dbcredentials.txt"){
+#   require("RODBC")
+#   creds <- read.csv2(odbc_txt, header = TRUE, stringsAsFactors = FALSE, strip.white = TRUE)
+#   dsn <- as.character(creds[creds$name == "data-source","value"])
+#   odbcConnect(dsn)
+# }
+
+bosvitaliteit_connect <- function(){
+  con <- DBI::dbConnect(odbc::odbc(),
+                        Driver = "SQL Server", 
+                        Server = "inbo-sql07-prd.inbo.be", 
+                            port = 1433, 
+                            Database = "D0004_00_Bosvitaliteit", 
+                            Trusted_Connection = "True")   
+  if(class(con) != "Microsoft SQL Server") 
+        print("Connectie niet gelukt. Ben je op het INBO netwerk of via VPN verbonden? Contacteer de database administrator")
+  con
+}
+    
+###################################################################
+
+get_treedata <- function(channel, jaar, tree_indeling, sql, show_query = TRUE, 
+                         tweejaarlijks = NULL, driejaarlijks = NULL) {
+  if(is.null(tweejaarlijks)) tweejaarlijks <- c(jaar[length(jaar) - 1:0])
+  if(is.null(driejaarlijks)) driejaarlijks <- c(jaar[length(jaar) - 2:0])
   jaarstring <- paste(jaar, collapse = ",")
   whereClause <-  paste0(" where w.WRNG_JAA in (", jaarstring, ")")
   dfTreeIndeling <- tree_indeling
   sql <- c(sql, whereClause)
   sql <- paste(sql, collapse = "\n")
   if (show_query) cat(sql, "\n")
-  df <- sqlQuery(channel, sql, stringsAsFactors = FALSE)
+  
+  df <- dbGetQuery(channel, sql)
   print(head(df))
   maxOmtrekKlasse <- ceiling(max(df$Omtrek, na.rm = TRUE)/50)
   df <-
     mutate(df,
+           BladverliesNetto = as.numeric(BladverliesNetto),
+           Soortnummer = as.integer(Soortnummer),
            BVKlasseEur = cut(BladverliesNetto,
                              breaks = c(0, 10, 25, 60, 99, 100),
                              include.lowest = TRUE,
@@ -204,7 +316,7 @@ get_treedata <- function(channel, jaar, tree_indeling, sql, show_query = TRUE) {
                            ifelse(Jaar == driejaarlijks[2], "J2",
                                   ifelse(Jaar == driejaarlijks[3], "J3", NA))),
            prbo = paste0(PlotNr, BoomNr)) %>%
-    left_join(dfTreeIndeling, by = c("Soortnummer" = "SPEC_EUR_CDE"))
+    left_join(tree_indeling, by = c("Soortnummer" = "SPEC_EUR_CDE"))
   df
 }
 
@@ -218,7 +330,14 @@ get_symptomdata <- function(channel, jaar, sql, show_query = FALSE) {
   if (show_query) cat(sql)
 
   df <-
-    sqlQuery(channel, sql, stringsAsFactors = FALSE, nullstring = -1) %>%
+    dbGetQuery(channel, sql, stringsAsFactors = FALSE, nullstring = -1) %>% 
+    mutate(SymptoomCode = as.numeric(SymptoomCode), 
+           SymptoomOorzaakCode = as.numeric(SymptoomOorzaakCode), 
+           AangetastDeelCode = as.numeric(AangetastDeelCode))
+  
+  print(str(df))
+  
+  df <- df %>%
     mutate(OnderdeelBoomCat = if_else(AangetastDeelCode < 0, "Unknown",
                                      if_else(AangetastDeelCode < 20,
                                      "Bladeren",

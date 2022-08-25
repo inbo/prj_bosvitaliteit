@@ -9,11 +9,11 @@ select
 , sym.WMSY_UCME_CDE SymptoomMeting
 , sym.WMSY_LEFT_CDE LeeftijdSchadeCode
 , clft.LEFT_DES as LeeftijdSchade
-, sym.WMSY_OPM SymptoomOpmerking
 , oorz.OORZ_CDE SymptoomOorzaakCode
 , oorz.OORZ_DES SymptoomOorzaak
 , ozor.OZOR_CDE SymptoomOrganismeCode
 , ozor.OZOR_NAM SymptoomOrganisme
+, sym.WMSY_OPM SymptoomOpmerking
 from
 tblProefvlak p left join
 tblWaarneming w on w.WRNG_PLOT_ID = p.PLOT_ID left join

@@ -14,13 +14,48 @@ De data van de projecten is niet publiek beschikbaar in deze repository en moet 
 Scripts ter ondersteuning van de jaarlijkse rapportage van de bosvitaliteit in Vlaanderen
 
 Dit maakt gebruik van interne databronnen op het INBO. 
-De scripts gaan er vanuit dat je zelf een databron D0004_00_Bosvitaliteit aangemaakt hebt, die de credentials bevat om de data te kunnen bevragen.
-Er worden 2 belangrijke datasets gebruikt met volgende structuur. De SQL code om deze te bevragen staan in de repository.
+
 
 ## Hoe te werk gaan
 
-Het startscript moet altijd gerund worden om alle functies, packages en data te laden. De andere scripts kunnen los van elkaar gerund worden eens het startscript gelopen is.
+Er is een startscript waarmee je de volledige analyse kan doorlopen:
 
+````
+#zorg dat de root directory juist staat (aanpassen indien nodig)
+rootdir <- file.path(here::here(), "01 JAARLIJKS RAPPORT")
+setwd(rootdir)
+
+#zorg dat alle functies gekend zijn
+source("scripts/functies/functies_db.R")
+source("scripts/functies/functies_samenvatting.R")
+source("scripts/functies/functies_samenvatting.R")
+
+#maak een connectie met de db (indien relevant)
+conn <- bosvitaliteit_connect()
+
+#maak globale variabelen aan die gebruikt worden door de scripts
+init_sessie(jaar = 2021, connect_via_db = TRUE) 
+
+#kies het thema voor de figuren
+theme_set(theme_inbo(10))
+
+#lees de data in 
+source("scripts/01_data_import.R")
+
+#jaarlijkse analyse
+source("scripts/02_jaarlijkseAnalyse.R")
+
+#symptomen analyse
+source("scripts/03_SymptomenAnalyse.R")
+
+#tweejaarlijkse analyse
+source("scripts/04_TweejaarlijkseAnalyse.R")
+
+#driejaarlijkse analyse
+source("scripts/05_DriejaarlijkseAnalyse.R")
+
+
+````
 
 # Evolutie van de essenziekte
 

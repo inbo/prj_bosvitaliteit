@@ -123,23 +123,6 @@ bomen_calc <-
     rv <- NULL
     for (i in 1:length(grouplist)) {
       group <- grouplist[[i]]
-      # rv[[i]] <-
-      #   group_by(x, !!!syms(c(group, group2))) %>%
-      #   summarize(AantalBomen = length(unique(MetingKey)),
-      #             AantalRecords = length(MetingKey),
-      #             AantalAantastingen = length(unique(AantastingsKey)),
-      #             AantalUnique = ifelse(is.null(uniquecount), NA, length(unique(!!!syms(uniquecount)))),
-      #             mean_value = ifelse(is.null(respons), NA, mean(!!!sym(respons))),
-      #             sd = ifelse(is.null(respons), NA, ifelse(is.na(sd(!!!sym(respons))), 0, sd(!!!sym(respons)))), #om NaN te vermijden
-      #             se = ifelse(is.null(respons), NA, ifelse(is.na(sd(!!!sym(respons))), 0, sd(!!!sym(respons))/sqrt(n()))), #om NaN te vermijden
-      #             median_value = ifelse(is.null(respons), NA, median(!!!sym(respons)))) %>%
-      #   group_by(!!!syms(group)) %>%
-      #   na.action() %>%
-      #   mutate(PctBomen = AantalBomen / sum(AantalBomen) * 100,
-      #          PctRecords = AantalRecords / sum(AantalRecords) * 100,
-      #          PctUnique = AantalUnique / sum(AantalUnique) * 100,
-      #          Set = paste(group, collapse = "."))
-      # print(rv[[i]])
 
       rv[[i]] <-
         group_by_at(x, vars(c(group, group2))) %>%
@@ -181,9 +164,6 @@ bomen_calc <-
                                    ifelse(!is.na(SoortIndeling), as.character(SoortIndeling),
                                           ifelse(!is.na(SoortType),as.character(SoortType),"totaal"))))
 
-    # v1 <- which(names(bc) %in% gvars)
-    # v2 <- which(!(names(bc) %in% gvars))
-    # bc <- bc[, c(v1, v2)]
     if (uniquecount == "do_nothing") {
       bc$AantalUnique <- bc$PctUnique <- NULL
     }
@@ -195,11 +175,6 @@ bomen_calc <-
     }
     bc
   }
-
-
-
-
-
 
 #######################################################################
 

@@ -10,10 +10,96 @@ verlies aan bomen door cirkels ipv oude satteliet-windrichting-methode
 
 ## Steekproef
 
+## Veldwerk
+
+Hoelang duurt alles, tijdsinvestering, hoelang bladerdek opmeten, hoelang alle andere metingen
+
 ## Analyses
+
+Mann-Kenly Sen-slope: verder uitvlooien en manueel berekenen om power analyse te kunnen doen!
+Eventueel maueel, per boom een statistiek uitvlooien en die dan uitrekenen met als random effect plot en soort, alsook de analyse voor soort apart.
 
 # Vraaganalyse meetnet
 
+## Input gevraagd aan Geert
+
+### Swot-analyse
+
+- Wat zijn volgens de sterktes van het meetnet?
+- Wat zijn volgens jou de zwaktes van het meetnet?
+- Waarin zou het meetnet verbeterd kunnen worden?
+- Zou er meer uit het meetnet gehaald kunnen worden?
+- Zijn er problemen te verwachten in de toekomst voor het meetnet?
+
+### Historiek
+
+Er zijn verschillende versies geweest van het meenet.
+
+- Hoe zijn de huidige proefvlakken geselecteerd (ik kan dat zelf nalezen, maar misschien gemakkelijker als je dat vertelt
+- Worden proefvlakken verschoven
+- Zijn de proefvlakken representatief voor alle bossen, voor bomen midden in bossen, voor oude bomen, ...?
+- In hoeverre is er nog een Europese verplichting?
+
+### Vroegere analyses
+
+- We hebben ooit eens een verklarend model gemaakt voor dit meetnet, is dit iets dat we periodiek herhalen?
+
+### Kosten
+
+De kern van het meetnet is het bladverlies, maar er worden ook heel veel andere zaken gemeten. Gebeurt daar genoeg mee, of zijn bepaalde metingen overbodig?
+
+Hoe zou je de kosten inschatten?
+
+- Hoeveel proefvlakken per dag?
+- Hoeveel mandagen
+- Transportkosten
+- Tijd op het proefvlak
+    - Hoelang duurt kroonbeoordeling?
+    - Hoelang duren de andere metingen?
+
+### Vergelijking met buurlanden
+
+- Zijn er gelijkaardige meetnetten?
+- Indien zo, hoe zijn deze vergeleken met het INBO meetnet
+
+## Wat willen we kunnen aantonen?
+
+- Wat willen we detecteren? Welk effect over welke periode?
+- Een bepaald percentage verschil over een periode van 12 jaar
+- jaar tot jaar variatie
+- inschatting algemeen over alle bomen heen
+- inschatting per soort
+- nog andere criteria?
+
+## Welk model gebruiken we voor de analyse
+
+- Gepaarde t-test (mixed effect model) voor de jaar-jaar variatie
+- Sen slope over rollende 12 jaar?
+- Toch een gewoon glm model ipv sen slope?
+
+## Huidig steekproefdesign
+
+- Hoeveel proefvlakken en hoe gekozen?
+- Wat indien er een boom verdwijnt?
+    - Hoe eventueel vervangen?
+- Wat indien een proefvlak verdwijnt?
+    - Hoe eventueel vervangen?
+
 # Powerberekeningen
+
+## Jaar tot jaar variatie
+
+Normale benadering door centrale limietstelling: het gemiddelde van een mixture van metingen volgt vaak een normale distributie ongeacht de oorspronkelijke distributie
+
+Rekening houden met paring van bomen genest in proefvlakken en boomsoort. Autocorrelatie is hier niet relevant omdat er maar 1 tijdstap is, en een mixed effect is dan per definitie ook de autocorrelatie
+
+Dit uitvoeren algemeen over alle bomen, splitsing loof-naald, per hoofdboomsoort
+
+- Inschatten variabiliteit tussen proefvlakken
+- Inschatten variabiliteit binnen proefvlakken
+- Inschatten variabiliteit tussen 2 jaren voor eenzelfde proefvlak
+- Inschatten variabilitieit tussen 2 jaren voor eenzelfde boom
+
+Power analyse
 
 # Voorstellen voor meetnetaanpassingen

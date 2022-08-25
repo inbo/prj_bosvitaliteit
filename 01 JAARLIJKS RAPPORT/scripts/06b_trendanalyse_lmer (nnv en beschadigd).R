@@ -58,14 +58,16 @@ for (sel in unique(dfBRMSbasis$selectie)) {
     ungroup() %>%
     transmute(JaarC = (Jaar - meerjaarlijks[1])/diff(range(meerjaarlijks)), PlotNr, logBladverlies = log(mean_value + 2.5))
 
-  model <-  try(brm(logBladverlies ~ JaarC + (1|PlotNr), data = dfBrms, family = gaussian(),
-                autocor = cor_ar(~ JaarC|PlotNr, p = 1), #---> geeft veel te brede intervallen door te weinig data met zo een complex model?
-                iter = 10000, thin = 20, chains = 3, cores = 3))
+  model <-  try(
+    brm(logBladverlies ~ JaarC + (1|PlotNr), 
+        data = dfBrms, family = gaussian(),
+        autocor = cor_ar(~ JaarC|PlotNr, p = 1), #te brede intervallen
+        iter = 10000, thin = 20, chains = 3, cores = 3))
   nnvmodels[[sel]] <- model
 }
 
-save(nnvmodels, file = paste0(outdir, "interim/nnv_brms_models.Rdata"))
-load(file = paste0(outdir, "interim/nnv_brms_models.Rdata"))
+save(nnvmodels, file = file.path(outdir, "interim", "nnv_brms_models.Rdata"))
+load(file = file.path(outdir, "interim", "nnv_brms_models.Rdata"))
 
 
 ### >>> Figuur maken
@@ -98,7 +100,7 @@ for (sel in names(nnvmodels)) {
     geom_line(data =  confs, aes(x = Jaar, y = fit), inherit.aes = FALSE, color = inbo_groen) +
     geom_ribbon(data = confs, aes(x = Jaar, ymin = lcl, ymax = ucl), inherit.aes = FALSE, alpha = 0.3, fill = inbo_groen) +
       ylab("Bladverlies (%) brms") + ylim(0,40) + ggtitle(sel)
-  ggsave(p, file = paste0(outdir, "trend_nnv_",sel, "_brms.png" ), dpi = fig_dpi, width = fig_width, height = fig_height)
+  ggsave(p, file = file.path(outdir, paste0("trend_nnv_",sel, "_brms.png")), dpi = fig_dpi, width = fig_width, height = fig_height)
 
 }
 
@@ -130,8 +132,8 @@ for (sel in unique(dfBRMSbasis$selectie)) {
 
 }
 
-save(beschadigdmodels, file = paste0(outdir, "interim/beschadigd_brms_models.Rdata"))
-load(file = paste0(outdir, "interim/beschadigd_brms_models.Rdata"))
+save(beschadigdmodels, file = file.path(outdir, "interim", "beschadigd_brms_models.Rdata"))
+load(file = paste0(outdir, "interim", "beschadigd_brms_models.Rdata"))
 
 
 ### >>> Figuur maken
@@ -169,7 +171,7 @@ for (sel in names(beschadigdmodels)) {
     geom_line(data =  confs, aes(x = Jaar, y = fit), inherit.aes = FALSE, color = inbo_groen) +
     geom_ribbon(data = confs, aes(x = Jaar, ymin = lcl, ymax = ucl), inherit.aes = FALSE, alpha = 0.3, fill = inbo_groen) +
     ylab("Percentage beschadigd (brms)") + ylim(0,100) + ggtitle(sel)
-  ggsave(p, file = paste0(outdir, "trend_pctbeschadigd_",sel, "_brms.png" ), dpi = fig_dpi, width = fig_width, height = fig_height)
+  ggsave(p, file = file.path(outdir, paste0("trend_pctbeschadigd_",sel, "_brms.png")), dpi = fig_dpi, width = fig_width, height = fig_height)
 
 }
 
@@ -193,8 +195,8 @@ for (sel in unique(dfBRMS_schade_yy$selectie)) {
   beschadigdyymodels[[sel]] <- model
 }
 
-save(beschadigdyymodels, file = paste0(outdir, "interim/beschadigd_brms_factorJaar.Rdata"))
-load(file = paste0(outdir, "interim/beschadigd_brms_factorJaar.Rdata"))
+save(beschadigdyymodels, file = file.path(outdir, "interim", "beschadigd_brms_factorJaar.Rdata"))
+load(file = file.path(outdir, "interim", "beschadigd_brms_factorJaar.Rdata"))
 
 ### Figuur maken
 
@@ -211,6 +213,6 @@ for (sel in names(beschadigdyymodels)) {
 ggplot(plotdata, aes(x = Jaar, y = Pctbeschadigd)) + geom_point() + geom_line() + facet_wrap(~selectie) +
   geom_ribbon(aes(ymin = 100 * lcl, ymax = 100 * ucl), alpha = 0.3, color = NA, fill = inbo_groen) +
   ylab("Percentage Beschadigd (brms fit)")
-ggsave(file = paste0(outdir, "trend_beschadigd_brmsfit.png"), dpi = fig_dpi, height = fig_height, width = fig_width)
+ggsave(file = file.path(outdir, "trend_beschadigd_brmsfit.png"), dpi = fig_dpi, height = fig_height, width = fig_width)
 
 
