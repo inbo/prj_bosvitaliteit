@@ -16,7 +16,7 @@ bomen_calc(dfTrees, normal_groups) %>%
   left_join(select(dfSoortInfo, SoortIndeling, Soort, SoortType), by = c(selectie = "Soort")) %>%
   arrange(SoortType, desc(AantalBomen)) %>%
   select(SoortIndeling, selectie, AantalBomen, PctOfTotaalBomen) %>%
-  write.csv2(file = paste0(outdir, "jaarlijks_02_samenstellingsteekproef.csv"))
+  write.csv2(file = file.path(outdir, "jaarlijks_02_samenstellingsteekproef.csv"))
 
 bomen_calc(filter(dfTrees, SoortIndeling %in% c("overige lbs.","overige nbs.")),
            list(c("Jaar", "Soort"))) %>%
@@ -24,7 +24,7 @@ bomen_calc(filter(dfTrees, SoortIndeling %in% c("overige lbs.","overige nbs.")),
   left_join(select(dfSoortInfo, Soort, SoortIndeling), by = "Soort") %>%
   arrange(SoortIndeling, desc(AantalBomen)) %>%
   select(Jaar, SoortIndeling, Soort, AantalBomen) %>%
-  write.csv2(file = paste0(outdir, "jaarlijks_02b_samenstellingsteekproefOverig.csv"))
+  write.csv2(file = file.path(outdir, "jaarlijks_02b_samenstellingsteekproefOverig.csv"))
 
 
 
@@ -61,7 +61,7 @@ bomen_calc(dfTrees, group = c("Jaar"), group2 = "SPEC_DES", respons = "Leeftijd"
 lft1 <- bomen_calc(dfTrees, normal_groups,  respons = "Leeftijd") %>% select(selectie, mean_value)
 lft2 <- bomen_calc(dfTrees, normal_groups, group2 = "LeeftijdsklasseEur") %>%
   select(selectie, LeeftijdsklasseEur, PctBomen) %>% spread(key = LeeftijdsklasseEur, value = PctBomen)
-left_join(lft1, lft2) %>% write.csv2(paste0(outdir, "jaarlijks_05_leeftijden.csv"))
+left_join(lft1, lft2) %>% write.csv2(file.path(outdir, "jaarlijks_05_leeftijden.csv"))
 rm(lft1, lft2)
 
 ###1.6 Aandeel bomen leeftijd soort
@@ -71,7 +71,7 @@ bomen_calc(dfTrees, normal_groups, group2 = "SPEC_DES")
 bomen_calc(dfTrees, c("Jaar","SoortType", "LeeftijdsklasseEur"), group2 = c( "SoortIndeling")) %>%
   select(LeeftijdsklasseEur, SoortIndeling, PctBomen) %>%
   arrange(SoortType, LeeftijdsklasseEur, desc(PctBomen)) %>% spread(key = LeeftijdsklasseEur, value = PctBomen, fill = 0.00) %>%
-  write.csv2(paste0(outdir, "jaarlijks_0607_soortensamenstellingleeftijdsgroepen.csv"))
+  write.csv2(file.path(outdir, "jaarlijks_0607_soortensamenstellingleeftijdsgroepen.csv"))
 
 ###1.7 Aandeel soorten leeftijd soorttype
 
@@ -86,12 +86,12 @@ bomen_calc(dfTrees, normal_groups, "BVKlasseEur") %>%
   left_join(dfVolgorde) %>%
   spread(key = BVKlasseEur, value = PctBomen, fill = 0)  %>% arrange(volgorde) %>%
   rowwise() %>% mutate(Beschadigd = 100 - `0-10%` - `10+-25%`) %>%
-  write.csv2(paste0(outdir, "jaarlijks_16_verdeling_per_bvklasse.csv"))
+  write.csv2(file.path(outdir, "jaarlijks_16_verdeling_per_bvklasse.csv"))
 
 bomen_calc(dfTrees, normal_groups, "BVKlasse10") %>%
   select(selectie, BVKlasse10, PctBomen) %>%
   spread(key = selectie, value = PctBomen, fill = 0) %>%
-  write.csv2(paste0(outdir, "jaarlijks_17_verdeling_per_10pctBVklasse.csv"))
+  write.csv2(file.path(outdir, "jaarlijks_17_verdeling_per_10pctBVklasse.csv"))
 
 
 bomen_calc(dfTrees, all_groups, c("Beschadigd")) %>%
@@ -100,7 +100,7 @@ bomen_calc(dfTrees, all_groups, c("Beschadigd")) %>%
   spread(key = LeeftijdsklasseEur, value = PctBomen) %>%
   left_join(dfVolgorde) %>% arrange(volgorde) %>%
   rename("totaal" = `<NA>`) %>% select(-volgorde) %>%
-  write.csv2(paste0(outdir, "jaarlijks_19_beschadigdperleeftijd.csv"))
+  write.csv2(file.path(outdir, "jaarlijks_19_beschadigdperleeftijd.csv"))
 
 
 # wilcoxon test (niet-gepaard) --> om wel gepaard te werken aan de formule " | paarvariabele" toevoegen
@@ -115,7 +115,7 @@ dfTrees %>%
   split(.$SoortIndeling) %>%
   map_dfr(wilcox_table, formula = BladverliesNetto ~ LeeftijdsklasseEur, .id = "selectie")
 ) %>% left_join(dfVolgorde) %>% arrange(volgorde) %>% select(-volgorde) %>%
-  write.csv2(paste0(outdir, "jaarlijks_20_bladverlieswilcoxtabelnietgepaard.csv"))
+  write.csv2(file.path(outdir, "jaarlijks_20_bladverlieswilcoxtabelnietgepaard.csv"))
 
 
 #beschadigdde proefvlakken
@@ -125,7 +125,7 @@ dfTrees %>%
   summarize(gem_bladverlies = mean(BladverliesNetto)) %>%
   filter(gem_bladverlies >= 25) %>%
   arrange(PlotNr) %>%
-  write.csv2(paste0(outdir, "jaarlijks_21_beschadigdeproefvlakken.csv"))
+  write.csv2(file.path(outdir, "jaarlijks_21_beschadigdeproefvlakken.csv"))
 
 #schade per proefvlak, enkel voor de hoofdboomsoort (minstens 5 exemplaren, en slechts 1 hoofdboomsoort per plot)
 #VRAAG Geert: Wat te doen met proefvlakken met meerdere hoofdboomsoorten (er zijn plots waarbij de 2 meest-voorkomende soorten gelijk zijn)
@@ -149,14 +149,15 @@ spp <-
   mutate(SoortIndeling2 = factor(SoortIndeling,
                                 levels = c(dfVolgorde$selectie[dfVolgorde$selectie %in% unique(.$SoortIndeling)])))
 
-ggplot(spp, aes(x = "", y = Pct_plots, fill = schadeklasse)) +
+(p <- ggplot(spp, aes(x = "", y = Pct_plots, fill = schadeklasse)) +
    facet_wrap(~SoortIndeling2) +
    geom_bar(width = 1, stat = "identity", position = position_stack(reverse = TRUE))  +
    geom_text(aes(y = Positie, label = paste0(round(Pct_plots), "%"))) +
    scale_fill_manual(values = c("blue", "green4", "orange", "red"), drop = FALSE) +
    coord_polar("y", start = 0, direction = 1)  + ylab("") + xlab("") +
-   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), legend.title = element_text("schade (%)"))
-ggsave(paste0(outdir, "jaarlijks_03_gemiddeld_aantal_beschadigde_proefvlakken_voor_hoofdboomsoort.jpg"), width = fig_width, height = fig_height, dpi = 2 * fig_dpi)
+   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), legend.title = element_text("schade (%)")))
+
+ggsave(file.path(outdir, "jaarlijks_03_gemiddeld_aantal_beschadigde_proefvlakken_voor_hoofdboomsoort.png"), p,  width = fig_width, height = fig_height, dpi = 2 * fig_dpi)
 
 
 ###1.10 Aandeel bomen Slijmuitvloei Soort
@@ -175,7 +176,7 @@ bomen_calc(dfTrees, group = normal_groups, group2 = "Waterscheuten") %>%
   spread(key = Waterscheuten, value = PctBomen, fill = 0.0) %>%
   mutate(`totaal (1-3)` = `1`+ `2` + `3`) %>%
   arrange(volgorde) %>%
-  write.csv2(paste0(outdir, "jaarlijks_35_waterscheuten.csv"))
+  write.csv2(file.path(outdir, "jaarlijks_35_waterscheuten.csv"))
 
 ###1.13 Aandeel bomen vorstscheuren soort
 
@@ -206,7 +207,7 @@ bomen_calc(dfTrees, group = normal_groups, group2 = "Zaadzetting") %>%
   mutate(`totaal (1-3)` = `1`+ `2` + `3`,
          `matig tot sterk (2-3)` = `2` + `3`) %>%
   arrange(volgorde) %>%
-  write.csv2(paste0(outdir, "jaarlijks_34_zaadzetting.csv"))
+  write.csv2(file.path(outdir, "jaarlijks_34_zaadzetting.csv"))
 
 ###1.19 Gemiddeld bladverlies zaadzetting soort
 
@@ -228,7 +229,7 @@ bomen_calc(dfTrees, group = normal_groups, group2 = "PlotNr")
 bomen_calc(dfTrees, group = extra_groups, respons = "BladverliesNetto") %>%
   left_join(dfVolgorde) %>% arrange(volgorde, LeeftijdsklasseEur) %>%
   select(selectie, LeeftijdsklasseEur, mean_value, median_value, sd, se) %>%
-  write.csv2(paste0(outdir, "jaarlijks_18_gemiddeldbladverlies.csv"))
+  write.csv2(file.path(outdir, "jaarlijks_18_gemiddeldbladverlies.csv"))
 
 #alternatieve manier (test)
 # bomen_calc_new(dfTrees, grouplist = extra_groups, response = "BladverliesNetto") %>%

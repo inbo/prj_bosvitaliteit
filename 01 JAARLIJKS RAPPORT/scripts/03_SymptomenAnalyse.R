@@ -169,7 +169,8 @@ bomen_calc(filter(dfSA, SymptoomCode %in% c(1)), normal_groups, "SymptoomExtent"
 bomen_calc(filter(dfSA, SymptoomCode %in% c(1)), lapply(normal_groups, c, c("Symptoom", "SymptoomOorzaakCode", "SymptoomOrganisme")),
            "SymptoomExtent")
 
-bomen_calc(filter(dfSA, OnderdeelBoomCat == "Stam", SymptoomOorzaakGroep == 200),
+bomen_calc(filter(dfSA, OnderdeelBoomCat == "Stam", 
+                  SymptoomOorzaakGroep == 200),
            lapply(normal_groups, c, "OnderdeelBoomCat"), "SymptoomExtent") %>%
   left_join(dfTotaalBomen) %>%
   mutate(Pct = AantalBomen / TotaalAantalBomen * 100) %>%

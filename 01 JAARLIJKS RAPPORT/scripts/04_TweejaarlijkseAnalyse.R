@@ -81,8 +81,9 @@ ggplot(filter(dfBeschadigd2j, !(selectie %in% c("overige nbs.", "loofbomen jong"
   scale_fill_discrete(name = "jaar") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) + xlab("") + ylab("percentage beschadigde bomen") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  geom_errorbar(position = "dodge") +
-  ggsave(filename = paste0(outdir, "tweejaarlijks_04_aandeel_beschadigd.png"), width = fig_width, height = fig_height, dpi = fig_dpi)
+  geom_errorbar(position = "dodge")
+
+ggsave(filename = file.path(outdir, "tweejaarlijks_04_aandeel_beschadigd.png"), width = fig_width, height = fig_height, dpi = fig_dpi)
 
 dfBeschadigd2j %>%
   group_by(selectie) %>%

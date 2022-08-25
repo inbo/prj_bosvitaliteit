@@ -3,8 +3,9 @@
 ### >>> Data inhoud
 
 #Aantal Bomen
-ggplot(dfTreesTrend, aes(x = Jaar)) + geom_bar() + ylab("Aantal bomen") +
-  ggsave(file = paste0(outdir, "trend_aantalbomen.png"), width = fig_width, height = fig_height, dpi = fig_dpi)
+ggplot(dfTreesTrend, aes(x = Jaar)) + geom_bar() + ylab("Aantal bomen") 
+
+ggsave(file = file.path(outdir, "trend_aantalbomen.png"), width = fig_width, height = fig_height, dpi = fig_dpi)
 
 
 #Aantal Plots
@@ -21,7 +22,8 @@ group_by(dfTreesTrend, Jaar) %>%
   ggplot(aes(x = factor(PlotNr), y = AantalJaar, color = factor(TeWeinigJaar))) +
   geom_point() +
   labs(x = "PlotNr", color = "TeWeinigJaar") + theme(axis.text.x = element_text(angle = 90))
-  ggsave(file = paste0(outdir, "trend_aantal_jaar_gemeten_per_plot.png"))
+
+ggsave(file = file.path(outdir, "trend_aantal_jaar_gemeten_per_plot.png"))
 
 dfTreesTrendV <- filter(dfTreesTrend, PlotNr %in% (filter(AantalPlotJaren, TeWeinigJaar == FALSE) %>% pull(PlotNr)))
 
@@ -78,10 +80,8 @@ dfSenResult <- bomen_calc(x = dfTreesTrend,
                           group = lapply(normal_groups, c, "PlotNr"),
                           respons = "BladverliesNetto")
 
-test <- rkt::rkt(date = data[["Jaar"]],  y = data[["mean_value"]], block = data[["PlotNr"]])
 
 my_rkt <- function(data){
-
   model <- rkt(date = data$Jaar, y = data$gemNNV, block = data$PlotNr)
   data.frame(sen_slope = model$B, kendall_tau = model$tau, p_value = model$sl)
 }
@@ -92,7 +92,7 @@ my_rkt <- function(data){
   mutate(senresult = map(.x = data, .f = my_rkt)) %>%
   select(-data) %>%
   unnest(cols = senresult)) %>%
-  write.csv2(file = paste0(outdir, "trend_senslopes_rkt.csv"))
+  write.csv2(file = file.path(outdir, "trend_senslopes_rkt.csv"))
 
 
 
@@ -111,9 +111,9 @@ if (recalc_sen) {
     print(head(tmp))
     dfSen[[i]] <- tmp
   }
-  save(dfSen, file = paste0(outdir, "interim/dfSen_trend_nnv", n_sen_boot, ".Rdata"))
+  save(dfSen, file = file.path(outdir, "interim", paste0("dfSen_trend_nnv", 200, ".Rdata")))
 } else {
-  load(file =  paste0(outdir, "interim/dfSen_trend_nnv", n_sen_boot, ".Rdata"))
+  load(file =  file.path(outdir, "interim", paste0("dfSen_trend_nnv", 200, ".Rdata")))
 }
 
 ###
@@ -128,7 +128,7 @@ for (i in unique(dfSenResult$selectie)) {
     geom_ribbon(aes(ymin = boot_lcl, ymax = boot_ucl), alpha = 0.3, fill = inbo_groen) +
     xlab("Jaar") + ylab("Bladverlies (%) Sen-slope") + ggtitle(i) + ylim(0,ymax)
   print(p)
-  file = paste0(outdir, "trend_nnv_", i, ".png")
+  file = file.path(outdir, paste0("trend_nnv_", i, ".png"))
   ggsave(plot = p, filename = file, dpi = fig_dpi, width = fig_width, height = fig_height)
 }
 
@@ -151,9 +151,9 @@ if (recalc_sen_besch) {
     print(head(tmp))
     dfSenB[[i]] <- tmp
   }
-  save(dfSenB, file =  paste0(outdir, "interim/dfSenbesch_trend_nnv", n_sen_boot, ".Rdata"))
+  save(dfSenB, file =  file.path(outdir, "interim", paste0("dfSenbesch_trend_nnv", n_sen_boot, ".Rdata")))
 } else {
-  load(file =  paste0(outdir, "interim/dfSenbesch_trend_nnv", n_sen_boot, ".Rdata"))
+  load(file =  file.path(outdir, "interim", paste0("dfSenbesch_trend_nnv", n_sen_boot, ".Rdata")))
 }
 
 
@@ -171,6 +171,6 @@ for (i in unique(dfSenResult$selectie)) {
     xlab("Jaar") + ylab("Aandeel Beschadigd (%)") + ggtitle(i) + ylim(0,ymax)
   print(p)
 
-  file = paste0(outdir, "trend_pctbeschadigd_", i, ".png")
+  file = file.path(outdir, paste0("trend_pctbeschadigd_", i, ".png"))
   ggsave(plot = p, filename = file, dpi = fig_dpi, width = fig_width, height = fig_height)
 }

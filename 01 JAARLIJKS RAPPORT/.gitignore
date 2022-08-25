@@ -1,0 +1,7 @@
+#output files
+20*/
+output/
+
+#Gegenereerde data files
+*.Rdata
+

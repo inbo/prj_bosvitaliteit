@@ -36,7 +36,7 @@ bind_rows(rv) %>%
   left_join(dfVolgorde) %>%
   arrange(volgorde) %>%
   select(-volgorde) %>%
-  write.csv2(paste0(outdir, "driejaarlijks_39_evolutiebladverlies.csv"))
+  write.csv2(file.path(outdir, "driejaarlijks_39_evolutiebladverlies.csv"))
 
 ######
 
@@ -49,7 +49,7 @@ ggplotschadeklassen <- function(data, title = "", fig_width = 7, fig_height = 5,
     guides(fill = guide_legend(title = "jaar")) + ylim(0,100)+ ggtitle(title) +
     scale_x_discrete(drop = FALSE)
   print(p)
-  ggsave(plot = p, filename = paste0(outdir, "driejaarlijks_06_", title, ".png"),
+  ggsave(plot = p, filename = file.path(outdir, paste0("driejaarlijks_06_", title, ".png")),
          width = fig_width, height = fig_height, dpi = fig_dpi)
 }
 
