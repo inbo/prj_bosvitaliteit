@@ -79,9 +79,64 @@ ggplot(sd_between_plots, aes(x = sd_avg)) + geom_density() +
 #so sd_between_plots is distributed normally with mean 6.34 en sd 1.4
 
 
-## variabiliteit tussen observaties van 2 opeenvolgende jaren
+## variabiliteit tussen boomobservaties van 2 opeenvolgende jaren (= autocorrelatie)
+df_compare <- dfTrees %>% 
+  group_by(PlotKey, BoomKey, Jaar) %>% 
+  summarise(NNV = BladverliesNetto) %>% 
+  mutate(JaarPrev = Jaar-1)
 
+
+
+df_comp_joined <- df_compare %>% 
+  inner_join(df_compare %>% select(-JaarPrev, NNVP = NNV), 
+             by = c("PlotKey", "BoomKey", "JaarPrev" = "Jaar")) %>% 
+  mutate(NNVdiff = NNV - NNVP,
+         NNVrel = NNV / (NNVP + 5))
+
+cor(na.omit(df_comp_joined[c("NNV", "NNVP")], na.rm = TRUE))
+
+test <- MASS::mvrnorm(n=10000, mu = c(1,1), Sigma = rbind(c(1,0.73), c(0.73,1)))
+test2 <- test
+test2[,2] <- test[,2] + 1
+cor(test2)
+
+ggplot(df_comp_joined, aes(x = NNVdiff)) + geom_histogram(binwidth = 5)
+ggplot(df_comp_joined, aes(x = NNVrel)) + geom_histogram(binwidth = 0.2)
+
+mean(df_comp_joined$NNVdiff, na.rm = TRUE) #0.46
+sd(df_comp_joined$NNVdiff, na.rm = TRUE) #8.60
+
+generator <- expand.grid(Plot = 1:50, Boom = 1:20, NNV1 = NA, NNV2 = NA)
+
+
+
+
+
+#TABEL MET WIJZIGINGEN
+
+tabel <- table(df_comp_joined$NNVP, df_comp_joined$NNV)
+tabeldf <- as.data.frame(tabel)
+colnames(tabeldf) <- c("Current", "Prev", "Freq")
+
+tabeldf <- tabeldf %>% 
+  group_by(Prev) %>% 
+  mutate(RelFreq = Freq / sum(Freq))
+
+ggplot(tabeldf, aes(x = Current, y = Prev, z = RelFreq, fill = RelFreq)) + 
+  geom_tile() + scale_fill_gradient(low = "blue", high = "red") + geom_abline(slope=1)
+
+
+#mean(df_comp_joined$NNVrel, na.rm = TRUE) 
+#sd(df_comp_joined$NNVrel, na.rm = TRUE)
 
 
 ## variabiliteit van treespecies binnen een plot
+df_spec <- dfTrees %>% 
+  group_by(Jaar, PlotKey, Soortnummer) %>% 
+  summarise(avg = mean(BladverliesNetto) ) %>% 
+  summarise(N = n(), 
+            sdev = sd(avg))
+ggplot(df_spec, aes(x = sdev)) + geom_histogram()
+dist_spec <- MASS::fitdistr(df_spec %>% mutate(sdev = sdev + 0.1) %>% pull(sdev) %>% na.omit(), densfun = "lognormal")
+ #variabiliteit gemiddeld 5.31 (log was 1.672) maar wel met heel veel ruis (sd= 0.897 in log-schaal)
 

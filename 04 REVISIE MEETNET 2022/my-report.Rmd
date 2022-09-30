@@ -20,7 +20,7 @@ Hoe evolueert de gezondheidstoestand van de bomen in de Vlaamse bossen?
 
 - Er is een duidelijk rapport dat voor alle stakeholders raadpleegbaar is
 - Er is geen policy rond de openheid en FAIR-ness van de data
-- << wie is de doelgroep >>
+- <<wie is de doelgroep>>
 
 
 ### Doelstelling en Normstelling
@@ -339,3 +339,55 @@ Power analyse
 
 # Voorstellen voor meetnetaanpassingen
 --->
+
+<!--chapter:end:01_huidige_situatie.Rmd-->
+
+---
+# generic options. See ?INBOmd::report() for full list and more details.
+title: Revisie Level I bosvitaliteitsmeetnet
+author: 
+  - firstname: "Pieter"
+    name: "Verschelde"
+    email: "pieter.verschelde@inbo.be"
+    orcid: 0
+  - firstname: "Geert"
+    name: "Sioen"
+    email: "geert.sioen@inbo.be"
+    orcid: 0
+style: INBO
+lang: nl
+
+# report specific options. See ?INBOmd::report() for full list and more details.
+shortauthor: pieterverschelde
+reviewer:
+  - firstnaam: Firstname
+    name: Lastname
+    email: "firstname.lastname@inbo.be"
+    orcid: 0
+year: 2022
+reportnr: 0
+doi: 0
+depotnr: 0
+cover_description: none
+output:
+  INBOmd::gitbook: default
+  INBOmd::report: default
+  INBOmd::ebook: default
+---
+
+# Abstract
+
+<!--chapter:end:Index.Rmd-->
+
+```{r references, results = "asis", echo = FALSE}
+# insert the references at this position
+# set appendix = FALSE, when the report has no appendix
+INBOmd::references(appendix = TRUE)
+```
+
+# Eerste hoofdstuk van de appendix
+
+Inhoud van de eerste appendix
+
+<!--chapter:end:zzz_references_and_appendix.Rmd-->
+
