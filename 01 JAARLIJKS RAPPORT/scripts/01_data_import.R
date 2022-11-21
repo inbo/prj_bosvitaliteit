@@ -11,6 +11,7 @@ if (connect_via_db) {
   #dan best aan Pieter of IT vragen
   conn <- bosvitaliteit_connect()
   
+  
   dfSoortInfo <- read.csv2("data/tree_indeling.csv", stringsAsFactors = FALSE)
   dim(dfSoortInfo)
   if (!is.null(dfSoortInfo) & length(dfSoortInfo))
