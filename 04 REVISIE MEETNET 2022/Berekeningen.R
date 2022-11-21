@@ -56,7 +56,7 @@ ggplot(sd_within_plot, aes(x = sd)) + geom_density(color = "blue") +
   geom_line(distri_sample, mapping = aes(x = x, y = ests), color = "red") +
   geom_line(distri_sample, mapping = aes(x = x, y = este), 
             color = "green", linetype = 2)
-#so sd_within_plot is distributed lognormally with pars lmean 2.16 and lsd 0.45
+#!!!so sd_within_plot is distributed lognormally with pars lmean 2.16 and lsd 0.45
 
 ## variabiliteit tussen proefvlakken per jaar
 
@@ -76,7 +76,7 @@ MASS::fitdistr(sd_between_plots %>% pull(sd_avg), densfun = "normal")
 ggplot(sd_between_plots, aes(x = sd_avg)) + geom_density() +
   geom_line(data.frame(x = 350:900/100, fit = dnorm(350:900/100, 6.35, 1.4)),
                mapping = aes(x = x, y = fit), color = "red")
-#so sd_between_plots is distributed normally with mean 6.34 en sd 1.4
+#!!!so sd_between_plots is distributed normally with mean 6.34 en sd 1.4
 
 
 ## variabiliteit tussen boomobservaties van 2 opeenvolgende jaren (= autocorrelatie)
@@ -84,8 +84,6 @@ df_compare <- dfTrees %>%
   group_by(PlotKey, BoomKey, Jaar) %>% 
   summarise(NNV = BladverliesNetto) %>% 
   mutate(JaarPrev = Jaar-1)
-
-
 
 df_comp_joined <- df_compare %>% 
   inner_join(df_compare %>% select(-JaarPrev, NNVP = NNV), 
@@ -95,6 +93,10 @@ df_comp_joined <- df_compare %>%
 
 cor(na.omit(df_comp_joined[c("NNV", "NNVP")], na.rm = TRUE))
 
+#!!!Autocorrelatie van opeenvolgende metingen van een boom: 0.73
+
+
+#check of het goed lukt autocorrelatie te simuleren
 test <- MASS::mvrnorm(n=10000, mu = c(1,1), Sigma = rbind(c(1,0.73), c(0.73,1)))
 test2 <- test
 test2[,2] <- test[,2] + 1
