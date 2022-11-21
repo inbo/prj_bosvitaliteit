@@ -1,0 +1,62 @@
+# Dimensionering meetnet
+
+## Inleiding
+
+Omdat er geen specifieke doelstelling is worden hier enkele verschillende analyses uitgewerkt. Standaard ga ik uit van een detectiewens van een 12% evolutie op 12 jaar tijd.
+
+Er zal eerst gekeken worden hoeveel kracht het meetnet heeft om van jaar op jaar een analyse te doen.
+
+Daarna wordt gebruik gemaakt van een standaard lineair mixed effect model.
+
+Tenslotte wordt ook gekeken naar de Mann-Kendall Sen-slope, een niet-parametrische methode om een trend in te schatten.
+
+## Voorberekeningen: Inschatten van correlaties tussen observaties
+
+
+Normale benadering door centrale limietstelling: het gemiddelde van een mixture van metingen volgt vaak een normale distributie ongeacht de oorspronkelijke distributie
+
+Rekening houden met paring van bomen genest in proefvlakken en boomsoort. Autocorrelatie is hier niet relevant omdat er maar 1 tijdstap is, en een mixed effect is dan per definitie ook de autocorrelatie
+
+Dit uitvoeren algemeen over alle bomen, splitsing loof-naald, per hoofdboomsoort
+
+- Inschatten variabiliteit tussen proefvlakken
+- Inschatten variabiliteit binnen proefvlakken
+- Inschatten variabiliteit tussen 2 jaren voor eenzelfde proefvlak
+- Inschatten variabilitieit tussen 2 jaren voor eenzelfde boom
+
+Uitvoeren kostenefficiëntie
+
+### Correlatie binnen een proefvlak
+
+### Correlatie binnen een proefvlak over de jaren heen
+
+### Correlatie van boommetingen over de jaren heen
+
+
+## Analyse van jaar tot jaar
+
+### Methode
+
+### Over alle soorten heen
+
+### Specifiek voor boomsoorten
+
+## Standaard lineair mixed effect model
+
+### Methode
+
+### Over alle soorten heen
+
+### Specifiek voor boomsoorten
+
+
+## Mann-Kendall Tau en Sen-slope
+
+### Methode
+
+### Over alle soorten heen
+
+### Specifiek voor boomsoorten
+
+
+

@@ -3,9 +3,28 @@
 
 ## Historiek
 
+Er zijn verschillende versies geweest van het meenet.
+
+- Hoe zijn de huidige proefvlakken geselecteerd (ik kan dat zelf nalezen, maar misschien gemakkelijker als je dat vertelt
+- Worden proefvlakken verschoven
+- Zijn de proefvlakken representatief voor alle bossen, voor bomen midden in bossen, voor oude bomen, ...?
+- In hoeverre is er nog een Europese verplichting?
+
+
+
 Het bosvitaliteitsmeetnet, of Level-I meetnet, is een heel langlopend meetnet opgestart in 1987. Dit is tot stand gekomen via het expertenpanelgroep ICP-forests, met vertegenwoordigers uit heel Europa.
 
 Dit meetnet is ge-evolueerd in de loop van de jaren en er is ook al eens een revisie gebeurd enkele jaren geleden << concretiseren >> onder leiding van Paul Quataert << referentie >>
+
+
+### Vroegere onderzoeken rond het meetnetopzet
+
+- Paul Quataert
+- Vergelijking 4 windrichtingenmethode met vaste steekproefcirkel
+
+### Vroegere statistische analyses op basis van deze metingen
+
+- We hebben ooit eens een verklarend model gemaakt voor dit meetnet, is dit iets dat we periodiek herhalen?
 
 
 ## Vage informatiebehoefte:
@@ -15,6 +34,7 @@ Dit meetnet is ge-evolueerd in de loop van de jaren en er is ook al eens een rev
 ### Welke vraag moet beantwoord worden?
 
 Hoe evolueert de gezondheidstoestand van de bomen in de Vlaamse bossen?
+Voor de rest lijken hier geen normen of zo vastgelegd, dus misschien moeten we gaan naar een norm die regelmatig gebruikt wordt zoals 12% verslechtering op 12 jaar tijd.
 
 ### Wie is de eindgebruiker van de resultaten?
 
@@ -30,13 +50,14 @@ Hoe evolueert de gezondheidstoestand van de bomen in de Vlaamse bossen?
 
 ### Doelpopulatie
 
-De doelpopulatie is << AANVULLEN >>
-    
-- De steekproef bevat enkel punten volledig in bos
-- Heel jonge bestanden komen niet in aanmerking
-- Enkel gesampled in gebieden met oudere bomen
+De steekproef is niet volledig representatief voor de bossen in Vlaanderen:
+
+- Punten worden herlegt zodat ze volledig in een bos vallen
+- Er worden punten bijgenomen om minder vertegenwoordigde soorten meer in de steekproef te representeren, dus het betreft geen representatieve steekproef voor Vlaanderen.
+- Heel jonge bestanden komen niet in aanmerking en er wordt enkel gesampled in plots met voldoende oudere bomen
+
 - Het meetnet is geconcipieerd om een uitspraak op niveau Vlaanderen te doen
-    - Voor een analyse per boomsoort is dit nog niet uitgerekend
+    - Voor een analyse per boomsoort is dit nog niet uitgerekend.
     
 
 ## Fase 2: Ontwerp gegevensinzameling
@@ -138,7 +159,7 @@ De kostprijs is in 2022 gedetailleerd genoteerd
 
 ### Data-opslag
 
-- Er is nog geen data management plan voor deze data
+- Er is nog geen data management plan voor deze data voor zover ik weet (nog vragen aan Geert, er is dacht ik wel een plan om dit plan op te maken)
 - De data wordt bewaard in een door het team databeheer beheerde databank D0004_Bosvitaliteit
 - De data wordt ook in een datawarehouse intern ter  beschikking gesteld
 - Deze data is enkel intern beschikbaar
@@ -175,167 +196,5 @@ Dit is een lopend meetnet en is dus reeds geïmplementeerd
 
 ## Evolutie proefvlakken
 
-<!---
 
-## Steekproef
-
-eenheid is plot met meerdere boommetingen voor uitfilteren beoordelingsfout
-
-## Veldwerk
-
-Hoelang duurt alles, tijdsinvestering, hoelang bladerdek opmeten, hoelang alle andere metingen
-
-## Analyses
-
-Mann-Kenly Sen-slope: verder uitvlooien en manueel berekenen om power analyse te kunnen doen!
-Eventueel maueel, per boom een statistiek uitvlooien en die dan uitrekenen met als random effect plot en soort, alsook de analyse voor soort apart.
-
-# SWOT analyse huidig meetnet
-
-Onderstaande info is tot stand gekomen via een gesprek met Geert Sioen.
-
-## Sterktes
-
-- Internationaal gedragen meetnet 
-    - ICP-Forests is de internationale orgqnisqtie die de kapstok vormt voor het meetnet
-    - Monitoring begeleid door verschillende experntengroepen van het internationaal netwerk
-- Publicaties op internationale schaal die gebruik maakt van de data uit verschillende Europese partnerlanden
-    - <<aan te vullen: voorbeelden>>
-- Heel langlopend meetnet
-    - ICP-Forests in 1985 opgericht
-    - Kroonbeoordelingen vanaf 1986 gestroomlijnd over de verschillende landen
-    - Vlaanderen neemt deel sedert 1987
-- Vastgelegd protocol
-    - Hoofdzakelijk hetzelfde meetprotocol wordt gebruikt over de verschillende landen
-- Vastgelegde meetpuntenselectie
-    - Objectief geselecteerd via een systematisch raster
-
-## Zwaktes
-
-- Kan niet gebruikt worden als early warning system
-    - Nieuwe ziektes of infecties worden niet onmiddellijk opgemerkt
-- Enkel basisinformatie over de algemene gezondheidstoestand
-    - Meer uitgebreid meetnet voor fundamenteel onderzoek: Level-II  meetnet
-    - Deze detailplots komen niet zoveel voor (slechts 5 in Vlaanderen)
-- Het meetnet is niet representatief voor Vlaanderen
-    - selectieve uitbreiding voor onderbemonsterde soorten
-- Door met dezelfde proefvlakken te werken veroudert de gerepresenteerde populatie
-    - veroudering kan ook een invloed hebben op de vitaliteit
-
-## Opportuniteiten
-
-- Binnen de huidige budgettering niet veel extra mogelijk
-    - Meetnet kan misschien geschikt zijn voor een masterthesis
-- Voorlopig heel beschrijvend meetnet
-    - De trend zou statistisch gelinkt kunnen worden aan klimaatvariabelen
-        - Dit is enkele jaren geleden eens gedaan
-        - Periodiek herhalen
-        - Weinig extra kosten: aankoop klimaatgegevens + tijd voor statische analyse
-
-
-
-## Bedreigingen
-
-- Het huidige meetnet wordt door een heel beperkte kern uitgevoerd
-    - 3 op 4 kroonbeoordelingsexperten naderen hun pensioen
-    - training vereist om de beoordeling juist te kunnen uitvoeren
-
-- Wat zijn volgens jou de zwaktes van het meetnet?
-- Waarin zou het meetnet verbeterd kunnen worden?
-- Zou er meer uit het meetnet gehaald kunnen worden?
-- Zijn er problemen te verwachten in de toekomst voor het meetnet?
-
-## Extra interessante wensen
-
-Extra analyses hebben altijd een extra kostenplaatje, maar enkele mogelijkheden zouden kunnen zijn:
-
-- Bladanalyses binnen het meetnet
-    - bij ons nooit gedaan, terwijl dit wel in andere landen gebeurt
-- Regelmatig een begeleidend bodemonderzoek uitvoeren
-    - Nu is dit enkel eens in 2003-2004 gebeurd
-- Metingen kunnen uitgebreid worden
-    - leeftijdsbepalingen
-    - vegetatieopnames
-
-
-# Vraaganalyse meetnet
-
-## Input gevraagd aan Geert
-
-### Swot-analyse
-
-
-
-### Historiek
-
-Er zijn verschillende versies geweest van het meenet.
-
-- Hoe zijn de huidige proefvlakken geselecteerd (ik kan dat zelf nalezen, maar misschien gemakkelijker als je dat vertelt
-- Worden proefvlakken verschoven
-- Zijn de proefvlakken representatief voor alle bossen, voor bomen midden in bossen, voor oude bomen, ...?
-- In hoeverre is er nog een Europese verplichting?
-
-### Vroegere analyses
-
-- We hebben ooit eens een verklarend model gemaakt voor dit meetnet, is dit iets dat we periodiek herhalen?
-
-### Kosten
-
-De kern van het meetnet is het bladverlies, maar er worden ook heel veel andere zaken gemeten. Gebeurt daar genoeg mee, of zijn bepaalde metingen overbodig?
-
-Hoe zou je de kosten inschatten?
-
-- Hoeveel proefvlakken per dag?
-- Hoeveel mandagen
-- Transportkosten
-- Tijd op het proefvlak
-    - Hoelang duurt kroonbeoordeling?
-    - Hoelang duren de andere metingen?
-
-### Vergelijking met buurlanden
-
-- Zijn er gelijkaardige meetnetten?
-- Indien zo, hoe zijn deze vergeleken met het INBO meetnet
-
-## Wat willen we kunnen aantonen?
-
-- Wat willen we detecteren? Welk effect over welke periode?
-- Een bepaald percentage verschil over een periode van 12 jaar
-- jaar tot jaar variatie
-- inschatting algemeen over alle bomen heen
-- inschatting per soort
-- nog andere criteria?
-
-## Welk model gebruiken we voor de analyse
-
-- Gepaarde t-test (mixed effect model) voor de jaar-jaar variatie
-- Sen slope over rollende 12 jaar?
-- Toch een gewoon glm model ipv sen slope?
-
-## Huidig steekproefdesign
-
-- Hoeveel proefvlakken en hoe gekozen?
-- Wat indien er een boom verdwijnt?
-    - Hoe eventueel vervangen?
-- Wat indien een proefvlak verdwijnt?
-    - Hoe eventueel vervangen?
-
-# Powerberekeningen
-
-## Jaar tot jaar variatie
-
-Normale benadering door centrale limietstelling: het gemiddelde van een mixture van metingen volgt vaak een normale distributie ongeacht de oorspronkelijke distributie
-
-Rekening houden met paring van bomen genest in proefvlakken en boomsoort. Autocorrelatie is hier niet relevant omdat er maar 1 tijdstap is, en een mixed effect is dan per definitie ook de autocorrelatie
-
-Dit uitvoeren algemeen over alle bomen, splitsing loof-naald, per hoofdboomsoort
-
-- Inschatten variabiliteit tussen proefvlakken
-- Inschatten variabiliteit binnen proefvlakken
-- Inschatten variabiliteit tussen 2 jaren voor eenzelfde proefvlak
-- Inschatten variabilitieit tussen 2 jaren voor eenzelfde boom
-
-Power analyse
-
-# Voorstellen voor meetnetaanpassingen
 --->

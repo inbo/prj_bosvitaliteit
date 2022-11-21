@@ -1,0 +1,66 @@
+# SWOT Analyse
+
+Onderstaande info is tot stand gekomen via een gesprek met Geert Sioen.
+
+## Sterktes
+
+- Internationaal gedragen meetnet 
+    - ICP-Forests is de internationale orgqnisqtie die de kapstok vormt voor het meetnet
+    - Monitoring begeleid door verschillende experntengroepen van het internationaal netwerk
+- Publicaties op internationale schaal die gebruik maakt van de data uit verschillende Europese partnerlanden
+    - <<aan te vullen: voorbeelden>>
+- Heel langlopend meetnet
+    - ICP-Forests in 1985 opgericht
+    - Kroonbeoordelingen vanaf 1986 gestroomlijnd over de verschillende landen
+    - Vlaanderen neemt deel sedert 1987
+- Vastgelegd protocol
+    - Hoofdzakelijk hetzelfde meetprotocol wordt gebruikt over de verschillende landen
+- Vastgelegde meetpuntenselectie
+    - Objectief geselecteerd via een systematisch raster
+
+## Zwaktes
+
+- Kan niet gebruikt worden als early warning system
+    - Nieuwe ziektes of infecties worden niet onmiddellijk opgemerkt
+- Enkel basisinformatie over de algemene gezondheidstoestand
+    - Meer uitgebreid meetnet voor fundamenteel onderzoek: Level-II  meetnet
+    - Deze detailplots komen niet zoveel voor (slechts 5 in Vlaanderen)
+- Het meetnet is niet representatief voor Vlaanderen
+    - selectieve uitbreiding voor onderbemonsterde soorten
+- Door met dezelfde proefvlakken te werken veroudert de gerepresenteerde populatie
+    - veroudering kan ook een invloed hebben op de vitaliteit
+
+## Opportuniteiten
+
+- Binnen de huidige budgettering niet veel extra mogelijk
+    - Meetnet kan misschien geschikt zijn voor een masterthesis
+- Voorlopig heel beschrijvend meetnet
+    - De trend zou statistisch gelinkt kunnen worden aan klimaatvariabelen
+        - Dit is enkele jaren geleden eens gedaan
+        - Periodiek herhalen
+        - Weinig extra kosten: aankoop klimaatgegevens + tijd voor statische analyse
+
+
+
+## Bedreigingen
+
+- Het huidige meetnet wordt door een heel beperkte kern uitgevoerd
+    - 3 op 4 kroonbeoordelingsexperten naderen hun pensioen
+    - training vereist om de beoordeling juist te kunnen uitvoeren
+
+- Wat zijn volgens jou de zwaktes van het meetnet?
+- Waarin zou het meetnet verbeterd kunnen worden?
+- Zou er meer uit het meetnet gehaald kunnen worden?
+- Zijn er problemen te verwachten in de toekomst voor het meetnet?
+
+## Extra interessante wensen
+
+Extra analyses hebben altijd een extra kostenplaatje, maar enkele mogelijkheden zouden kunnen zijn:
+
+- Bladanalyses binnen het meetnet
+    - bij ons nooit gedaan, terwijl dit wel in andere landen gebeurt
+- Regelmatig een begeleidend bodemonderzoek uitvoeren
+    - Nu is dit enkel eens in 2003-2004 gebeurd
+- Metingen kunnen uitgebreid worden
+    - leeftijdsbepalingen
+    - vegetatieopnames

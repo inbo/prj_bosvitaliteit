@@ -14,7 +14,6 @@ author:
 style: INBO
 lang: nl
 description: ...
-
 # report specific options. See ?INBOmd::report() for full list and more details.
 shortauthor: 
 corresponding: 
@@ -43,24 +42,20 @@ cooperation:
   - Postal code city
   - https://www.website.com
 cooperation_logo:
-
 # pdf report specific options. See ?INBOmd::report() for full list and more details.
 embargo:
 print:
   copies: 0
   motivation:
   pages:
-
 # HTML report specific options. See ?INBOmd::gitbook() for full list and more details.
 github-repo:
-
 bibliography: references.bib
 link-citations: TRUE
 site: bookdown::bookdown_site
-
 output:
+  INBOmd::pdf_report: default
   INBOmd::gitbook: default
-  INBOmd::report: default
   INBOmd::ebook: default
 ---
 

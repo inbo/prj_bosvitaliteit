@@ -1,34 +1,79 @@
 ---
-# generic options. See ?INBOmd::report() for full list and more details.
-title: Revisie Level I bosvitaliteitsmeetnet
-author: 
-  - firstname: "Pieter"
-    name: "Verschelde"
-    email: "pieter.verschelde@inbo.be"
-    orcid: 0
-  - firstname: "Geert"
-    name: "Sioen"
-    email: "geert.sioen@inbo.be"
-    orcid: 0
+title: "Revisie Level I bosvitaliteitsmeetnet"
+author:
+- firstname: Pieter
+  name: Verschelde
+  email: pieter.verschelde@inbo.be
+  orcid: 0
+- firstname: Geert
+  name: Sioen
+  email: geert.sioen@inbo.be
+  orcid: 0
+corresponding:
+- firstname: Pieter
+  name: Verschelde
+  email: pieter.verschelde@inbo.be
+  orcid: 0
 style: INBO
-lang: nl
-
-# report specific options. See ?INBOmd::report() for full list and more details.
+output:
+  INBOmd::gitbook: default
+  INBOmd::ebook: default
+  INBOmd::pdf_report: default
 shortauthor: pieterverschelde
 reviewer:
-  - firstnaam: Firstname
-    name: Lastname
-    email: "firstname.lastname@inbo.be"
-    orcid: 0
+- firstnaam: Firstname
+  name: Lastname
+  email: firstname.lastname@inbo.be
+  orcid: 0
 year: 2022
 reportnr: 0
 doi: 0
 depotnr: 0
 cover_description: none
-output:
-  INBOmd::gitbook: default
-  INBOmd::report: default
-  INBOmd::ebook: default
+cover_photo: NULL
+embargo: NA
+lang: nl
 ---
 
+<!--
+bookdown::render_book("04 REVISIE MEETNET 2022")
+-->
+
+```{r setup, include = FALSE}
+library(knitr)
+opts_chunk$set(
+  echo = FALSE,
+  eval = TRUE,
+  cache = FALSE,
+  warning = TRUE,
+  error = FALSE,
+  message = TRUE
+)
+library(tidyverse)
+library(INBOtheme)
+if (interactive()) {
+  theme_set(theme_inbo(base_size = 10))
+} else {
+  switch(
+    opts_knit$get("rmarkdown.pandoc.to"),
+    html = {
+      opts_chunk$set(dev = "png", dpi = 72)
+      theme_set(theme_inbo(base_size = 12))
+    },
+    latex = {
+      opts_chunk$set(dev = "cairo_pdf", dpi = 300)
+      theme_set(theme_inbo(base_size = 9))
+      update_geom_defaults("point", list(size = 1.5))
+    },
+    epub3 = {
+      opts_chunk$set(dev = "png", dpi = 300)
+      theme_set(theme_inbo(base_size = 12))
+    }
+  )
+}
+```
+
+
 # Abstract
+
+Hier komt het abstract
