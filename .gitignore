@@ -39,5 +39,7 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
+#data
+data/
 # Output
 output/

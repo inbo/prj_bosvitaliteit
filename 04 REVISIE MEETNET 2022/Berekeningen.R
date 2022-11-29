@@ -2,10 +2,10 @@
 library(DBI)
 library(odbc)
 library(tidyverse)
+library(inbobosvitaliteit)
 
 ### >>> Inlezen data
 
-source("01 JAARLIJKS RAPPORT/scripts/functies/functies_db.R")
 conn <- bosvitaliteit_connect()
 dfSoortInfo <- read.csv2("01 JAARLIJKS RAPPORT/data/tree_indeling.csv", 
                          stringsAsFactors = FALSE)
@@ -14,6 +14,29 @@ dfTrees <- get_treedata(conn, jaar = 1970:2024,
                         tree_indeling = dfSoortInfo,
                         sql = tree_sql)
 names(dfTrees)
+
+hist(dfTrees$BladverliesNetto)
+qqnorm(dfTrees$BladverliesNetto)
+qqline(dfTrees$BladverliesNetto)
+hist(log(dfTrees$BladverliesNetto+2.5))
+car::powerTransform(dfTrees$BladverliesNetto)
+car::powerTransform(log(dfTrees$BladverliesNetto+2.5))
+qqnorm(log(dfTrees$BladverliesNetto+2.5))
+qqline(log(dfTrees$BladverliesNetto+2.5))
+
+hist(sqrt(dfTrees$BladverliesNetto))
+qqnorm(sqrt(dfTrees$BladverliesNetto))
+qqline(sqrt(dfTrees$BladverliesNetto))
+
+plot(density(dfTrees$BladverliesNetto))
+lines(density(dfTrees$BladverliesNetto[dfTrees$BladverliesNetto < 100]), col = "red")
+
+quantile(dfTrees$BladverliesNetto, probs = seq(0,1, by = 0.05))
+
+sd(dfTrees$BladverliesNetto)
+sd(dfTrees$BladverliesNetto[dfTrees$BladverliesNetto<100])
+mean(dfTrees$BladverliesNetto)
+mean(dfTrees$BladverliesNetto[dfTrees$BladverliesNetto<100])
 
 ### >>> Variabiliteiten
 
