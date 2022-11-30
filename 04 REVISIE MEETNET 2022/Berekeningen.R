@@ -6,13 +6,20 @@ library(inbobosvitaliteit)
 
 ### >>> Inlezen data
 
-conn <- bosvitaliteit_connect()
 dfSoortInfo <- read.csv2("01 JAARLIJKS RAPPORT/data/tree_indeling.csv", 
                          stringsAsFactors = FALSE)
-tree_sql <- readLines("01 JAARLIJKS RAPPORT/data/tree_info.SQL")
-dfTrees <- get_treedata(conn, jaar = 1970:2024,
-                        tree_indeling = dfSoortInfo,
-                        sql = tree_sql)
+
+con <- DBI::dbConnect(odbc::odbc(),
+                      Driver = "SQL Server",
+                      Server = "inbo-sql07-prd.inbo.be",
+                      port = 1433,
+                      Database = "D0004_00_Bosvitaliteit",
+                      Trusted_Connection = "True")
+
+tree_sql <- paste(readLines("01 JAARLIJKS RAPPORT/data/tree_info.SQL"), 
+                  collapse = "\n")
+dfTrees <- dbGetQuery(con, tree_sql)
+
 names(dfTrees)
 
 hist(dfTrees$BladverliesNetto)
@@ -118,6 +125,14 @@ cor(na.omit(df_comp_joined[c("NNV", "NNVP")], na.rm = TRUE))
 
 #!!!Autocorrelatie van opeenvolgende metingen van een boom: 0.73
 
+
+#variatie op de trend --> verschil tussen 2 opeenvolgende jaren?
+dfTrees %>% group_by(Jaar) %>% 
+  summarise(gemNNV = mean(as.numeric(BladverliesNetto)/100, na.rm = TRUE)) %>% 
+  pull(gemNNV) -> trends
+y2yv <- trends - lag(trends)
+plot(y2yv)
+sd(y2yv, na.rm = TRUE) #0.014
 
 #check of het goed lukt autocorrelatie te simuleren
 test <- MASS::mvrnorm(n=10000, mu = c(1,1), Sigma = rbind(c(1,0.73), c(0.73,1)))
