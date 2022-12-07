@@ -21,9 +21,13 @@ if (get_from_db) {
   dfTrees <- inbobosvitaliteit::get_treedata(con, jaar = 1987:2022, 
                                              tree_indeling = dfSoortInfo)
   print(dim(dfTrees))
+  dfSymptoms <- inbobosvitaliteit::get_symptomdata(con, jaar = 2022)
+  print(dfSymptoms)
   saveRDS(dfTrees, file = "dfTrees_trend.RDS")  
+  saveRDS(dfTrees, file = "dfSymptoms.RDS") 
 } else {
   dfTrees <- readRDS("dfTrees_trend.RDS")
+  dfSymptoms <- readRDS("dfSymptoms.RDS")
   print(dim(dfTrees))
 }
 
