@@ -26,9 +26,11 @@
 #grote zwakte: geen representatief beeld door keuze gewenste boomsoorten en geen gegevens om stratificatiecorrecties uit te voeren, suggestie terug te gaan naar een random proces + extra proefvlakken ter informatie maar niet voor de algemene trend, maar eventueel wel voor soortspecifieke trends.)
 #2 proefvlakken per dag, 120km per proefvlak, tijd voor rapportage?
 #Vraagstelling, Communicatieplan?
+
 #DMP in ontwerp, zenodo publicatie mogelijk
 #Vrij bruibaar en gebruikt door doctoraatstudenten
 #8 proefvlakken verplicht maar niet meer opgevolgd, de rest wel voor ICP forests statistieken rapport.
+
 
 ##structuur: 
 #beschrijving meetnet inclusief historiek
