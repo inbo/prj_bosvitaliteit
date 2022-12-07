@@ -1,9 +1,7 @@
 
-# Situering huidige situatie in relatie tot de ontwerpfases in een meetnet
+# Beschrijving meetnet
 
-## Beschrijving van het meetnet
-
-### Historiek
+## Historiek
 
 Het bosvitaliteitsmeetnet ook gekend als het Level-1 meetnet is een heel langlopend meetnet, vermoedelijk een van de oudste meetnetten op het INBO,  waarbij de eerste gegevens reeds van 1987 dateren. Het meetnet is tot stand gekomen via de expertenpanel groep ICP forests, met vertegenwoordigers uit heel Europa.
 
@@ -17,14 +15,7 @@ Omdat in 2018 er nog 2 proefvlakken wegvielen en de bomen ook steeds ouder werde
 Vanaf het jaar 2014 is ook de methode van het selecteren van bomen in een proefvlak gewijzigd. Voor dit doorgevoerd is, is er uitgebreid onderzoek gedaan door o.a. Paul Quataert <<REFERENTIE>> om de impact van deze wijziging te evalueren. In plaats vanuit het centrum van het proefvlak, 4 clusters (1 voor elke windrichting) telkens 6 bomen te selecteren, werd overgeschakeld naar proefvlakken met vaste steekproefcirkels waarin alle relevante bomen werden bekeken. Voorwaarden voor relevantie is dat de boom dominant moet zijn en minstens een bepaalde dikte moest hebben. Hierdoor waren er in 2014 een 60-tal bomen minder opgemeten.
 
 
-### Keuze van proefvlakken
-
-Zoals eerder gemeld zijn de proefvlakken gekozen op basis van een raster over heel Vlaanderen, startende van 16x16km naar 8x8km tot 4x4km. Indien een rasterpunt heel dicht in de buurt van een bos ligt wordt het proefvlak verschoven zodat het zich volledig binnen een bos bevindt. Dit was zowel bij de selectie in 1987 als in 1995 het geval.
-
-Hoewel in 1987 nog vanuit gegaan werd van een vast raster, is bij de selectie in 1995  hiervan afgeweken en is er een overmaat aan proefvlakken met interessante soorten die niet genoeg leken vertegenwoordigd geselecteerd.
-
-
-### Gebruik van de data voor afgeleide projecten
+## Gebruik van de data voor afgeleide projecten
 
 Op het INBO is er een analyse gebeurd op basis van deze dataset door Pieter Verschelde <<REFERENTIE>> waarbij getracht werd een verklarend statistisch model voor deze data te bouwen.
 
@@ -147,8 +138,7 @@ Dit is eerder een opinie dan feit, vooral gevoed door eens mee te gaan op het ve
 
 Volgens mij is het heel moeilijk om een correcte objectieve beoordeling van de kroon te krijgen in klassen van 5%, niettemin zal het normaal gezien ook nooit heel ver ervan afwijken. Op zich is dit geen probleem, en is eigen aan ieder meetnet, dus dit is enkel een mogelijk meetfout die in rekening moet gebracht worden bij de dimensionering van het meetnet. Hoe meer bomen per plot beoordeeld worden, hoe zekerder we kunnen zijn over hoe het met het plot gesteld is, zelfs is niet elke beoordeling volledig nauwkeurig.
 
-<< FIGUUR MAKEN DIE DIT ILLUSTREERT >>
-```{r invloedaantalbomen}
+```{r invloedaantalbomen, echo = FALSE}
 set.seed(732)
 avg <- 0.25
 plotdata <- expand.grid(sd = c(0.05,0.10,0.15),
@@ -171,7 +161,7 @@ ggplot(plotdata, aes(x = aantal_bomen, y = se, color = factor(sd))) +
 
 ### Keuze van plots
 
-Het meetnet kan niet gezien worden als een gebiedsdekkend of als volledig representatief voor Vlaanderen, ondanks dat de basis van het meetnet een 16x16km (later 8x8km) grid is, omdat er enkele keuzes gemaakt zijn die dit verhinderen.
+Het meetnet kan niet gezien worden als een gebiedsdekkend of als volledig representatief voor Vlaanderen, ondanks dat de basis van het meetnet een 16x16km opgelegd door ICP forests, wat door het toenmalige IBW naar een 8x8km grid verdicht is (later 8x8km) grid is, omdat er enkele keuzes gemaakt zijn die dit verhinderen.
 
 Steekproefpunten aan de rand van een bos werden in alle tijdsperiodes verlegd naar een plaats binnen het bos.
 
@@ -179,13 +169,14 @@ Met het grootste grid hebben we slechts 9 ICP-forests punten, daardoor dat in Vl
 
 In 1995 werd de steekproef uitgebreid naar een grid van 4x4km, maar hier werden steekproefpunten selectief toegevoegd op basis van criteria om minder gerepresenteerde boomsoorten extra mee te hebben. Dit ging vooral over de beuk.
 
-De nieuwe steekproefbasis is in de periode 1995-2017 72 plots, waarbij sedert 2012 1 proefvlak is vervallen.
+De nieuwe steekproefbasis is in de periode 1995-2017 72 plots, waarbij sedert 2012 1 proefvlak is vervallen door kapping.
 
-Vanaf 2018 verdwenen nog extra proefvlakken door kappingen, herbestemmingen, schade, gebrek aan bomen, ... wat geleid heeft tot de keuze om ieder jaar enkele extra proefvlakken mee te nemen in het meetnet, zodat dit er in 2022 uiteindelijk 78 werden. De basis voor deze uitbreidingen is nog altijd het 4x4km grid al wordt er wel wat meer van afgeweken en liggen nieuwe proefvlakken minstens 4 km verwijderd van een ander proefvlak.
+Vanaf het jaar 2014 is ook de interne implementatie verandert en werd op vraag van ICP forests gekozen voor een vaste oppervlakte per plot in plaats van de windrichtingen methode. Voor het bosvitaliteitsmeetnet is gekozen om als synergie met bosecologie te werken met steekproefcirkels met een straal van 18m, wat ook de oppervlakte is die gebruikt wordt als grootste cirkel in de bosinventarisaties.
+
+Vanaf 2018 verdwenen nog extra proefvlakken door kappingen, herbestemmingen, stormschade, gebrek aan bomen, ... wat geleid heeft tot de keuze om ieder jaar enkele extra proefvlakken mee te nemen in het meetnet, zodat dit er in 2022 uiteindelijk 78 werden. 
+De basis voor deze laatste uitbreidingen is het 4x4m grid dat ook voor de bosinventarisatie gebruikt wordt, maar met extra voorwaarden dat er genoeg bomen moeten zijn, dat het plot volledig in bos ligt en minstens op 4km van een andere proefvlak. Er is echter wel nog geen duidelijk protocol welk geschikt gridpunt wordt genomen, en hier lijkt een selectie gebaseerd op het `grts` ruimtelijk gebalanceerd grid van de bosinventarisatie.
 
 Doordat het merendeel van de steekproefpunten ouder en ouder wordt, wordt verwacht dat in de toekomst er nog meer plots gaan vervangen worden, en zal een duidelijke strategie moeten opgesteld worden over hoe hiermee omgegaan moet worden.
-
-
 
 
 #### Vergelijking met Europa
