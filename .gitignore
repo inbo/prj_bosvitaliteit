@@ -41,5 +41,6 @@ vignettes/*.pdf
 
 #data
 data/
+*.RDS
 # Output
 output/

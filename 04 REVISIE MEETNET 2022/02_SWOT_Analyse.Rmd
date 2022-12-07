@@ -45,9 +45,9 @@ In sommige landen gebeuren ook nog bladanalyses binnen de meetnetproefvlakken, o
 
 In Vlaanderen zijn redelijk veel andere metingen voorhanden, dus misschien kan de trend beter verklaard worden door een statistisch model, zonder veel extra kostprijs, dan puur uit te gaan van een constante trend zoals in een standaardmeetnet. 
 
-Vroeger (2003) zijn er eens bodemanalyses gebeurd in alle proefvlakken, maar dat is nooit meer herhaald, terwijl er intussen op het INBO heel veel bodemonderzoek gebeurt.
+Vroeger (2003) zijn er eens bodemanalyses gebeurd in alle proefvlakken, maar dat is nooit meer herhaald, terwijl er intussen op het INBO heel veel bodemonderzoek gebeurt. Op zich is er wel interesse in het MILKLIM team om de bosinventarisatieproefvlakken eens opnieuw te bezoeken voor bodemanalyses.
 
-Voorlopig worden gegevens niet meer in Fieldmap ingegeven (dateert van 2010) <<WAT ZOU HET VOORDEEL HIERVAN ZIJN>>
+Voorlopig worden gegevens niet meer in Fieldmap ingegeven (dateert van 2010) en dus staan de nieuwe plots hier nog niet in. Als alles ook in Fieldmap toegevoegd wordt waaronder ook de dendrometrische gegevens voor het hele proefvlak, biedt dat perspectieven naar links tussen vitaliteit en beheervormen, afstand tussen bomen, ... . Daarnaast is het ook gemakkelijk dat alle bomen via Fieldmap gemakkelijk teruggevonden kunnen worden.
 
 ## Bedreigingen
 
@@ -57,5 +57,5 @@ Om het meetnet in de toekomst te kunnen blijven opvolgen zal op korte termijn tr
 
 Het laatste jaar is alles van het meetnet van veldwerk tot data-invoer tot rapportage door 1 persoon gebeurd, wat niet voordelig is voor de kennis hieromtrent bij andere collega's.
 
-De monitoring is niet de duurste van het INBO maar er moet wel voldoende budget zijn
+De monitoring is niet de duurste van het INBO maar er moet wel voldoende budget zijn.
 

@@ -76,6 +76,4 @@ if (interactive()) {
 
 # Abstract
 
-# Inleiding
-
 Dit rapport probeert het bosvitaliteitsmeetnet in kaart te brengen, en onderzoekt of het meetnet goed gedimensioneerd is voor de vragen die het wil beantwoorden.
