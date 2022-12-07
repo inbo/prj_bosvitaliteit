@@ -13,6 +13,35 @@
 #keuze van correlatie tussen bomen binnen een plot
 #keuze van correlatie tussen plots (misschien niet nodig, want volgt uit bomen)
 
+
+#OPMERKINGEN
+# Eigenlijk is het een stijging van 12% die we willen detecteren
+# Het correcte model zou een random slope moeten gebruiken
+#de sd_slope moet berekend worden zonder outliers anders zal het model zelden betekenis hebben
+#4 paden
+# - minder metingen per boom (nadeel:veel informatieverlies voor weinig tijdswinst)
+# - minder bomen per proefvlak (nadeel: beoordeling is niet heel nauwkeurig, en het wordt gevraagd door het ICP forests protocol)
+# - minder proefvlakken (grootste potentieel, ook nadenken over vervangingsstrategie)
+# - minder regelmatig meten (nadeel; bladverlies is heel variabel, dus kans op foute conclusies, het gaat in tegen het ICP forests protocol, misschien suggestie enkele proefvlakken jaarlijks en andere minder regelmatig bezoeken?) 
+#grote zwakte: geen representatief beeld door keuze gewenste boomsoorten en geen gegevens om stratificatiecorrecties uit te voeren, suggestie terug te gaan naar een random proces + extra proefvlakken ter informatie maar niet voor de algemene trend, maar eventueel wel voor soortspecifieke trends.)
+#2 proefvlakken per dag, 120km per proefvlak, tijd voor rapportage?
+#Vraagstelling, Communicatieplan?
+
+##structuur: 
+#beschrijving meetnet inclusief historiek
+#Korte vergelijking met leidraad voor meetnetten (verschillende fases)
+##fase1: protocolgestuurd en interessegestuurd ipv vraaggestuurd, geen echte vraagstelling, aanbod heel langlopend meetnet met enkele beperkingen
+##fase2: gegevensinzameling plannen (tekortkomingen, opleiding?, goedkoop)
+##fase3: analysestrategie: niet duidelijk, sen-slope, lmer, mnaar welke vorm
+##fase3: poweranalyse:  historische revisie, maar nog niet echt uitgevoerd?
+##fase4: communicatiestrategie: jaarlijks rapport, ICP forest communicatie, persartikels
+##fase5: implementatie: reeds lopend meetnet
+#SWOT analyse
+#potentiele winsten in kosten en verbetersuggesties
+#powersimulaties
+#conclusies
+
+
 library(tidyverse)
 
 value_per_timestep <- function(value_t0, value_tn, tn, 

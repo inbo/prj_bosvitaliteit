@@ -6,21 +6,34 @@ library(inbobosvitaliteit)
 
 ### >>> Inlezen data
 
-dfSoortInfo <- read.csv2("01 JAARLIJKS RAPPORT/data/tree_indeling.csv", 
-                         stringsAsFactors = FALSE)
-
-con <- DBI::dbConnect(odbc::odbc(),
-                      Driver = "SQL Server",
-                      Server = "inbo-sql07-prd.inbo.be",
-                      port = 1433,
-                      Database = "D0004_00_Bosvitaliteit",
-                      Trusted_Connection = "True")
-
-tree_sql <- paste(readLines("01 JAARLIJKS RAPPORT/data/tree_info.SQL"), 
-                  collapse = "\n")
-dfTrees <- dbGetQuery(con, tree_sql)
+get_from_db <- FALSE
+if (get_from_db) {
+  dfSoortInfo <- inbobosvitaliteit::read_species_information()
+  
+  con <- DBI::dbConnect(odbc::odbc(),
+                        Driver = "SQL Server",
+                        Server = "inbo-sql07-prd.inbo.be",
+                        port = 1433,
+                        Database = "D0004_00_Bosvitaliteit",
+                        Trusted_Connection = "True")
+  
+  
+  dfTrees <- inbobosvitaliteit::get_treedata(con, jaar = 1987:2022, 
+                                             tree_indeling = dfSoortInfo)
+  print(dim(dfTrees))
+  saveRDS(dfTrees, file = "dfTrees_trend.RDS")  
+} else {
+  dfTrees <- readRDS("dfTrees_trend.RDS")
+  print(dim(dfTrees))
+}
 
 names(dfTrees)
+
+dfTrees %>% group_by(Jaar) %>% 
+  summarise(aantal_plots = length(unique(PlotNr)),
+            aantal_bomen = length(unique(paste(PlotNr, BoomNr, sep = ".")))) %>% 
+  view()
+
 
 hist(dfTrees$BladverliesNetto)
 qqnorm(dfTrees$BladverliesNetto)
