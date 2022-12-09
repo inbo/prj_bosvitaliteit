@@ -377,27 +377,94 @@ De monitoring is niet de duurste van het INBO maar er moet wel voldoende budget 
 
 Omdat er geen specifieke doelstelling is worden hier enkele verschillende analyses uitgewerkt. Standaard ga ik uit van een detectiewens van een 12% evolutie op 12 jaar tijd.
 
-Er zal eerst gekeken worden hoeveel kracht het meetnet heeft om van jaar op jaar een analyse te doen.
+### Modellen
 
-Daarna wordt gebruik gemaakt van een standaard lineair mixed effect model.
+Hiervoor kunnen verschillende modellen gebruikt worden
 
-Tenslotte wordt ook gekeken naar de Mann-Kendall Sen-slope, een niet-parametrische methode om een trend in te schatten.
+- De Mann-Kendall Tau test met Sen slope voor gemiddeld bladverlies
+- De Mann-Kendall Tau test met Sen Slope voor gemiddeld percentage beschadigd
+- Lineair mixed effect model voor gemiddeld bladverlies
+- Lineair mixed effect model voor gemiddeld percentage beschadigd.
+- Lineair mixed effect model voor gemiddeld bladverlies maar zonder ieder jaar te meten
+- Idem maar voor gemiddeld percentage beschadigd
 
-## Voorberekeningen: Inschatten van correlaties tussen observaties
+De huidige tijdsreeks is heel lang, veel langer dan de 12 jaar vooropgesteld per cyclus, dus zal vooral gekeken worden om altijd de laatste 12 jaar van het meetnet te gebruiken. Hier is echter wel een probleem omdat enkele jaren <<SPECIFIEK OPGEVEN>> het bladverlies plots heel veel hoger is, maar dat dit zich hersteld heeft binnen enkele jaren, dus binnen enkele jaren als dit de eerste jaren van de tijdreeks zijn, wordt best met enkele extra jaren ervoor ook nog gewerkt tijdens de analyse.
+
+### Power
+
+We gaan proberen de kracht (Power) van het meetnet te bepalen, voornamelijk door simulatie, om te zien hoe het meetnet gedimensioneerd is om een trend op te pikken over de soorten heen en per soort apart.
+
+De power is sterk afhankelijk van de modelformulatie en de ingestelde varianties, daarom proberen we die zo goed mogelijk in te schatten op basis van alle gegevens van het meetnet tot heden. Dit is echter geen gemakkelijke oefening omdat hier veel random effecten en autocorrelaties in rekening gebracht moeten worden.
+
+## Bepalen van de responsvariabele in het model
+
+### Normale benadering
+
+Om het werk te vereenvoudigen is er de hoop dat de verdeling van bladverlies niet te sterk afwijkt van de normale verdeling, wat het modelleren een heel stuk eenvoudiger maakt, en veel versnelt, zeker wanneer er veel data gesimuleerd moet worden.
+
+Er blijkt dat eens een boom begint veel beschadiging te vertonen, dat de toestand sterk verslechterd, en dat  hierdoor heel weinig observaties zijn met een bladverlies hoger dan 50% op de dode bomen na, die een bladverlies krijgen van 100% en die het jaar na sterfte verdwijnen uit de dataset.
+
+```{r verdelingbladverlies, echo = FALSE, fig.cap="Range van de observaties in de ruwe data", warning = FALSE}
+dfTrees <- readRDS("dfTrees_trend.RDS") %>% 
+  filter(!is.na(BladverliesNetto))
+
+ggplot(dfTrees, aes(x = BladverliesNetto)) + geom_bar(width = 4.3)
+
+```
 
 
-Normale benadering door centrale limietstelling: het gemiddelde van een mixture van metingen volgt vaak een normale distributie ongeacht de oorspronkelijke distributie
+```{r normaleverdeling, fig.cap="Vergelijking voorkomen bladverlies op basis van een eenvoudig model met een normale distributie met dezelfde parameters, om te zien of een normale benadering plausibel is", cache = TRUE, echo = FALSE, warning=FALSE}
 
-Rekening houden met paring van bomen genest in proefvlakken en boomsoort. Autocorrelatie is hier niet relevant omdat er maar 1 tijdstap is, en een mixed effect is dan per definitie ook de autocorrelatie
 
-Dit uitvoeren algemeen over alle bomen, splitsing loof-naald, per hoofdboomsoort
 
-- Inschatten variabiliteit tussen proefvlakken
-- Inschatten variabiliteit binnen proefvlakken
-- Inschatten variabiliteit tussen 2 jaren voor eenzelfde proefvlak
-- Inschatten variabilitieit tussen 2 jaren voor eenzelfde boom
+base_lme <- nlme::lme(BladverliesNetto ~ Jaar, 
+                       random = ~1|PlotNr/BoomNr, 
+                       correlation = nlme::corAR1(form = ~Jaar|PlotNr/BoomNr),
+                       data = dfTrees )
+resids <- data.frame(resn = resid(base_lme, type = "n")) %>% 
+  mutate(qqprob = seq(0,1, length = n()),
+         norm = qnorm(qqprob))
+                     
+ggplot(resids) + geom_density(aes(x = resn )) + 
+  geom_density(aes(x = norm), color = "red")
 
-Uitvoeren kostenefficiëntie
+```
+
+
+Op basis van bovenstaand plot \@ref(fig:verdelingbladverlies) blijkt dat de meeste bomen een bladverlies hebben onder de 50% en dat binnen het bereik 0-50% de verdeling er vrij normaal uit ziet. Om dit iets exacter te bekijken is er figuur \@ref(fig:normaleverdeling) waaruit blijkt dat het eenvoudige model (mixed effect model met fixed effect op Jaar en random effect PlotNr met daarin BoomNr genest) leidt tot een vrij goed een gaussiaanse distributie te benaderen.
+
+Dus ondanks enkele mogelijke artefacten aan de uiteinden 0% en > 50% zal een normale benadering bruikbaar zijn.
+
+
+## Inschatten van correlaties
+
+Op basis van de dataset kunnen we zo goed mogelijke instelwaarden vinden om later een poweranalyse uit te voeren die toch iets van betekenis heeft. De data heeft echter heel wat afhankelijkheden, waardoor dit vrij moeilijk goed te kwantificeren is. 
+
+- Er is afhankelijkheid van bomen in een proefvlak
+- Afhankelijkheid van metingen in de tijd op dezelfde boom
+
+Als we naast een algemeen beeld over de soorten heen ook per soort een inschatting willen kunnen maken moet dit voor iedere soort apart in kaart  gebracht worden.
+
+### Inschatten variabiliteit tussen proefvlakken
+
+### Inschatten variabiliteit tussen bomen in eenzelfde proefvlak
+
+### Inschatten variabiliteit tussen metingen van eenzelfde  boom in de tijd
+
+### Inschatten variabiliteit op de trend tussen verschillende proefvlakken
+
+### Inschatten variabiliteit op de trend van bomen binnen een proefvlak
+
+### Inschatten van overgebleven variabiliteit
+
+
+
+
+
+
+
+
+## Uitvoeren kostenefficiëntie
 
 ### Correlatie binnen een proefvlak
 

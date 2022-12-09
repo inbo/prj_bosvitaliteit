@@ -44,3 +44,7 @@ data/
 *.RDS
 # Output
 output/
+
+#build variables
+my-report.Rmd
+my-report_files/

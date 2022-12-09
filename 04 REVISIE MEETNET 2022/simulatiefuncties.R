@@ -1,51 +1,3 @@
-#Keuze van trend per jaar (relatief percentage)
-  #bv 12% reductie op 12 jaar: 0.25 * (1-0.12) (of moet je hier 11 nemen?)
-  #(1+x)^12 = 0.88
-  #1+x = 0.88^(1/12)
-  #x = 0.88^(1/12) - 1
-
-#keuze van aantal plots
-#keuze van aantal jaar
-#keuze van aantal bomen per plot
-#keuze range effectief bladverlies
-#keuze van betrouwbaarheids van telproces
-#keuze van correlatie van een boom naar volgend jaar toe
-#keuze van correlatie tussen bomen binnen een plot
-#keuze van correlatie tussen plots (misschien niet nodig, want volgt uit bomen)
-
-
-#OPMERKINGEN
-# Eigenlijk is het een stijging van 12% die we willen detecteren
-# Het correcte model zou een random slope moeten gebruiken
-#de sd_slope moet berekend worden zonder outliers anders zal het model zelden betekenis hebben
-#4 paden
-# - minder metingen per boom (nadeel:veel informatieverlies voor weinig tijdswinst)
-# - minder bomen per proefvlak (nadeel: beoordeling is niet heel nauwkeurig, en het wordt gevraagd door het ICP forests protocol)
-# - minder proefvlakken (grootste potentieel, ook nadenken over vervangingsstrategie)
-# - minder regelmatig meten (nadeel; bladverlies is heel variabel, dus kans op foute conclusies, het gaat in tegen het ICP forests protocol, misschien suggestie enkele proefvlakken jaarlijks en andere minder regelmatig bezoeken?) 
-#grote zwakte: geen representatief beeld door keuze gewenste boomsoorten en geen gegevens om stratificatiecorrecties uit te voeren, suggestie terug te gaan naar een random proces + extra proefvlakken ter informatie maar niet voor de algemene trend, maar eventueel wel voor soortspecifieke trends.)
-#2 proefvlakken per dag, 120km per proefvlak, tijd voor rapportage?
-#Vraagstelling, Communicatieplan?
-
-#DMP in ontwerp, zenodo publicatie mogelijk
-#Vrij bruibaar en gebruikt door doctoraatstudenten
-#8 proefvlakken verplicht maar niet meer opgevolgd, de rest wel voor ICP forests statistieken rapport.
-
-
-##structuur: 
-#beschrijving meetnet inclusief historiek
-#Korte vergelijking met leidraad voor meetnetten (verschillende fases)
-##fase1: protocolgestuurd en interessegestuurd ipv vraaggestuurd, geen echte vraagstelling, aanbod heel langlopend meetnet met enkele beperkingen
-##fase2: gegevensinzameling plannen (tekortkomingen, opleiding?, goedkoop)
-##fase3: analysestrategie: niet duidelijk, sen-slope, lmer, mnaar welke vorm
-##fase3: poweranalyse:  historische revisie, maar nog niet echt uitgevoerd?
-##fase4: communicatiestrategie: jaarlijks rapport, ICP forest communicatie, persartikels
-##fase5: implementatie: reeds lopend meetnet
-#SWOT analyse
-#potentiele winsten in kosten en verbetersuggesties
-#powersimulaties
-#conclusies
-
 
 library(tidyverse)
 
@@ -66,7 +18,7 @@ value_per_timestep <- function(value_t0, value_tn, tn,
 rbind(value_per_timestep(0.25, 0.22, 11),
       value_per_timestep(0.25, 0.22, 11, relative = FALSE))
 
-generate_autocor <- function(n, mu, rho, sd) {
+generate_ar1 <- function(n, mu, rho, sd) {
   n_var <- length(mu)
   Sigma <- matrix(nrow = n_var, ncol = n_var, data = 0)
   for (i in 1:n_var) {
@@ -83,108 +35,129 @@ generate_autocor <- function(n, mu, rho, sd) {
   colnames(rv) <- 0:(ncol(rv) - 1)
   rv
 }
-test <- generate_autocor(10000, rep(0,11), rho = 0.6, sd = 2)
-testdf <- as.data.frame(test) %>%
-  mutate(id = 1:n()) %>% 
-  pivot_longer(cols = -id) %>% 
-  mutate(time = as.numeric(substring(name, 2)))
-mod <- gls(data = testdf, value ~ 1, correlation = corAR1(form = ~time|id))
-summary(mod)
-
-#gemeten = (echte_waarde, sd_observer)
-#echte_waarde = (real_expected_value, sd_natuur)
-#modelschatting = (modelschatter, sd_model) --> sd_model en sd_natuur samenvooegen?
-#variantie_model = var_ruis + jaar_tot_jaar_var_op_trend + var_tussen_plots + var_boom_in_plot + var_metingen_over_tijd_per_boom (autocorrelatie)
 
 
-simulatie_bosvitaliteit <- function(n_plots=70, n_trees=20, 
+
+generate_cor_general <- function(n, mu, cor_per_lag, sd) {
+  if (length(mu) != length(cor_per_lag)) 
+    stop("mu and cor_per lag should be the same size, starting with lag 0")
+    n_var <- length(mu)
+  Sigma <- matrix(nrow = n_var, ncol = n_var, data = 0)
+  for (i in 1:n_var) {
+    for (j in i:n_var) {
+        tdiff <- abs(i-j)
+        Sigma[i,j] <- Sigma[j,i] <- cor_per_lag[tdiff + 1] * sd * sd
+    }
+  }
+  rv <- MASS::mvrnorm(n, mu =  mu, Sigma = Sigma)
+  colnames(rv) <- 0:(ncol(rv) - 1)
+  rv
+}
+
+################################################
+
+simulatie_bosvitaliteit <- function(n_plots=70, 
+                                    n_trees=20, 
                                     years = 12, #first year 0, last 12
                                     mu_pop_t0 = 0.25,
-                                    mu_relative_tn = 0.88, 
-                                    sd_trend = 0.01,
-                                    sd_between_plots = 0.1, 
-                                    sd_between_trees_nat = 0.05,
-                                    sd_between_trees_obs = 0.05,
-                                    sd_within_trees = 0.1, 
-                                    autocor = 0.75, 
-                                    sd_error = 0) {
-  
-  yearly_trend <- ((mu_relative_tn * mu_pop_t0)  - mu_pop_t0) / years
+                                    mu_relative_tn = 1.12, 
+                                    sd_trend_year = 0.001,
+                                    sd_trend_plot = 0.001,
+                                    sd_trend_tree = 0.001,
+                                    sd_between_plots = 0.001, 
+                                    sd_between_trees_nat = 0.001,
+                                    sd_between_trees_obs = 0.001,
+                                    sd_within_trees = 0.001, 
+                                    correlations = c(0.000^(0:(years))), 
+                                    sd_error = 0.001,
+                                    partitions = 20) {
   start_year <- 0
   end_year <- years
-  
-  trend_modifier <- 
-    data.frame(start = mu_pop_t0,
-               year = 0:years, 
-               base = yearly_trend * 0:years,
-               random = c(0, rnorm(years, 0, sd_trend))) %>% 
-    mutate (total_trend = base + random, 
-            val_pop = start + total_trend)
   
   #init data
   data <- expand.grid(tree = 1:n_trees, plot = 1:n_plots, 
                       year = start_year:end_year, 
                       val_pop_t0 = mu_pop_t0)
-  #population trend + observer effect
-  #het observer effect is logischerwijs hetgeen de autocorrelatie mindert
-  #omdat dit helemaal nergens mee linkt
-  #aangezien we toch verwachten dat de fout meer boomafhankelijk is dan puur
-  #onafhankelijk, zullen we dit observer effect om boomniveau toepassen
-  #en niet willekeurig over alle metingen heen
-  #dus hoe groter het observer effect hoe groter de interne autocorrelatie
-  #moet zijn om tot de geobserveerde autocorrelatie van ca. 0.75 te geraken
+  
+  #trend calculations
+  trend_pop <- ((mu_relative_tn * mu_pop_t0)  - mu_pop_t0) / years
+  
+  trend_plot <- data.frame(plot = 1:n_plots, 
+                           t_plt = rnorm(n_plots, 0, sd_trend_plot))
+  
+  trend_tree <- expand.grid(plot = 1:n_plots, tree = 1:n_trees) %>% 
+    mutate(t_tree = rnorm(n(), 0, sd_trend_tree))
+  
+  trend_year <- data.frame(year = start_year:end_year) %>% 
+    mutate(t_year = rnorm(n(), 0, sd_trend_year))
+  
+  trend <- data %>% 
+    inner_join(trend_plot, by = "plot") %>% 
+    inner_join(trend_tree, by = c("plot", "tree")) %>% 
+    inner_join(trend_year, by = "year") %>% 
+    mutate(t_pop = trend_pop, 
+           trend_contribution = t_plt + t_tree + t_year + t_pop) 
+  trendsum <- trend %>% group_by(tree, plot) %>% 
+    do({
+      year = .$year
+      evolution = c(0, cumsum(.$trend_contribution[-1]))
+      data.frame(year, evolution)
+      })
+  
   data <- data %>% 
-    inner_join(trend_modifier %>% select(year, val_pop), by = "year") %>% 
-    mutate(val_observer = rnorm(n(), 0, sd_error))
+    inner_join(trendsum, by = c("plot", "tree", "year")) %>% 
+    mutate(val_trend = mu_pop_t0 + evolution)
+  
+  #voeg errorterm toe
+  data <- data %>% 
+    mutate(c_error = rnorm(n(), 0, sd_error))
   
   #between plot variation
   between_plots <- 
     data.frame(plot = 1:n_plots, 
-               val_plot = rnorm(n_plots, mean = 0, sd = sd_between_plots))
+               c_plot = rnorm(n_plots, mean = 0, sd = sd_between_plots))
   
   #between trees in plot variation
   between_trees <- 
     expand.grid(plot = 1:n_plots, tree = 1:n_trees) %>% 
-    mutate(val_tree = rnorm(n(), mean = 0, sd = sd_between_trees_nat) + 
+    mutate(c_tree = rnorm(n(), mean = 0, sd = sd_between_trees_nat) + 
                       rnorm(n(), mean = 0, sd = sd_between_trees_obs))
 
   #within tree variation over time (autocorrelated)
   epsilon <- data %>% 
     filter(year == start_year) %>% 
-    select(-year, -val_pop_t0, -val_pop, -val_observer) %>% 
-    bind_cols(generate_autocor(n_plots * n_trees, 
-                               rep(0, length(start_year:end_year)),
-                               rho = autocor, 
+    select(tree, plot) %>% 
+    bind_cols(generate_cor_general(n = n_plots * n_trees, 
+                               mu = rep(0, length(start_year:end_year)),
+                               cor_per_lag = correlations, 
                                sd = sd_within_trees)) %>% 
     pivot_longer(cols = -c(tree, plot), 
                  names_to = "year", 
-                 values_to = "val_eps") %>% 
+                 values_to = "c_eps") %>% 
     mutate(year = as.numeric(year) + start_year)
   
-  data <- data %>% 
+  data_final <- data %>% 
     inner_join(between_plots, by = "plot") %>% 
     inner_join(between_trees, by = c("plot", "tree")) %>% 
     inner_join(epsilon, by = c("plot", "tree", "year")) %>% 
-    mutate(val_mod = val_pop + val_plot + val_tree, 
-           val_observed = val_mod + val_eps + val_observer,
+    mutate(val_mod = val_trend  + c_tree +  c_plot, 
+           val_observed = val_mod  + c_error + c_eps,
            val_observed = if_else(val_observed < 0, 0, val_observed),
            val_observed = if_else(val_observed > 1, 1, val_observed), 
-           val_categorised = round(val_observed * 20)/20)
+           val_categorised = round(val_observed * partitions)/ partitions)
   
-  data
+  data_final
 }
-test <- simulatie_bosvitaliteit(autocor = 0.80)
-
-mod <- lme(val_categorised ~ year, 
-           random = ~1|plot/tree, 
-           correlation = corAR1(form = ~1|plot/tree),
-           data = test); summary(mod)
 
 
+##################################################
 
 execute_simulation <- function(configset, 
                                row, 
-                               filter_years = NULL) {
+                               filter_years = NULL,
+                               correlations, 
+                               modeltype = c("intercept", "slope", "nocorr"),
+                               show_model = FALSE) {
   n_sims <- configset$n_sims[row]
   n_plots <- configset$n_plots[row]
   n_trees <- configset$n_trees[row]
@@ -192,12 +165,16 @@ execute_simulation <- function(configset,
   end_year <- configset$end_year[row]
   mu_pop_t0 <- configset$mu_pop_t0[row]
   mu_relative_tn <- configset$mu_relative_tn[row]
-  sd_trend <- configset$sd_trend[row]
+  sd_trend_tree <- configset$sd_trend_tree[row]
+  sd_trend_plot <- configset$sd_trend_plot[row]
+  sd_trend_year <- configset$sd_trend_year[row]
+  sd_between_plots <- configset$sd_between_plots[row]
   sd_between_trees_nat <- configset$sd_between_trees_nat[row]
   sd_between_trees_obs <- configset$sd_between_trees_obs[row]
   sd_within_trees <- configset$sd_within_trees[row]
-  autocor <- configset$autocor[row]
+  correlations <- correlations
   sd_error <- configset$sd_error[row]
+  partitions <- configset$partitions[row]
   
   if (!is.null(filter_years)) {
     years <- filter_years
@@ -208,7 +185,10 @@ execute_simulation <- function(configset,
                            tree = 1:n_trees, 
                            year = years)
   print(dim(base_data))
-  rv <- data.frame(sim = 1:n_sims, est = NA, end = NA, pval = NA, autocor = NA)
+  
+  rv <- data.frame(sim = 1:n_sims, itc = NA, itc_se = NA, year = NA, 
+                   year_se = NA, pval = NA, after_end = NA)
+
   for (i in 1:n_sims) {
     cat("Executing iteration", i, "of", n_sims, "\n")
     sim <- simulatie_bosvitaliteit(n_plots = n_plots, 
@@ -216,11 +196,16 @@ execute_simulation <- function(configset,
                                    years = end_year - start_year, 
                                    mu_pop_t0 = mu_pop_t0,
                                    mu_relative_tn = mu_relative_tn, 
-                                   sd_trend = sd_trend,
+                                   sd_trend_plot = sd_trend_plot,
+                                   sd_trend_tree = sd_trend_tree,
+                                   sd_trend_year = sd_trend_year,
+                                   sd_between_plots = sd_between_plots,
                                    sd_between_trees_nat = sd_between_trees_nat, 
                                    sd_between_trees_obs = sd_between_trees_obs,
                                    sd_within_trees = sd_within_trees, 
-                                   autocor = autocor)
+                                   correlations = correlations,
+                                   sd_error = sd_error, 
+                                   partitions = partitions)
     newname <- paste("sim", sprintf("%04d", i), sep = "_")
     print(newname)
     colnames(sim)[colnames(sim) == "val_categorised"] <- newname
@@ -234,48 +219,55 @@ execute_simulation <- function(configset,
       #base_data$year <- as.numeric(as.factor(base_data$year))
     }
     
-    model <- lme(data = base_data, 
-                 fixed = eval(parse(text = formula)),
-                 random = ~1|plot/tree, 
-                 correlation = corAR1(form = ~year|plot/tree)) 
+    e <- try({
+      if (modeltype[1] == "slope") {
+        model <- lme(data = base_data, 
+                   fixed = eval(parse(text = formula)),
+                   random = ~year|plot/tree, 
+                   correlation = corAR1(form = ~year|plot/tree))       
+    }
+      if (modeltype[1] == "intercept") {
+        model <- lme(data = base_data, 
+                   fixed = eval(parse(text = formula)),
+                   random = ~1|plot/tree, 
+                   correlation = corAR1(form = ~year|plot/tree)) 
+    }
+      if (modeltype[1] == "nocorr") {
+        model <- lme(data = base_data, 
+                   fixed = eval(parse(text = formula)),
+                   random = ~year|plot/tree) 
+    }
+      if (modeltype[1] == "simple"){
+        model <- lme(data = base_data, 
+                   fixed = eval(parse(text = formula)),
+                   random = ~1|plot/tree) 
+      }
+      if (show_model) print(summary(model))
+    })
+    if (inherits(e,  "try-error")) model <- NULL
+    
+    if (is.null(model)) {
+      rv[i, 'itc'] <- rv[i, "itc_se"] <- rv[i, "year"] <- 
+        rv[i, "year_se"] <- rv[i, "pval"] <- rv[i, "after_end"] <- NA
+      next
+    } 
+    
+
     fx <- summary(model)$tTable
     est <- fx[2,1]
     se <- fx[2,2]
     itc <- fx[1,1]
     pval <- fx[2,5]
     ac_est <- coef(model$modelStruct$corStruct)
-    ac_Phi <- (exp(ac_est) - 1) / (exp(ac_est) + 1)
-    rv[i, "est"] <- est
-    rv[i, "end"] <- (itc + 12 * est)/itc #12 en niet 11 want itc is t0, em data begint met t1
+    #ac_Phi <- (exp(ac_est) - 1) / (exp(ac_est) + 1)
+    rv[i, "itc"] <- itc
+    rv[i, "itc_se"] <- fx[1,2]
+    rv[i, "year"] <- est
+    rv[i, "year_se"] <- se
     rv[i, "pval"] <- pval
-    rv[i, "autocor"] <- ac_Phi
-    #print(summary(model))
-    
+    rv[i, "after_end"] <- itc + max(years) * est
   }
   return(rv)
 }
 
 
-simconfig <- expand.grid(n_sims = 3, 
-                         n_plots = 100, 
-                         n_trees = 20, 
-                         start_year = 0, 
-                         end_year = 12, 
-                         mu_pop_t0 = 0.25, 
-                         mu_relative_tn = 0.88, 
-                         sd_trend = 0.0,
-                         sd_between_trees_nat = 0.05, 
-                         sd_between_trees_obs = 0.05,
-                         sd_between_trees = 0.1, 
-                         sd_within_trees = 0.1, 
-                         autocor = 0.77,
-                         sd_error = 0.1)
-
-#corAR1 is misschien wat te streng, correlatie tussen jaren blijft vermoedelijk hoger
-result <- execute_simulation(simconfig, 1)
-result
-
-#probleem met autocorrelatie (telkens als 0 gegenereerd)
-result2 <- execute_simulation(simconfig, 1, 
-                              filter_years = c(0,3,6,9,12))
-result2

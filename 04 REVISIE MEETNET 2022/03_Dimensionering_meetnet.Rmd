@@ -33,7 +33,10 @@ Er blijkt dat eens een boom begint veel beschadiging te vertonen, dat de toestan
 
 ```{r verdelingbladverlies, echo = FALSE, fig.cap="Range van de observaties in de ruwe data", warning = FALSE}
 dfTrees <- readRDS("dfTrees_trend.RDS") %>% 
-  filter(!is.na(BladverliesNetto))
+  filter(!is.na(BladverliesNetto)) %>% 
+  mutate(JaarC = Jaar - 2011, 
+         times = JaarC + 1, 
+         group = paste(PlotNr, BoomNr, sep = "."))
 
 ggplot(dfTrees, aes(x = BladverliesNetto)) + geom_bar(width = 4.3)
 
@@ -44,10 +47,75 @@ ggplot(dfTrees, aes(x = BladverliesNetto)) + geom_bar(width = 4.3)
 
 
 
-base_lme <- nlme::lme(BladverliesNetto ~ Jaar, 
-                       random = ~1|PlotNr/BoomNr, 
-                       correlation = nlme::corAR1(form = ~Jaar|PlotNr/BoomNr),
-                       data = dfTrees )
+
+```
+
+
+```{r modeltest}
+
+base_lme <- lme(BladverliesNetto ~ JaarC, 
+                random = ~ 1 + JaarC|PlotNr/BoomNr, 
+                #correlation = corExp(form = ~Jaar|PlotNr/BoomNr, nugget = TRUE),
+                correlation = corExp(value = c(7, 0.14), nugget = TRUE, fixed = TRUE),
+                data = dfTrees %>% filter(JaarC >= 0), 
+                control = lmeControl(maxiter = 100, 
+                                     tolerance = 1e-4,
+                                     opt = "optim",
+                                     optimMethod = "L-BFGS-B"))
+
+base_lme2 <- lme(BladverliesNetto ~ JaarC, 
+                random = ~ 1 + JaarC|PlotNr/BoomNr, 
+                #correlation = corExp(form = ~JaarC|PlotNr/BoomNr, nugget = TRUE),
+                #correlation = corExp(value = c(7, 0.14), nugget = TRUE, fixed = TRUE),
+                data = dfTrees %>% filter(JaarC >= 0), 
+                control = lmeControl(maxiter = 100, 
+                                     tolerance = 1e-4,
+                                     opt = "optim",
+                                     optimMethod = "L-BFGS-B"))
+
+base_lme3 <- lme(BladverliesNetto ~ JaarC, 
+                random = ~ 1 |PlotNr/BoomNr, 
+                correlation = corExp(form = ~JaarC|PlotNr/BoomNr, nugget = TRUE),
+                #correlation = corExp(value = c(7, 0.14), nugget = TRUE, fixed = TRUE),
+                data = dfTrees %>% filter(JaarC >= 0), 
+                control = lmeControl(maxiter = 100, 
+                                     tolerance = 1e-4,
+                                     opt = "optim",
+                                     optimMethod = "L-BFGS-B"))
+
+cs1 <- corARMA(0.7, ~ JaarC | group, p = 1)
+
+base_lme4 <- lme(BladverliesNetto ~ JaarC, 
+                random = ~ JaarC |PlotNr/BoomNr, 
+                correlation = corARMA(c(0.9), 
+                                      form = ~ JaarC | PlotNr/BoomNr, 
+                                      p = 1, q = 0),
+                data = dfTrees %>% filter(JaarC >= 0), 
+                control = lmeControl(maxiter = 100, 
+                                     tolerance = 1e-4,
+                                     opt = "optim",
+                                     optimMethod = "L-BFGS-B"))
+
+testdata <- dfTrees %>% 
+  filter(JaarC >= 0) %>% 
+  select(JaarC, PlotNr, BoomNr, BladverliesNetto)
+testdata$residraw_noac <- resid(base_lme2)
+testdata$resid_noac <- resid(base_lme2, type = "n")
+
+testac <- gls(resid_noac ~ 1, data = testdata, 
+            correlation = corExp(form = ~ JaarC | PlotNr/BoomNr, nugget = TRUE))
+
+
+anova(base_lme, base_lme2, base_lme3, base_lme4)
+
+
+base_tmb <- glmmTMB(BladverliesNetto ~ JaarC  +
+                      (JaarC|PlotNr/BoomNr) + 
+                      exp(times  + 0 | group), 
+                    data = dfTrees %>% filter(JaarC >= 0))
+
+                
+                
 resids <- data.frame(resn = resid(base_lme, type = "n")) %>% 
   mutate(qqprob = seq(0,1, length = n()),
          norm = qnorm(qqprob))
@@ -55,8 +123,9 @@ resids <- data.frame(resn = resid(base_lme, type = "n")) %>%
 ggplot(resids) + geom_density(aes(x = resn )) + 
   geom_density(aes(x = norm), color = "red")
 
-```
+#summary(base_lme)
 
+```
 
 Op basis van bovenstaand plot \@ref(fig:verdelingbladverlies) blijkt dat de meeste bomen een bladverlies hebben onder de 50% en dat binnen het bereik 0-50% de verdeling er vrij normaal uit ziet. Om dit iets exacter te bekijken is er figuur \@ref(fig:normaleverdeling) waaruit blijkt dat het eenvoudige model (mixed effect model met fixed effect op Jaar en random effect PlotNr met daarin BoomNr genest) leidt tot een vrij goed een gaussiaanse distributie te benaderen.
 
@@ -74,13 +143,223 @@ Als we naast een algemeen beeld over de soorten heen ook per soort een inschatti
 
 ### Inschatten variabiliteit tussen proefvlakken
 
+```{r sdbetweenplots, echo = FALSE, eval = FALSE}
+sd_between_plots_model <- 6.43 #from base_lme
+
+df1 <- dfTrees %>% 
+  group_by(PlotNr, Jaar) %>% 
+    summarise(avg = mean(BladverliesNetto))
+sd_between_plots_data <- summary(lm(data = df1, avg ~ factor(Jaar)))$sigma #6.71
+```
+
+
+
 ### Inschatten variabiliteit tussen bomen in eenzelfde proefvlak
+
+```{r sdbetweentrees, echo = FALSE, eval = FALSE}
+sd_between_trees_model <- 7.79
+
+df2 <- dfTrees %>% 
+  group_by(PlotNr, BoomNr, Jaar) %>% 
+    summarise(avg = mean(BladverliesNetto))
+sd_between_trees_data <- summary(lmer(data = df2, avg ~ Jaar) + factor(PlotNr)))$sigma #11.18
+```
+
 
 ### Inschatten variabiliteit tussen metingen van eenzelfde  boom in de tijd
 
+
+
+```{r sdbetweentrees, echo = FALSE, eval = FALSE}
+#Houdt geen rekening met een interne trend of autocorrelatie.
+sd_within_trees_model <- 7.79
+
+df2 <- dfTrees %>% 
+  group_by(PlotNr, BoomNr, Jaar) %>% 
+  summarise(avg = mean(BladverliesNetto), .groups = "drop") %>% 
+  mutate(avg0 = avg, 
+         J0 = Jaar, J1 = Jaar - 1, J2 = Jaar - 2, J3 = Jaar - 3,
+         J4 = Jaar - 4, J5 = Jaar - 5, J6 = Jaar - 6, J7 = Jaar - 7, 
+         J8 = Jaar - 8, J9 = Jaar - 9, J10 = Jaar - 10,
+         J11 = Jaar -11, J12 = Jaar - 12)
+
+df2m <- df2 %>% 
+  inner_join(df2 %>% select(J1, avg1 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J1", "PlotNr", "BoomNr")) %>% 
+  inner_join(df2 %>% select(J2, avg2 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J2", "PlotNr", "BoomNr")) %>% 
+    inner_join(df2 %>% select(J3, avg3 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J3", "PlotNr", "BoomNr")) %>% 
+    inner_join(df2 %>% select(J4, avg4 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J4", "PlotNr", "BoomNr")) %>% 
+    inner_join(df2 %>% select(J5, avg5 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J5", "PlotNr", "BoomNr")) %>% 
+    inner_join(df2 %>% select(J6, avg6 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J6", "PlotNr", "BoomNr")) %>% 
+    inner_join(df2 %>% select(J7, avg7 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J7", "PlotNr", "BoomNr")) %>% 
+    inner_join(df2 %>% select(J8, avg8 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J8", "PlotNr", "BoomNr")) %>% 
+    inner_join(df2 %>% select(J9, avg9 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J9", "PlotNr", "BoomNr")) %>% 
+    inner_join(df2 %>% select(J10, avg10 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J10", "PlotNr", "BoomNr")) %>% 
+    inner_join(df2 %>% select(J11, avg11 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J11", "PlotNr", "BoomNr")) %>% 
+    inner_join(df2 %>% select(J12, avg12 = avg, PlotNr, BoomNr),
+             by = c("J0" = "J12", "PlotNr", "BoomNr"))
+
+y2ydev <- c(sd(df2m$avg0 - df2m$avg1), 
+            sd(df2m$avg1 - df2m$avg2), 
+            sd(df2m$avg2 - df2m$avg3),
+            sd(df2m$avg3 - df2m$avg4), 
+            sd(df2m$avg4 - df2m$avg5),
+            sd(df2m$avg5 - df2m$avg6), 
+            sd(df2m$avg6 - df2m$avg7),
+            sd(df2m$avg7 - df2m$avg8),
+            sd(df2m$avg8 - df2m$avg9), 
+            sd(df2m$avg9 - df2m$avg10),
+            sd(df2m$avg10 - df2m$avg11), 
+            sd(df2m$avg11 - df2m$avg12))
+mean(y2ydev)
+sd(y2ydev)
+            
+cormat <- cor(df2m[c("avg0", "avg1", "avg2", "avg3", "avg4", "avg5", "avg6",
+                     "avg7", "avg8", "avg9", "avg10", "avg11", "avg12")])
+
+get_cor_per_lag <- function(cormat, lag = 1, return_vec = TRUE) {
+  rv <- NULL
+  for (l in lag) {
+    cat("lag is:", l, "\n")
+    xpos <- 1:(nrow(cormat) - l)
+    ypos <- xpos + l
+    print(xpos)
+    print(ypos)
+    for(i in xpos) {
+      rv <-  bind_rows(rv,  data.frame(lag = l, cor = cormat[xpos[i], ypos[i]]))     
+    }    
+  }
+  rv
+}
+
+lags <- 1:12 #best fit met 1:12 en corstruct_exp
+corrs <- get_cor_per_lag(cormat, lag = lags)
+corrs2 <- corrs %>% group_by(lag) %>% summarize(cor = mean(cor))
+
+corrs2 #DIT IS DE STRUCTUUR IN DE DATA
+
+corstruct_exp <- nls(formula = cor ~ (1-n) * exp(-lag/d), 
+                     data = corrs, 
+                     start = list(n = 0.2, d = 7))
+corstruct_exp2 <- nls(formula = cor ~ (1-n) * exp(-lag/d), 
+                     data = corrs2, 
+                     start = list(n = 0.2, d = 7))
+corstruct_exp 
+#nugget = 0.31, d = 14.08 (1:12) en 0.1458, 8.54 (0:12) en 0.01 en 6.31 (0:6)
+corstruct_exp2 
+#nugget = 0.33, d = 15.5 en 0.20, 10.87 (0:12) en 0.11 en 6.84 (0:6)
+preds <- data.frame(lag = lags, 
+                    fit1 = predict(corstruct_exp, 
+                                   newdata = data.frame(lag = lags)),
+                    fit2 = predict(corstruct_exp2, 
+                                   newdata = data.frame(lag = lags)))
+assump <- data.frame(lag = lags) %>% 
+  mutate(val = (1 - 0.25) * exp(-lag / 8)) 
+
+ggplot(corrs, aes(x = lag, y = cor)) + geom_point() + 
+  geom_line(data = preds, aes(y = fit1) ) + 
+    geom_line(data = preds, aes(y = fit2), color = "green" ) + 
+  geom_line(data = assump, aes(y = val), color = "red")
+
+
+sd_within_trees_model <- sd(df2m$avg.x - df2m$avg.y)
+  
+sd_within_trees_model <- sd(df2m$avg.x - df2m$avg.y) # 8.66
+cor_within_trees_model <- cor(df2m$avg.x, df2m$avg.y) # 0.73
+```
+
+### Inschatten variabiliteit op de trend van alle gegevens (rollend gemiddelde)
+
+
+Starten van het jaar 1996
+
+```{r trendvar}
+chk <- dfTrees %>% group_by(Jaar) %>% summarise(avg = mean(BladverliesNetto))
+ggplot(chk, aes(x = Jaar, y = avg)) + geom_point() + geom_vline(xintercept = 1995)
+
+#onderstaande doet niet echt wat bedoeld is, en is meer een afwijking op de trend voor een blok van 12 jaar
+trend <- NULL
+for (i in 1996: 2010) {
+  tmp <- dfTrees %>% filter(Jaar %in% i:(i+12)) %>% 
+    group_by(PlotNr, Jaar) %>% 
+    summarize(nnv = mean(BladverliesNetto)/100, .groups = "drop")
+  model <- lme(nnv ~ Jaar, random = ~1|PlotNr, data = tmp)
+  trend[i - 1996 + 1] <- summary(model)$tTable[2,1]
+}
+hist(trend)
+sd(trend)
+
+#beter: variabiliteit zoeken tussen alle 2 opeenvolgende waarden, want zo is het gesimuleerd
+  tmp <- dfTrees %>% 
+    group_by(Jaar, PlotNr) %>% 
+    summarize(nnv = mean(BladverliesNetto)/100, .groups = "drop_last") %>% 
+    summarize(nnv2 = mean(nnv), .groups = "drop")  %>% 
+    mutate(Jaar1 = Jaar - 1)
+  tmp <- tmp %>% 
+    inner_join(tmp %>% select(Jaar1, nnv_last = nnv2), 
+                            by = c("Jaar" = "Jaar1")) %>% 
+    mutate(nnvdiff = nnv2 - nnv_last)
+  
+  sd(tmp$nnvdiff) / sqrt(nrow(tmp))
+    
+    
+
+
+```
+
 ### Inschatten variabiliteit op de trend tussen verschillende proefvlakken
 
+```{r plottrend}
+#gewoon de laatste 13 jaar bekijken om een 12 jaar cyclus (1e tot 13e meting)
+#te benaderen
+tmp2 <- dfTrees %>% filter(Jaar > 2009) 
+plottrend <- NULL
+for (plot in unique(tmp2$PlotNr)) {
+  tmpplot <- tmp2 %>% filter(PlotNr == plot)
+  print(dim(tmpplot))
+  e <- try(mod2 <- lme(BladverliesNetto ~ Jaar, random = ~1|BoomNr, data = tmpplot))
+  if (inherits(e, "try-error")) 
+    plottrend[plot] <- NA 
+  else
+    plottrend[plot] <- summary(mod2)$tTable[2,1]
+}
+
+mean(plottrend, na.rm = TRUE)/100
+sd(plottrend, na.rm = TRUE)/100 #0.02
+
+```
+
 ### Inschatten variabiliteit op de trend van bomen binnen een proefvlak
+
+```{r}
+
+tmp3 <- dfTrees %>% filter(Jaar > 2009) 
+grptrend <- NULL
+for (grp in unique(tmp3$group)) {
+  tmpplot <- tmp3 %>% filter(group == grp)
+  e <- try(mod3 <- lm(BladverliesNetto ~ Jaar, data = tmpplot))
+  if (inherits(e, "try-error")) 
+    grptrend[grp] <- NA 
+  else
+    grptrend[grp] <-coef(mod3)[2]
+}
+
+mean(grptrend, na.rm = TRUE)/100
+sd(grptrend, na.rm = TRUE)/100 #0.07
+
+
+```
+
 
 ### Inschatten van overgebleven variabiliteit
 
