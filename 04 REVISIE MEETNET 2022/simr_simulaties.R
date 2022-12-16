@@ -1,15 +1,17 @@
 
 ### Get vereenvoudigde schattingen dfTrees (op plotniveau ipv boomniveau)
 
+setwd("F:/INBO/BOSVITALITEIT/")
 library(tidyverse)
-library(inbobosvitaliteit)
+#library(inbobosvitaliteit)
 library(lme4)
 library(simr)
+source("simr_functions.R")
 
 ### INLEZEN EN KLAARZETTEN DATA
 
 #Lees testdata in
-df_trees <- readRDS("04 REVISIE MEETNET 2022/dfTrees_trend.RDS") %>% 
+df_trees <- readRDS("dfTrees_trend.RDS") %>% 
   mutate(JaarC = Jaar - 2000, 
          nnv = BladverliesNetto / 100,
          prbo = paste(PlotNr, BoomNr, sep = "."))
@@ -25,7 +27,8 @@ df_plots <- df_trees %>%
          JaarC = Jaar - 2000) %>% 
   na.omit()
 
-ggplot(df_plots, aes(x = Jaar, y = nnv, group = PlotNr)) + geom_line()
+ggplot(df_plots, aes(x = Jaar, y = nnv, group = PlotNr)) + 
+  geom_line() + geom_hline(yintercept = mean(df_plots$nnv), color = "green", size = 3)
 
 mean(df_plots$nnv)
 
@@ -43,7 +46,7 @@ sd_between_plots <-
   summarise(sd_plot = sd(nnv)) %>% 
   pull(sd_plot) 
 sd_between_plots
-  
+
 quantile(sd_between_plots, prob = c(0,0.10,0.25,0.50,0.75,0.90,1))
 mean(sd_between_plots)
 sd(sd_between_plots)
@@ -98,7 +101,7 @@ VarCorr(lmermodel)
 #sd_tree: 0.10053 ~ 0.10 (random intercept op prbo)
 #sd_resid: 0.0787 ~ 0.08 (residual effect in model)
 
-modellen <- sinr_params <-  NULL
+modellen <- simr_params <-  NULL
 for (startjaar in 1995:2010) {
   jaren <- startjaar:(startjaar + 12)
   center <- median(jaren)
@@ -164,8 +167,45 @@ quantile(sd_resid_all);mean(sd_resid_all);sd(sd_resid_all);hist(sd_resid_all)
 
 
 #scenarios beperken tot essentie
-scenarios <- readr::read_csv2("04 REVISIE MEETNET 2022/scenarios_01_definition.csv")
+scenarios <- readr::read_csv2("scenarios_01_definition.csv")
 
-tmp <- bulk_simulate(nsim = 3, scenarios = scenarios, slice = 1:5)
+run_power = FALSE
+if (run_power) {
+  tmp <- bulk_simulate(nsim = 200, scenarios = scenarios, slice = 1:18, outpath = "output")
+  
+}
 
+files <- list.files("output",  pattern = "power", full.names = TRUE)
+powers <- pwrlist <- NULL
+for (file in files) {
+  start <- regexpr("\\_NR\\_", file) + 4
+  end <- regexpr("\\.RDS", file) - 1
+  NR <- as.numeric(substring(file, start, end))
+  pwrdata <- readRDS(file)
+  pwr <- 100 * mean(pwrdata$pval <= 0.05)
+  powers <- bind_rows(powers, 
+                      cbind(NR = NR, 
+                            power = binom::binom.confint(x = sum(pwrdata$pval < pwrdata$alpha), 
+                                                         n = pwrdata$n, 
+                                                         methods = "exact")))
+  pwrlist[[NR]] <- pwrdata
+}
+scenario_power <- scenarios %>% 
+  mutate(NR = as.numeric(NR)) %>%  
+  left_join(powers, by = "NR")
+
+scenario_power
+
+#standard varying plots and sd_tree
+ggplot(data = scenario_power %>% filter(NR %in% 1:12), 
+       mapping = aes(x = plots, y=power.mean, color = factor(round(sd_tree,3)), 
+                     ymin = power.lower, ymax = power.upper)) +
+  geom_point() + geom_line() + geom_errorbar() + 
+  labs(x = "aantal plots", y = "power", color = " stdev tussen bomen" )
+
+#varying other variables, keeping plots fixed at 75
+ggplot(data = scenario_power %>% filter(NR %in% c(1,2,13:50)), 
+       mapping = aes(x = factor(NR), y=power.mean, color = paste(NR,Description, sep = ":"), 
+                     ymin = power.lower, ymax = power.upper)) +
+  geom_point() + geom_errorbar()
 

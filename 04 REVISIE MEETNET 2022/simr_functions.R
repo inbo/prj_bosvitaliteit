@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-bulk_simulate <- function(nsim, scenarios, slice = NULL) {
+bulk_simulate <- function(nsim, scenarios, slice = NULL, outpath = "output") {
   library(simr)
   if (!is.null(slice)) {
     subset <- scenarios %>% slice(slice)    
@@ -20,8 +20,8 @@ bulk_simulate <- function(nsim, scenarios, slice = NULL) {
   reslist <- NULL
   for (i in 1:nrow(subset)) {
     NR <- subset$NR[i]
-    save_name = paste0("power_scenarios_01_NR_", i, ".RDS")
-    outfile <- file.path("04 REVISIE MEETNET 2022", "output", save_name)
+    save_name = paste0("power_scenarios_01_NR_", NR, ".RDS")
+    outfile <- file.path(outpath, save_name)
     e <- try({
       res <- 
         power_simulate_lmer(years = subset$years[i],
@@ -33,9 +33,11 @@ bulk_simulate <- function(nsim, scenarios, slice = NULL) {
                             sd_intercept = subset$sd_intercept[i],
                             corr_itc_trend = subset$corr_itc_trend[i],
                             sd_tree = subset$sd_tree[i],
-                            sd_resid = subset$sd_resid[i])
+                            sd_resid = subset$sd_resid[i],
+                            nsim = nsim)
     })
     if (inherits(e, "try-error")) res <- "Niet gelukt"
+    cat("saving: ", outfile, "\n")
     saveRDS(res, file = outfile)
     reslist[[i]] <- res
   }

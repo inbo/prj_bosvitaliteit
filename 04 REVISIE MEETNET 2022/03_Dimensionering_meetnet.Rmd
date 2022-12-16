@@ -23,46 +23,130 @@ We gaan proberen de kracht (Power) van het meetnet te bepalen, voornamelijk door
 
 De power is sterk afhankelijk van de modelformulatie en de ingestelde varianties, daarom proberen we die zo goed mogelijk in te schatten op basis van alle gegevens van het meetnet tot heden. Dit is echter geen gemakkelijke oefening omdat hier veel random effecten en autocorrelaties in rekening gebracht moeten worden.
 
+Voor de poweranalyse gaan we ons beperken tot de meest krachtige analysemethode die ter beschikking is voor deze data, namelijk een model dat het jaarlijks bladverlies opvolgt in de tijd. 
+Dit zal bekeken worden voor een periode van 12 jaar (dit zijn 13 metingen, aangezien er ieder jaar een meting gebeurt en om een periode van 12 jaar tussen de eerste en laatste meting te hebben, kom je op 13 metingen, van het jaar 0 tot het jaar 12
+In eerste instantie wordt gekeken naar de hele dataset samen over alle bomen heen, daarna wordt dit ook eens bekeken voor de belangrijkste boomsoorten. Maar de vuistregel hierin is dat je een vergelijkbare datasetgrootte nodig hebt voor 1 soort als voor alle soorten samen, als je voor iedere soort dezelfde trend wil detecteren als over alle soorten heen. 
+Per soort zal er vermoedelijk gekozen worden om slechts een grotere effectgrootte te detecteren dan het volledige meetnet. Verder zal de variatie tussen bomen van dezelfde soort op een proefvlak vermoedelijk ook iets kleiner zijn dan over de verschillende soorten heen in een proefvlak.
+
+Alternatieve mogelijkheden zijn het opvolgen van het aandeel beschadigde bomen per proefvlak of een niet-parametrische methode via de Mann-Kendall Tau test met sen slope.
+
 ## Bepalen van de responsvariabele in het model
 
 ### Normale benadering
+
+De data die we gaan gebruiken als basis voor conclusies is de volledige data van het bosvitaliteitsmeetnet vanaf het jaar 1995. In de jaren van 1987 tot 1994 waren er immers veel minder proefvlakken, en vanaf 1995 gaat dit nog altijd over een reeks van 28 jaar.
 
 Om het werk te vereenvoudigen is er de hoop dat de verdeling van bladverlies niet te sterk afwijkt van de normale verdeling, wat het modelleren een heel stuk eenvoudiger maakt, en veel versnelt, zeker wanneer er veel data gesimuleerd moet worden.
 
 Er blijkt dat eens een boom begint veel beschadiging te vertonen, dat de toestand sterk verslechterd, en dat  hierdoor heel weinig observaties zijn met een bladverlies hoger dan 50% op de dode bomen na, die een bladverlies krijgen van 100% en die het jaar na sterfte verdwijnen uit de dataset.
 
 ```{r verdelingbladverlies, echo = FALSE, fig.cap="Range van de observaties in de ruwe data", warning = FALSE}
-dfTrees <- readRDS("dfTrees_trend.RDS") %>% 
-  filter(!is.na(BladverliesNetto)) %>% 
-  mutate(JaarC = Jaar - 2011, 
-         times = JaarC + 1, 
-         group = paste(PlotNr, BoomNr, sep = "."))
-
-ggplot(dfTrees, aes(x = BladverliesNetto)) + geom_bar(width = 4.3)
-
-```
+df_trees <- readRDS("dfTrees_trend.RDS") %>% 
+  filter(!is.na(BladverliesNetto),
+         Jaar >= 1995) %>% 
+  mutate(JaarC = Jaar - 2000, 
+         nnv = BladverliesNetto / 100,
+         prbo = paste(PlotNr, BoomNr, sep = "."))
 
 
-```{r normaleverdeling, fig.cap="Vergelijking voorkomen bladverlies op basis van een eenvoudig model met een normale distributie met dezelfde parameters, om te zien of een normale benadering plausibel is", cache = TRUE, echo = FALSE, warning=FALSE}
-
-
-
+ggplot(df_trees, aes(x = nnv)) + geom_histogram(binwidth = 0.05) + 
+  xlab("Bladverlies") + ylab("Aantal")
 
 ```
 
 
-```{r modeltest}
+Als naar de evolutie van het bladverlies over de jaren wordt gekeken in de ruwe dataset, dan is duidelijk dat er geen mooie lineaire trend is. Daarentegen is er weinig verschil als de data per plot of per boom geaggregeerd wordt, behalve in de latere jaren, maar op 2 jaar na is dit verschil beperkt tot minder dan een halve procent, dus vermoedelijk zal het aantal bomen en de variatie tussen de bomen binnen een plot niet veel impact hebben op de schattingen van het model, natuurlijk wordt er wel impact verwacht op de betrouwbaarheid van de schattingen die hoger is wanneer meer bomen gemeten worden.
 
-base_lme <- lme(BladverliesNetto ~ JaarC, 
+```{r trendperjaar, fig.cap= "trend per jaar (zwart geaggregeerd per plot, groen gewoon naïef over alle bomen heen zonder rekening te houden met plot)}
+  tr_plot <- df_plots %>% group_by(Jaar) %>% 
+    summarise(mean_nnv = mean(nnv), .groups = "drop")
+  tr_tree <- df_trees %>% group_by(Jaar) %>% 
+    summarise(mean_nnv = mean(nnv), .groups = "drop")
+  ggplot(data = tr_plot, aes(x = Jaar, y = mean_nnv)) + 
+    geom_point() + geom_line() + 
+    geom_point(data = tr_tree, color = "green4") + 
+    geom_line(data = tr_tree, color = "green4") +
+    ylab("Gemiddeld naaldverlies")
+```
+
+
+Daarnaast is er veel verschil is tussen de plots.
+
+```{r evolutieperplot, fig.cap = "Evolutie bladverlies geaggregeerd per plot. Groene lijn is gemiddeld bladverlies over de dataset"}
+df_plots <- df_trees %>% 
+  group_by(PlotNr, Jaar) %>% 
+  summarize(n_trees = n(), 
+            nnv =  mean(BladverliesNetto)/100, 
+            .groups = "drop") %>% 
+  mutate(PlotNr = as.factor(PlotNr),
+         JaarC = Jaar - 2000) %>% 
+  na.omit()
+
+ggplot(df_plots, aes(x = Jaar, y = nnv, color = PlotNr)) + 
+  geom_line() + 
+  geom_hline(yintercept = mean(df_plots$nnv), color = "darkgreen", size = 1) +
+  theme(legend.position = "none")
+
+```
+
+
+Omdat we in deze studie vooral geïnteresseerd zijn in trends over een periode van 12 jaar, zullen we voor de trendanalyses de modellen opsplitsen in rollende 12 jaar, dus er wordt een model gefit van 1995 tem 2007, een volgend model van 1996 tem 2008, ..., 2010 tem 2022. Een inschatting van de variantieparameters zal dan gebeuren op basis van de resultaten van al deze modellen. De schattingen hiervan komen aan bod in het punt rond bepalen van correlaties.
+
+
+### Bepalen van het geschikte model
+
+Voor dit meetnet is het niet mogelijk om een model te fitten op basis van het gehele datageneratieproces. De hoofdreden hiervoor is dat het over een heel grote dataset gaat met heel veel afhankelijkheden:
+
+- Ieder plot zal een verschillende basisgezondheidstoestand hebben
+- Ieder plot kan anders evolueren dan de globale trend
+- Iedere boom in een plot kan anders reageren dan andere bomen in een plot
+- Dezelfde bomen worden in de tijd gemeten, dus er is autocorrelatie tussen de metingen
+- Er wordt een normale benadering gebruikt van de respons, omdat een poweranalyse anders veel te ingewikkeld wordt. Hoewel de normale benadering heer over het algemeen vrij goed is, zal dit extreme gevallen heel slecht capteren.
+
+Er zijn veel invloedsfactoren die de trend drastisch kunnen beïnvloeden, zoals droogte en warmte in het voorjaar, stormschade en insectenschade, het al dan niet mastjaar zijn, antropogene invloeden zoals kappingen. Dit is ook een van de hoofdredenen dat een jaarlijkse meting aangewezen is, anders kan je tot heel rare conclusies komen, als het ene jaar toevallig een warm mastjaar is en de meting 10 jaar later in een koud zaadarm jaar voorkomt.
+
+Voor een meetnet echter kunnen we al deze variabelen niet in rekening brengen en mag enkel de jaarlijkse trend gebruikt worden.
+
+Het meest complexe model zoals ik me voorstel, maar dat onmogelijk te gebruiken is voor een poweranalyse, omdat het model moeilijk zal convergeren of meerdere uren zal moeten rekenen:
+
+$$
+Bladverlies \sim 1 + Jaar + (Jaar | Plot / Boom) + ar(Exp_{n,r}(\sim Jaar | Plot / Boom))
+$$
+
+
+Als voorbeeld gebruiken we dit model hier om de trend te bepalen over de laatste periode van 12 jaar (2010 tem 2022). De autocorrelatieparameters zijn hier reeds ingevuld (die heb ik buiten dit document bepaald). Dit model is natuurlijk niet ideaal omdat er een grote stijging is in het bladverlies halverwege de jaren '10
+
+Enkele anomalieën kunnen niet vermeden worden door de normale benadering, waardoor het bladverlies in een beperkt aantal gevallen boven de 100% wordt geschat, maar dit gaat over zo weinig datapunten dat dit niet echt een probleem is voor de conclusies.
+
+
+```{r modeltest, eval = TRUE, echo = TRUE, cache = TRUE ,warning=FALSE}
+library(nlme)
+base_lme <- lme(nnv ~ JaarC, 
                 random = ~ 1 + JaarC|PlotNr/BoomNr, 
                 #correlation = corExp(form = ~Jaar|PlotNr/BoomNr, nugget = TRUE),
                 correlation = corExp(value = c(7, 0.14), nugget = TRUE, fixed = TRUE),
-                data = dfTrees %>% filter(JaarC >= 0), 
+                data = df_trees %>% filter(Jaar >= 2010), 
                 control = lmeControl(maxiter = 100, 
                                      tolerance = 1e-4,
                                      opt = "optim",
                                      optimMethod = "L-BFGS-B"))
+summary(base_lme)
 
+plotdata_full <- data.frame(
+  fit = fitted(base_lme), 
+  resid = resid(base_lme, type = "n"),
+  Jaar = df_trees %>% filter(Jaar >= 2010) %>% pull(Jaar))
+
+  ggplot(plotdata_full, aes(x = fit, y = resid, color = factor(Jaar))) + 
+  geom_point(pch = 1) + labs(x = "Gefitte waarden", 
+                             y = "Genormaliseerde residu's", 
+                             color = "Jaar")
+  ggplot(plotdata_full, aes(x = resid)) + geom_histogram()
+
+```
+                                  
+
+```{r modeltestx, echo = FALSE, eval = FALSE, include = FALSE}
 base_lme2 <- lme(BladverliesNetto ~ JaarC, 
                 random = ~ 1 + JaarC|PlotNr/BoomNr, 
                 #correlation = corExp(form = ~JaarC|PlotNr/BoomNr, nugget = TRUE),
@@ -130,6 +214,51 @@ ggplot(resids) + geom_density(aes(x = resn )) +
 Op basis van bovenstaand plot \@ref(fig:verdelingbladverlies) blijkt dat de meeste bomen een bladverlies hebben onder de 50% en dat binnen het bereik 0-50% de verdeling er vrij normaal uit ziet. Om dit iets exacter te bekijken is er figuur \@ref(fig:normaleverdeling) waaruit blijkt dat het eenvoudige model (mixed effect model met fixed effect op Jaar en random effect PlotNr met daarin BoomNr genest) leidt tot een vrij goed een gaussiaanse distributie te benaderen.
 
 Dus ondanks enkele mogelijke artefacten aan de uiteinden 0% en > 50% zal een normale benadering bruikbaar zijn.
+
+
+Om de power later te kunnen berekenen zullen we echter gebruik maken van een vereenvoudigd model, die wel wat impact zal hebben op de inschatting van de power maar toch probeert met alles zo goed mogelijk rekening te houden.
+
+Voor het eenvoudigere model gaan we de autocorrelatie weglaten. Door het random intercept op boom in het model te houden, wordt de autocorrelatie wel voor een stuk in rekening gebracht, aangezien een random  intercept een implicietie correlatie is, waarbij wel de correlatie tussen het eerste met het tweede jaar even groot wordt ingeschat als het eerste met het laatste jaar. In de realiteit is dit niet het geval, maar de correlatie blijft wel nog altijd hoog tussen het eerste en laatste jaar.
+
+Daarnaast gaat de nesting ook weggelaten worden tusen Plot en Boom, en zal iedere boom apart een random intercept genereren. Het verschil is dat in plaats dat we veronderstellen dat het ploteffect normaal verdeeld is en binnen een plot de bomen normaal verdeeld zijn, dat we er vanuit gaan dat alle bomen over alle plots heen normaal verdeeld zijn. De bomen per plot coderen we in de variabele `prbo`, die iedere individuele boom uniek codeert.
+Daarnaast veronderstellen we ook dat alle bomen in eenzelfde plot dezelfde trend in de tijd volgen in plaats van elk een individuele trend.
+
+Het vereenvoudigde model voor de powerberekeningen ziet er dan als volgt uit:
+
+$$
+Bladverlies \sim Jaar + (Jaar|Plot) + (1|prbo)
+$$
+
+```{r vereenvoudigdmodel}
+library(lme4)
+model <- lmer(nnv ~ JaarC + (JaarC|PlotNr) + (1|prbo), 
+              data = df_trees %>% filter(Jaar >= 2010))
+summary(model)
+plotdata_red <- data.frame(
+  fit = fitted(model), 
+  resid = resid(model, type = "pe"),
+  Jaar = df_trees %>% filter(Jaar >= 2010) %>% pull(Jaar))
+
+  ggplot(plotdata_red, aes(x = fit, y = resid, color = factor(Jaar))) + 
+  geom_point(pch = 1) + labs(x = "Gefitte waarden", 
+                             y = "Genormaliseerde residu's", 
+                             color = "Jaar")
+  ggplot(plotdata_red, aes(x = resid)) + geom_histogram()
+
+  e1 <- coef(summary(base_lme))
+  e2 <- coef(summary(model))
+  dt <- data.frame(model = c("base", "simpler"), 
+                   est = c(e1[2,1], e2[2,1]), 
+                   lcl = c(e1[2,1] - 2 * e1[2,2], e2[2,1] - 2 * e2[2,2]),
+                   ucl = c(e1[2,1] + 2 * e1[2,2], e2[2,1] + 2 * e2[2,2]))
+ ggplot(dt, aes(x = model, y = est, ymin = lcl, ymax = ucl)) + 
+   geom_point() + geom_errorbar()
+
+```
+
+De schattingen tussen het ingewikkelde en vereenvoudigde model zijn compatibel met elkaar, en ook de standaardfout op de schatting van jaar is vergelijkbaar (ergens een 10% verschil), dus ook de power tussen beide modellen is hierdoor vergelijkbaar, waardoor het eenvoudigere model gebruikt kan worden.
+
+Ook dit model is nog te ingewikkeld om te kunnen gebruiken, daarom gebruiken we in de powersimulaties slechts 5 bomen per plot, in plaats van de circa 20 in het meetnet. Deze reductie in aantal bomen compenseren we door de standaardafwijking tussen de bomen te reduceren met $\sqrt(n)$, dus om 20 bomen te modelleren met 5 bomen, zetten we de standaardafwijking tussen de verschillende bomen 2 keer kleiner dan in de data aanwezig is.
 
 
 ## Inschatten van correlaties

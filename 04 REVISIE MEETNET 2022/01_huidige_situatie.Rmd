@@ -26,6 +26,8 @@ Verder, hoewel de data niet gepubliceerd is, kan iedereen de data vrij opvragen,
 
 # Meetnet in relatie tot de fasen van het meetnetontwerp van BMK <<REFERENTIE>>
 
+In eerste instantie wil ik Geert bedanken dat hij heel transparent alle gegevens wil geven rond het meetnet waarnaar ik vraag en dat hij tijd heeft genomen mij eens mee te nemen op het veld om te zien wat ik me moet voorstellen bij de metingen die in het kader van het Level-I meetnet gebeuren.
+
 ## Fase I: Prioritering van de informatiebehoeften
 
 ### Welke vraag moet beantwoord worden?
@@ -85,6 +87,8 @@ Heel jonge bestanden komen niet in aanmerking, omdat enkel gekozen wordt met pro
 Daarnaast worden proefvlakken heel lang opgevolgd, wat een mooie tijdreeks oplevert, maar intussen is de tijdsreeks al zo lang dat ook de leeftijd een rol begint te spelen in de vitaliteit van de proefvlakken, wat niet altijd representatief is voor de volledige bosgemeenschap.
 
 De steekproefgrootte is oorspronkelijk gekozen om uitspraak te doen in Vlaanderen over alle soorten heen, voor analyse per soort of per regio zal een aangepaste en grotere steekproef nodig zijn om dezelfde evoluties als in Vlaanderen te kunnen vaststellen, tenzij blijkt dat de steekproef al overgedimensioneerd is om uitspraak te doen over alle soorten heen.
+
+Voor het huidige meetnet is het doenbaar om alle metingen in optimale omstandigheden te doen, namelijk in de zomer wanneer het kroondak het beste gesloten is en enkel op dagen waar het weer voldoende goed is, zodat alle metingen zonder problemen uitgevoerd kunnen worden. Hierdoor is de hoeveelheid uitval van metingen door overmacht heel beperkt.
 
 
 ### Meetvariabele
@@ -201,6 +205,8 @@ De laatste jaren verdwijnen er steeds meer bomen, door externe oorzaken, maar oo
 De kostprijs is in 2022 gedetailleerd genoteerd. Dit omvat het aankomstuur en vertrekuur in ieder plot en de rij-afstanden die telkens met dezelfde wagen (Duster 1XRY100) zijn uitgevoerd
 
 Voor een steekproef van 78 plots, kunnen er 2 steekproefpunten per dag opgemeten worden, met af en toe  eens een 3e plaats of slechts een enkele plaats, met als randvoorwaarde dat het weer de toegankelijkheid moet toelaten. Om die 78 plots te bezoeken is ongeveer 9000 km gereden op 38 mandagen.
+
+In vergelijking met veel andere meetnetten lijkt de kostprijs van dit meetnet heel beperkt, en de zwaarste kost is duidelijk de personeelskost, omdat de werkingsmiddelen heel beperkt zijn. Enkel transport is een significante kost naast de personeelskosten.
 
 Op zich is de kost van het meetnet op te delen als volgt:
 
