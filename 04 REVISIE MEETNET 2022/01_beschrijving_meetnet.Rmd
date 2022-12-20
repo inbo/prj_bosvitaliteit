@@ -1,0 +1,25 @@
+
+# Beschrijving meetnet
+
+## Historiek
+
+Het bosvitaliteitsmeetnet ook gekend als het Level-1 meetnet is een heel langlopend meetnet, vermoedelijk een van de oudste meetnetten op het INBO,  waarbij de eerste gegevens reeds van 1987 dateren. Het meetnet is tot stand gekomen via de expertenpanel groep ICP forests, met vertegenwoordigers uit heel Europa.
+
+In de loop van de tijd is het meetnet geëvolueerd. Bij de opstart in 1987 is gestart met het selecteren van proefvlakken op een raster van 16x16km en 8x8km. In totaal ging dit in de beginjaren over 40 a 45 plots.
+8 Proefvlakken werden zien als verplicht op te volgen via een verorderning van Europa, waar naast Level-1 ook Level-2 metingen gebeuren.
+
+Vanaf het jaar 1995 is beslist extra proefvlakken op te meten, hierbij wordt een raster van 4x4km genomen, maar wordt wel beslist om dit selectiever uit te breiden, zodat soorten die voor de Vlaamse onderzoeken ondervertegenwoordigd leken, toch meer aan bod komen in de datainzameling. Dit resulteerde dat er in de periode 1995 tot en met 2011 72-plots jaarlijks werden bezocht. Door een kap is dan een proefvlak weggevallen voor de periode 2011-2017. 
+
+Omdat in 2018 er nog 2 proefvlakken wegvielen en de bomen ook steeds ouder werden, is beslist om de jaren erop telkens enkele nieuwe proefvlakken toe te voegen, zo steeg het aantal proefvlakken jaar per jaar tot 78 in 2022.
+
+Vanaf het jaar 2014 is ook de methode van het selecteren van bomen in een proefvlak gewijzigd. Voor dit doorgevoerd is, is er uitgebreid onderzoek gedaan door o.a. Paul Quataert <<REFERENTIE>> om de impact van deze wijziging te evalueren. In plaats vanuit het centrum van het proefvlak, 4 clusters (1 voor elke windrichting) telkens 6 bomen te selecteren, werd overgeschakeld naar proefvlakken met vaste steekproefcirkels waarin alle relevante bomen werden bekeken. Voorwaarden voor relevantie is dat de boom dominant moet zijn en minstens een bepaalde dikte moest hebben. Hierdoor waren er in 2014 een 60-tal bomen minder opgemeten.
+
+
+## Gebruik van de data voor afgeleide projecten
+
+Op het INBO is er een analyse gebeurd op basis van deze dataset door Pieter Verschelde <<REFERENTIE>> waarbij getracht werd een verklarend statistisch model voor deze data te bouwen.
+
+De data wordt geleverd aan ICP forests zodat zij jaarlijks een Europese statistische analyse kunnen uitvoeren.
+
+Verder, hoewel de data niet gepubliceerd is, kan iedereen de data vrij opvragen, en is de data gebruikt voor verschillende thesissen en doctoraten <<REFERENTIES>>
+

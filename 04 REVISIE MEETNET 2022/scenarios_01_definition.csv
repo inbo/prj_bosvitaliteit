@@ -1,19 +1,19 @@
-years;plots;trees;intercept;trend;sd_trend;sd_intercept;corr_itc_trend;sd_tree;sd_resid;NR;Description
-13;75;5;0,25;0,0025;0,0075;0,1;0,75;0,05;0,05;1;75 plots reference
-13;25;5;0,25;0,0025;0,0075;0,1;0,75;0,05;0,05;2;25 plots default
-13;50;5;0,25;0,0025;0,0075;0,1;0,75;0,05;0,05;3;50 plots default
-13;100;5;0,25;0,0025;0,0075;0,1;0,75;0,05;0,05;4;100 plots, default
-13;25;5;0,25;0,0025;0,0075;0,1;0,75;0,0707106781186548;0,05;5;25 plots halve trees
-13;50;5;0,25;0,0025;0,0075;0,1;0,75;0,0707106781186548;0,05;6;50 plots halve trees
-13;75;5;0,25;0,0025;0,0075;0,1;0,75;0,0707106781186548;0,05;7;75 plots halve trees
-13;100;5;0,25;0,0025;0,0075;0,1;0,75;0,0707106781186548;0,05;8;100 plots halve trees
-13;25;5;0,25;0,0025;0,0075;0,1;0,75;0,1;0,05;9;25 plots quarter trees
-13;50;5;0,25;0,0025;0,0075;0,1;0,75;0,1;0,05;10;50 plots quarter trees
-13;75;5;0,25;0,0025;0,0075;0,1;0,75;0,1;0,05;11;75 plot quarter trees
-13;100;5;0,25;0,0025;0,0075;0,1;0,75;0,1;0,05;12;100 plots quarter trees
-13;75;5;0,25;0,0025;0,01;0,1;0,75;0,05;0,05;13;75 plots larger sd_trend
-13;75;5;0,25;0,0050;0,0075;0,1;0,75;0,05;0,05;14; 75 plots double effect size 
-13;75;5;0,25;0,0025;0,0075;0,07;0,75;0,05;0,05;15;75 plots lower sd_trend
-13;25;20;0,25;0,0025;0,0075;0,1;0,75;0,1;0,05;16;25 plots with 20 simulated trees 
-13;75;5;0,25;0,0025;0,0075;0,1;0,50;0,05;0,05;17;75 plots reference less correlation
-13;75;5;0,25;0,0025;0,0075;0,1;0,75;0,05;0,10;18;75 plots double sd_resid
+years;plots;trees;intercept;trend;sd_trend;sd_intercept;corr_itc_trend;sd_tree;sd_resid;NR;Description;Desc2
+13;75;5;0,25;0,0025;0,0075;0,1;0,75;0,05;0,05;1;75 plots reference;03: 75 plots, reference
+13;25;5;0,25;0,0025;0,0075;0,1;0,75;0,05;0,05;2;25 plots default;02: 25 plots, 5 trees per plot
+13;50;5;0,25;0,0025;0,0075;0,1;0,75;0,05;0,05;3;50 plots default;
+13;100;5;0,25;0,0025;0,0075;0,1;0,75;0,05;0,05;4;100 plots, default;
+13;25;5;0,25;0,0025;0,0075;0,1;0,75;0,070710678;0,05;5;25 plots halve trees;
+13;50;5;0,25;0,0025;0,0075;0,1;0,75;0,070710678;0,05;6;50 plots halve trees;
+13;75;5;0,25;0,0025;0,0075;0,1;0,75;0,070710678;0,05;7;75 plots halve trees;
+13;100;5;0,25;0,0025;0,0075;0,1;0,75;0,070710678;0,05;8;100 plots halve trees;
+13;25;5;0,25;0,0025;0,0075;0,1;0,75;0,1;0,05;9;25 plots quarter trees;
+13;50;5;0,25;0,0025;0,0075;0,1;0,75;0,1;0,05;10;50 plots quarter trees;
+13;75;5;0,25;0,0025;0,0075;0,1;0,75;0,1;0,05;11;75 plot quarter trees;
+13;100;5;0,25;0,0025;0,0075;0,1;0,75;0,1;0,05;12;100 plots quarter trees;
+13;75;5;0,25;0,0025;0,01;0,1;0,75;0,05;0,05;13;75 plots larger sd_trend;04: 75 plots, sd_trend 33% larger
+13;75;5;0,25;0,005;0,0075;0,1;0,75;0,05;0,05;14; 75 plots double effect size ;08: 75 plots, double effect size
+13;75;5;0,25;0,0025;0,0075;0,07;0,75;0,05;0,05;15;75 plots lower sd_trend;06: 75 plots, sd_intercept 30% lower
+13;25;20;0,25;0,0025;0,0075;0,1;0,75;0,1;0,05;16;25 plots with 20 simulated trees ;01: 25 plots, 20 trees per plot
+13;75;5;0,25;0,0025;0,0075;0,1;0,5;0,05;0,05;17;75 plots reference less correlation;07: 75 plots, halved SI correlation
+13;75;5;0,25;0,0025;0,0075;0,1;0,75;0,05;0,1;18;75 plots double sd_resid;05: 75 plots, double sd_resid

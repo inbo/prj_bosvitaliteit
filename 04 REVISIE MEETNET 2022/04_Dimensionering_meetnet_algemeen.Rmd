@@ -1,4 +1,4 @@
-# Dimensionering meetnet
+# Dimensionering meetnet over alle bomen heen via een mixed effect model
 
 ## Inleiding
 
@@ -41,12 +41,25 @@ Om het werk te vereenvoudigen is er de hoop dat de verdeling van bladverlies nie
 Er blijkt dat eens een boom begint veel beschadiging te vertonen, dat de toestand sterk verslechterd, en dat  hierdoor heel weinig observaties zijn met een bladverlies hoger dan 50% op de dode bomen na, die een bladverlies krijgen van 100% en die het jaar na sterfte verdwijnen uit de dataset.
 
 ```{r verdelingbladverlies, echo = FALSE, fig.cap="Range van de observaties in de ruwe data", warning = FALSE}
+library(tidyverse)
+library(nlme)
+library(lme4)
 df_trees <- readRDS("dfTrees_trend.RDS") %>% 
   filter(!is.na(BladverliesNetto),
          Jaar >= 1995) %>% 
   mutate(JaarC = Jaar - 2000, 
          nnv = BladverliesNetto / 100,
          prbo = paste(PlotNr, BoomNr, sep = "."))
+
+df_plots <- df_trees %>% 
+  group_by(PlotNr, Jaar) %>% 
+  summarize(n_trees = n(), 
+            nnv =  mean(BladverliesNetto)/100, 
+            .groups = "drop") %>% 
+  filter(Jaar >= 1995) %>% 
+  mutate(PlotNr = as.factor(PlotNr),
+         JaarC = Jaar - 2000) %>% 
+  na.omit()
 
 
 ggplot(df_trees, aes(x = nnv)) + geom_histogram(binwidth = 0.05) + 
@@ -57,7 +70,7 @@ ggplot(df_trees, aes(x = nnv)) + geom_histogram(binwidth = 0.05) +
 
 Als naar de evolutie van het bladverlies over de jaren wordt gekeken in de ruwe dataset, dan is duidelijk dat er geen mooie lineaire trend is. Daarentegen is er weinig verschil als de data per plot of per boom geaggregeerd wordt, behalve in de latere jaren, maar op 2 jaar na is dit verschil beperkt tot minder dan een halve procent, dus vermoedelijk zal het aantal bomen en de variatie tussen de bomen binnen een plot niet veel impact hebben op de schattingen van het model, natuurlijk wordt er wel impact verwacht op de betrouwbaarheid van de schattingen die hoger is wanneer meer bomen gemeten worden.
 
-```{r trendperjaar, fig.cap= "trend per jaar (zwart geaggregeerd per plot, groen gewoon naïef over alle bomen heen zonder rekening te houden met plot)}
+```{r trendperjaar, fig.cap= "trend per jaar (zwart geaggregeerd per plot, groen gewoon naïef over alle bomen heen zonder rekening te houden met plot)", echo=FALSE}
   tr_plot <- df_plots %>% group_by(Jaar) %>% 
     summarise(mean_nnv = mean(nnv), .groups = "drop")
   tr_tree <- df_trees %>% group_by(Jaar) %>% 
@@ -72,17 +85,9 @@ Als naar de evolutie van het bladverlies over de jaren wordt gekeken in de ruwe 
 
 Daarnaast is er veel verschil is tussen de plots.
 
-```{r evolutieperplot, fig.cap = "Evolutie bladverlies geaggregeerd per plot. Groene lijn is gemiddeld bladverlies over de dataset"}
-df_plots <- df_trees %>% 
-  group_by(PlotNr, Jaar) %>% 
-  summarize(n_trees = n(), 
-            nnv =  mean(BladverliesNetto)/100, 
-            .groups = "drop") %>% 
-  mutate(PlotNr = as.factor(PlotNr),
-         JaarC = Jaar - 2000) %>% 
-  na.omit()
+```{r evolutieperplot, fig.cap = "Evolutie bladverlies geaggregeerd per plot. Groene lijn is gemiddeld bladverlies over de dataset", echo = FALSE}
 
-ggplot(df_plots, aes(x = Jaar, y = nnv, color = PlotNr)) + 
+ggplot(df_plots, aes(x = Jaar, y = nnv, groups = PlotNr)) + 
   geom_line() + 
   geom_hline(yintercept = mean(df_plots$nnv), color = "darkgreen", size = 1) +
   theme(legend.position = "none")
@@ -119,7 +124,7 @@ Als voorbeeld gebruiken we dit model hier om de trend te bepalen over de laatste
 Enkele anomalieën kunnen niet vermeden worden door de normale benadering, waardoor het bladverlies in een beperkt aantal gevallen boven de 100% wordt geschat, maar dit gaat over zo weinig datapunten dat dit niet echt een probleem is voor de conclusies.
 
 
-```{r modeltest, eval = TRUE, echo = TRUE, cache = TRUE ,warning=FALSE}
+```{r modeltest, eval = TRUE, echo = TRUE, cache = TRUE ,warning=FALSE, echo = FALSE}
 library(nlme)
 base_lme <- lme(nnv ~ JaarC, 
                 random = ~ 1 + JaarC|PlotNr/BoomNr, 
@@ -130,19 +135,22 @@ base_lme <- lme(nnv ~ JaarC,
                                      tolerance = 1e-4,
                                      opt = "optim",
                                      optimMethod = "L-BFGS-B"))
-summary(base_lme)
+#summary(base_lme)
 
 plotdata_full <- data.frame(
   fit = fitted(base_lme), 
   resid = resid(base_lme, type = "n"),
   Jaar = df_trees %>% filter(Jaar >= 2010) %>% pull(Jaar))
 
-  ggplot(plotdata_full, aes(x = fit, y = resid, color = factor(Jaar))) + 
+  ggplot(plotdata_full, aes(x = fit, y = resid, color = Jaar)) + 
   geom_point(pch = 1) + labs(x = "Gefitte waarden", 
                              y = "Genormaliseerde residu's", 
                              color = "Jaar")
-  ggplot(plotdata_full, aes(x = resid)) + geom_histogram()
 
+```
+
+```{r normaleverdeling, echo = FALSE, fig.cap="Residu's van het complexe model"}
+    ggplot(plotdata_full, aes(x = resid)) + geom_histogram(binwidth = 0.25)
 ```
                                   
 
@@ -229,21 +237,21 @@ $$
 Bladverlies \sim Jaar + (Jaar|Plot) + (1|prbo)
 $$
 
-```{r vereenvoudigdmodel}
+```{r vereenvoudigdmodel, echo = FALSE, message=FALSE, warning = FALSE, cache = TRUE}
 library(lme4)
 model <- lmer(nnv ~ JaarC + (JaarC|PlotNr) + (1|prbo), 
               data = df_trees %>% filter(Jaar >= 2010))
-summary(model)
+#summary(model)
 plotdata_red <- data.frame(
   fit = fitted(model), 
   resid = resid(model, type = "pe"),
   Jaar = df_trees %>% filter(Jaar >= 2010) %>% pull(Jaar))
 
-  ggplot(plotdata_red, aes(x = fit, y = resid, color = factor(Jaar))) + 
+  ggplot(plotdata_red, aes(x = fit, y = resid, color = Jaar)) + 
   geom_point(pch = 1) + labs(x = "Gefitte waarden", 
                              y = "Genormaliseerde residu's", 
                              color = "Jaar")
-  ggplot(plotdata_red, aes(x = resid)) + geom_histogram()
+  ggplot(plotdata_red, aes(x = resid)) + geom_histogram(binwidth = 0.0025)
 
   e1 <- coef(summary(base_lme))
   e2 <- coef(summary(model))
@@ -256,56 +264,177 @@ plotdata_red <- data.frame(
 
 ```
 
-De schattingen tussen het ingewikkelde en vereenvoudigde model zijn compatibel met elkaar, en ook de standaardfout op de schatting van jaar is vergelijkbaar (ergens een 10% verschil), dus ook de power tussen beide modellen is hierdoor vergelijkbaar, waardoor het eenvoudigere model gebruikt kan worden.
+De schattingen tussen het ingewikkelde en vereenvoudigde model zijn compatibel met elkaar, en ook de standaardfout op de schatting van jaar is vergelijkbaar (ergens een 10% verschil), dus ook de power tussen beide modellen is hierdoor vergelijkbaar, omdat de power nu eenmaal bepaald wordt door de standaardfout, waardoor het eenvoudigere model gebruikt kan worden.
 
 Ook dit model is nog te ingewikkeld om te kunnen gebruiken, daarom gebruiken we in de powersimulaties slechts 5 bomen per plot, in plaats van de circa 20 in het meetnet. Deze reductie in aantal bomen compenseren we door de standaardafwijking tussen de bomen te reduceren met $\sqrt(n)$, dus om 20 bomen te modelleren met 5 bomen, zetten we de standaardafwijking tussen de verschillende bomen 2 keer kleiner dan in de data aanwezig is.
+Dit echter heeft een grotere impact dan gedacht op de modelschattingen, niettemin aangezien het meeste van de power bepaald wordt door het aantal plots, eerder dan het aantal bomen is de impact toch vrij beperkt <<NOG VERDER UITZOEKEN>>
 
 
 ## Inschatten van correlaties
 
+
+```{r inputmodels, echo = FALSE, eval = FALSE, cache = TRUE, output = "hide", warning = FALSE, message = FALSE}
+
+startjaren <- 1995:2010
+
+modellen <- simr_params <-  NULL
+for (startjaar in startjaren) {
+  jaren <- startjaar:(startjaar + 12)
+  center <- median(jaren)
+  print(startjaar)
+  lmerdata <- df_trees %>% filter(Jaar %in% startjaar:(startjaar + 12)) %>% 
+    mutate(JaarCC = Jaar - center)
+  model_calc <- 
+    lmer(nnv ~ JaarCC + (JaarCC|PlotNr) + (1|prbo), 
+         data = lmerdata)
+  
+    sd_tree <- sqrt(VarCorr(model_calc)$prbo[1,1])
+  sd_between_plots <- sqrt(VarCorr(model_calc)$PlotNr[1,1])
+  sd_trend_between_plots <- sqrt(VarCorr(model_calc)$PlotNr[2,2])
+  COV_plot <- VarCorr(model_calc)$PlotNr
+  COR_plot <- attr(VarCorr(model_calc)$PlotNr, "correlation")
+  correlation <- COR_plot[1,2]
+  sd_resid <- attr(VarCorr(model_calc), "sc")
+  simr <- list(sd_tree = sd_tree, 
+               sd_plot = sd_between_plots,
+               sd_trend = sd_trend_between_plots,
+               cor_trend_plot = correlation, 
+               sd_resid = sd_resid, 
+               COV_tree = VarCorr(model_calc)$prbo,
+               COV_plot = VarCorr(model_calc)$PlotNr)
+  
+  modellen[[startjaar-1994]] <- model_calc
+  simr_params[[startjaar-1994]] <- simr
+}
+
+
+```
+
 Op basis van de dataset kunnen we zo goed mogelijke instelwaarden vinden om later een poweranalyse uit te voeren die toch iets van betekenis heeft. De data heeft echter heel wat afhankelijkheden, waardoor dit vrij moeilijk goed te kwantificeren is. 
 
+- Ieder plot kan een andere trend hebben dan de globale trend
 - Er is afhankelijkheid van bomen in een proefvlak
 - Afhankelijkheid van metingen in de tijd op dezelfde boom
+
+Omdat de power berekening later vooral een ruwe schatting is van de steekproef, zal voor deze net als andere inschattingen eerder gekozen worden voor een mooie ronde waarde die plausibel lijkt op basis van de data.
 
 Als we naast een algemeen beeld over de soorten heen ook per soort een inschatting willen kunnen maken moet dit voor iedere soort apart in kaart  gebracht worden.
 
 ### Inschatten variabiliteit tussen proefvlakken
 
-```{r sdbetweenplots, echo = FALSE, eval = FALSE}
-sd_between_plots_model <- 6.43 #from base_lme
+In eer eerste methode kijken we over alle jaren sedert 1995 wat de standaarddeviatie is tussen de plots in het bladverlies tussen in de data geaggregeerd per plot.
 
-df1 <- dfTrees %>% 
-  group_by(PlotNr, Jaar) %>% 
-    summarise(avg = mean(BladverliesNetto))
-sd_between_plots_data <- summary(lm(data = df1, avg ~ factor(Jaar)))$sigma #6.71
+```{r sdbetweenplotsraw, echo = FALSE, fig.cap="Verdeling op basis van ruwe gegevens"}
+sd_between_plots <- 
+  df_plots %>%  
+  group_by(Jaar) %>% 
+  summarise(sd_between_plots = sd(nnv))
+
+sd_bp_avg <- mean(sd_between_plots$sd_between_plots)
+
+ggplot(sd_between_plots, aes(x = sd_between_plots)) + 
+  geom_density() + geom_vline(xintercept = sd_bp_avg, color = inbo_palette()[3])
+
+#quantile(sd_between_plots, prob = c(0,0.10,0.25,0.50,0.75,0.90,1))
+#mean(sd_between_plots)
+#sd(sd_between_plots)
+#hist(sd_between_plots)  
 ```
 
+In een tweede methode , maken we een model op de geaggregeerde data per plot voor iedere rollende 13 jaar beginnende vanaf 1995.
+
+De variatie tussen al deze modellen zullen een inzicht geven op wat te verwachten is van de standdaarddeviatie tussen de plots. Hiervoor wordt de random intercept schatting gebruikt. Als model gebruiken we het vereenvoudigde model zoals hogerop beschreven. Voor iedere dataset van 13 jaar, centreren we jaar in het midden van iedere 13 jaar, dus de dataset die in 1995 begint wordt gecentreerd op 2001, die in 1996 op 2002, enz ... 
+
+```{r sdbetweenplotsmodel, echo = FALSE, dependson="inputmodels", fig.cap="Verdeling geschatte random intercept op plotniveau als het model over een rollende 13 jaar gefit wordt"}
+df_bp <- data.frame(
+  startjaar = startjaren, 
+  sd_between_plots = sapply(simr_params, function(x) x$sd_plot))
+
+sd_bp_chosen <- 0.10
+
+ggplot(df_bp, aes(x = startjaar, y = sd_between_plots)) + geom_point()
+
+```
+
+Er is een verschil tussen de eerste jaren en de laatste jaren, maar de laastste jaren blijft dit stijgen, vermoedelijk door introductie van nieuwe plots en het veroudern van de bestaande plost. Qls consensusparameter voor de standaarddeviatie tussen plots gebruiken we `r sd_bp_chosen`.
 
 
 ### Inschatten variabiliteit tussen bomen in eenzelfde proefvlak
 
-```{r sdbetweentrees, echo = FALSE, eval = FALSE}
-sd_between_trees_model <- 7.79
+Om de variabiliteit tussen bomen in een proefvlak te onderzoeken wordt op dezelfde manier te werk gegaan als voor de variabiliteit tussen plots, eerst op basis van de ruwe data en daarna op basis van dezelfde modellen als bij tussen de proefvlakken.
 
-df2 <- dfTrees %>% 
+
+```{r sdbetweentreesraw, echo = FALSE}
+
+sd_between_trees <- df_trees %>% 
   group_by(PlotNr, BoomNr, Jaar) %>% 
-    summarise(avg = mean(BladverliesNetto))
-sd_between_trees_data <- summary(lmer(data = df2, avg ~ Jaar) + factor(PlotNr)))$sigma #11.18
+    summarise(sd_between_trees = mean(nnv))
+
+sd_bt_avg <- mean(sd_between_trees$sd_between_trees)
+
+ggplot(sd_between_trees, aes(x = sd_between_trees)) + 
+  geom_histogram(binwidth = 0.05) + 
+  geom_vline(xintercept = sd_bt_avg, color = inbo_palette()[3])
+
 ```
+
+```{r sdbetweentreesmodel, echo = FALSE}
+df_bt <- data.frame(
+  startjaar = startjaren, 
+  sd_between_trees = sapply(simr_params, function(x) x$sd_tree))
+
+sd_bt_chosen <- 0.10
+
+ggplot(df_bt, aes(x = startjaar, y = sd_between_trees)) + geom_point()
+
+```
+
+De eeste jaren is er minder variatie tussen de verschillende bomen, <<<maar door een wijziging in boomselectie sedert het jaar 2000: NOG CHECKEN>>> is de variatie sedert dien een stuk hoger. Als consensusparameter voor de variabiliteit tussen de bomen gebruiken we `r sd_bt_chosen`.
+
+
+### Inschatten van de variabiliteit van de trends tussen de plots
+
+Hezelfde procedé als voorheen, maar nu is het de inschatting van de random helling tussen de plots.
+
+```{r sdtrendmodel, echo = FALSE}
+
+sd_trend <- data.frame(
+  startjaar = startjaren, 
+  sd_trend = sapply(simr_params, function(x) x$sd_trend))
+
+sd_trend_chosen <- 0.01
+
+ggplot(sd_trend, aes(x = startjaar, y = sd_trend)) + geom_point()
+
+```
+
+De standaardarwijking op de trend is de laatste jaren een stuk hoger dan in de eerdere jaren, Als instelwaarde gebruiken we `r sd_trend_chosen` <<<DIT KLOPT NIET MET MIJN SIMULATIES, DAAR KOOS IK VOOR 0.0075>>>
+
+### Inschatten van correlatie tussen random intercept van plot met trend per plot
+
+```{r correlatietrndplot, echo = FALSE}
+cor_slope <- data.frame(
+  startjaar = startjaren, 
+  cor_slope = sapply(simr_params, function(x) x$cor_trend_plot))
+
+cor_chosen <- 0.75
+
+ggplot(cor_slope, aes(x = startjaar, y = cor_slope)) + geom_point()
+```
+
+Ook hier is een groot verschil tussen modellen met de beginjaren en de modellen die de latere jaren gebruiken. We gebruiken als instelwaarde `r cor_chosen`
 
 
 ### Inschatten variabiliteit tussen metingen van eenzelfde  boom in de tijd
 
+Doordat dezelfe bomen doorheen jaarlijks gemeten worden, zal een resultaat van eenzelfde boom het jaar later, doorgaans dichter liggen bij de vorige meting, dus er is autocorrelatie tussen de jaren voor iedere boom.
 
-
-```{r sdbetweentrees, echo = FALSE, eval = FALSE}
+```{r sdbetweentrees1, echo = FALSE, cache = TRUE, fig.cap = "Correlatie tussen observaties van eenzelfde boom met de volgende jaren. De verschillende punten per lag komt omdat een correlatiematrix gebruikt wordt als plotdata, dus voor 1 jaar lag zijn er 12 punten en dat vermindert totdat er voor 12 jaar lag slechts 1 punt meer is."}
 #Houdt geen rekening met een interne trend of autocorrelatie.
-sd_within_trees_model <- 7.79
 
-df2 <- dfTrees %>% 
+df2 <- df_trees %>% 
   group_by(PlotNr, BoomNr, Jaar) %>% 
-  summarise(avg = mean(BladverliesNetto), .groups = "drop") %>% 
+  summarise(avg = mean(nnv), .groups = "drop") %>% 
   mutate(avg0 = avg, 
          J0 = Jaar, J1 = Jaar - 1, J2 = Jaar - 2, J3 = Jaar - 3,
          J4 = Jaar - 4, J5 = Jaar - 5, J6 = Jaar - 6, J7 = Jaar - 7, 
@@ -350,8 +479,8 @@ y2ydev <- c(sd(df2m$avg0 - df2m$avg1),
             sd(df2m$avg9 - df2m$avg10),
             sd(df2m$avg10 - df2m$avg11), 
             sd(df2m$avg11 - df2m$avg12))
-mean(y2ydev)
-sd(y2ydev)
+#mean(y2ydev)
+#sd(y2ydev)
             
 cormat <- cor(df2m[c("avg0", "avg1", "avg2", "avg3", "avg4", "avg5", "avg6",
                      "avg7", "avg8", "avg9", "avg10", "avg11", "avg12")])
@@ -359,11 +488,11 @@ cormat <- cor(df2m[c("avg0", "avg1", "avg2", "avg3", "avg4", "avg5", "avg6",
 get_cor_per_lag <- function(cormat, lag = 1, return_vec = TRUE) {
   rv <- NULL
   for (l in lag) {
-    cat("lag is:", l, "\n")
+    #cat("lag is:", l, "\n")
     xpos <- 1:(nrow(cormat) - l)
     ypos <- xpos + l
-    print(xpos)
-    print(ypos)
+    #print(xpos)
+    #print(ypos)
     for(i in xpos) {
       rv <-  bind_rows(rv,  data.frame(lag = l, cor = cormat[xpos[i], ypos[i]]))     
     }    
@@ -380,158 +509,181 @@ corrs2 #DIT IS DE STRUCTUUR IN DE DATA
 corstruct_exp <- nls(formula = cor ~ (1-n) * exp(-lag/d), 
                      data = corrs, 
                      start = list(n = 0.2, d = 7))
-corstruct_exp2 <- nls(formula = cor ~ (1-n) * exp(-lag/d), 
-                     data = corrs2, 
-                     start = list(n = 0.2, d = 7))
-corstruct_exp 
-#nugget = 0.31, d = 14.08 (1:12) en 0.1458, 8.54 (0:12) en 0.01 en 6.31 (0:6)
-corstruct_exp2 
-#nugget = 0.33, d = 15.5 en 0.20, 10.87 (0:12) en 0.11 en 6.84 (0:6)
+
 preds <- data.frame(lag = lags, 
                     fit1 = predict(corstruct_exp, 
-                                   newdata = data.frame(lag = lags)),
-                    fit2 = predict(corstruct_exp2, 
                                    newdata = data.frame(lag = lags)))
-assump <- data.frame(lag = lags) %>% 
-  mutate(val = (1 - 0.25) * exp(-lag / 8)) 
 
 ggplot(corrs, aes(x = lag, y = cor)) + geom_point() + 
-  geom_line(data = preds, aes(y = fit1) ) + 
-    geom_line(data = preds, aes(y = fit2), color = "green" ) + 
-  geom_line(data = assump, aes(y = val), color = "red")
-
-
-sd_within_trees_model <- sd(df2m$avg.x - df2m$avg.y)
-  
-sd_within_trees_model <- sd(df2m$avg.x - df2m$avg.y) # 8.66
-cor_within_trees_model <- cor(df2m$avg.x, df2m$avg.y) # 0.73
-```
-
-### Inschatten variabiliteit op de trend van alle gegevens (rollend gemiddelde)
-
-
-Starten van het jaar 1996
-
-```{r trendvar}
-chk <- dfTrees %>% group_by(Jaar) %>% summarise(avg = mean(BladverliesNetto))
-ggplot(chk, aes(x = Jaar, y = avg)) + geom_point() + geom_vline(xintercept = 1995)
-
-#onderstaande doet niet echt wat bedoeld is, en is meer een afwijking op de trend voor een blok van 12 jaar
-trend <- NULL
-for (i in 1996: 2010) {
-  tmp <- dfTrees %>% filter(Jaar %in% i:(i+12)) %>% 
-    group_by(PlotNr, Jaar) %>% 
-    summarize(nnv = mean(BladverliesNetto)/100, .groups = "drop")
-  model <- lme(nnv ~ Jaar, random = ~1|PlotNr, data = tmp)
-  trend[i - 1996 + 1] <- summary(model)$tTable[2,1]
-}
-hist(trend)
-sd(trend)
-
-#beter: variabiliteit zoeken tussen alle 2 opeenvolgende waarden, want zo is het gesimuleerd
-  tmp <- dfTrees %>% 
-    group_by(Jaar, PlotNr) %>% 
-    summarize(nnv = mean(BladverliesNetto)/100, .groups = "drop_last") %>% 
-    summarize(nnv2 = mean(nnv), .groups = "drop")  %>% 
-    mutate(Jaar1 = Jaar - 1)
-  tmp <- tmp %>% 
-    inner_join(tmp %>% select(Jaar1, nnv_last = nnv2), 
-                            by = c("Jaar" = "Jaar1")) %>% 
-    mutate(nnvdiff = nnv2 - nnv_last)
-  
-  sd(tmp$nnvdiff) / sqrt(nrow(tmp))
-    
-    
-
+  geom_line(data = preds, aes(y = fit1))
 
 ```
 
-### Inschatten variabiliteit op de trend tussen verschillende proefvlakken
+Rekening houden met autocorrelatie zorgt dat modellen fitten heel ingewikkeld worden. Daarom dat voor de poweranalyse deze niet expiciet meegerekend zal worden. Er wordt echter wel een impliciete correlatie tussen metingen van eenzelfde boom in rekening gebracht, omdat een random intercept op boomniveau wel in het model opgenomen is. Het verschil tussen een autocorrelatie door een random intercept geïmpliceerd en een autocorrelatie is dat bij een random effect de correlatie even hoog verondersteld wordt ongeacht hoevel jaren er verstreken zijn, in tegenstelling tot een tijdsvariërende autocorrelatie.
 
-```{r plottrend}
-#gewoon de laatste 13 jaar bekijken om een 12 jaar cyclus (1e tot 13e meting)
-#te benaderen
-tmp2 <- dfTrees %>% filter(Jaar > 2009) 
-plottrend <- NULL
-for (plot in unique(tmp2$PlotNr)) {
-  tmpplot <- tmp2 %>% filter(PlotNr == plot)
-  print(dim(tmpplot))
-  e <- try(mod2 <- lme(BladverliesNetto ~ Jaar, random = ~1|BoomNr, data = tmpplot))
-  if (inherits(e, "try-error")) 
-    plottrend[plot] <- NA 
-  else
-    plottrend[plot] <- summary(mod2)$tTable[2,1]
-}
-
-mean(plottrend, na.rm = TRUE)/100
-sd(plottrend, na.rm = TRUE)/100 #0.02
-
-```
-
-### Inschatten variabiliteit op de trend van bomen binnen een proefvlak
-
-```{r}
-
-tmp3 <- dfTrees %>% filter(Jaar > 2009) 
-grptrend <- NULL
-for (grp in unique(tmp3$group)) {
-  tmpplot <- tmp3 %>% filter(group == grp)
-  e <- try(mod3 <- lm(BladverliesNetto ~ Jaar, data = tmpplot))
-  if (inherits(e, "try-error")) 
-    grptrend[grp] <- NA 
-  else
-    grptrend[grp] <-coef(mod3)[2]
-}
-
-mean(grptrend, na.rm = TRUE)/100
-sd(grptrend, na.rm = TRUE)/100 #0.07
+Omdat de autocorrelatie ook na 12 jaar nog vrij hoog is, zal een random intercept zonder autocorrelatie toch nog een vrij goede benadering zijn.
 
 
-```
-
+Om de random intercept voor boom in te schatten, kunnen we opnieuw het model gebruiken die we voor de vorige variantiecomponenten gebruikten.
 
 ### Inschatten van overgebleven variabiliteit
 
+Ook hier gebruiken we de waarden uit de berekende modellen
+
+```{r sdresidmodel, echo = FALSE}
+
+sd_resid <- data.frame(
+  startjaar = startjaren, 
+  sd_resid = sapply(simr_params, function(x) x$sd_resid))
+
+sd_resid_chosen <- 0.072
+
+ggplot(sd_resid, aes(x = startjaar, y = sd_resid)) + geom_point()
+
+```
+
+De gekozen restvariabiliteit is `r sd_resid_chosen`. <<< IN DE SIMS HEB IK 0.05 GEBRUIKT>>>
 
 
 
+## Poweranalyse op de volledige dataset via een random effect model
+
+```{r readsims}
+
+scenarios <- read_csv2("scenarios_01_definition.csv")
+files <- list.files("output",  pattern = "power", full.names = TRUE)
+powers <- pwrlist <- NULL
+for (file in files) {
+  start <- regexpr("\\_NR\\_", file) + 4
+  end <- regexpr("\\.RDS", file) - 1
+  NR <- as.numeric(substring(file, start, end))
+  pwrdata <- readRDS(file)
+  pwr <- 100 * mean(pwrdata$pval <= 0.05)
+  powers <- bind_rows(powers, 
+                      cbind(NR = NR, 
+                            power = binom::binom.confint(x = sum(pwrdata$pval < pwrdata$alpha), 
+                                                         n = pwrdata$n, 
+                                                         methods = "exact")))
+  pwrlist[[NR]] <- pwrdata
+}
+scenario_power <- scenarios %>% 
+  mutate(NR = as.numeric(NR)) %>%  
+  left_join(powers, by = "NR")
+```
+
+```{r powerploteffect, echo = FALSE, fig.cap = "Impact op de power van het aantal plots en de standaardafwijking tussen de bomen (als proxy voor het aantal bomen, waar een kleinere sd betekent dat er meer bomen zijn, al werden de simulaties uitgevoerd met telkens 5 bomen)."}
+
+#standard varying plots and sd_tree
+ggplot(data = scenario_power %>% filter(NR %in% 1:12), 
+       mapping = aes(x = plots, y=power.mean, color = factor(round(sd_tree,3)), 
+                     ymin = power.lower, ymax = power.upper)) +
+  geom_point() + geom_line() + geom_errorbar() + 
+  labs(x = "aantal plots", y = "power", color = " stdev tussen bomen" )
+```
+
+De toename van het aantal plots is zoals verwacht heel sterk afhankelijk van het aantal plots, de standaardeviatie tussen de bomen hebben daarentegen een veel kleiner effect, waardoor die bijna volledig overlappen met elkaar, en zelfs soms door toeval verbetering brengen met kleinere stdev.
+
+
+```{r powerothereffects, echo = FALSE, fig.cap = "Vergelijking van de impact op de power voor verschillende scenario's, in vergelijking met het referentiescenario van 75 plots."}
+#varying other variables, keeping plots fixed at 75
+#make a ribbon for the reference, so everything is comparable
+ggplot(data = scenario_power %>% filter(!is.na(Desc2)), 
+       mapping = aes(x = Desc2, 
+                     y= power.mean, 
+                     color = Desc2, 
+                     ymin = power.lower, 
+                     ymax = power.upper)) +
+  geom_rect(xmin = 0, ymin = scenario_power$power.lower[1],
+            xmax = 9, ymax = scenario_power$power.upper[1], 
+            alpha = 0.1, 
+            color = inbo_palette()[2], 
+            fill = inbo_palette()[2]) +
+  geom_vline(xintercept = 2.5) + 
+  geom_point() + 
+  geom_errorbar() + 
+  scale_x_discrete(labels = sprintf("%02d", 1:8)) + 
+  labs(color = "Description", x = "Scenario", y = "Power" )
 
 
 
+```
 
-## Uitvoeren kostenefficiëntie
+In figuur \@ref(fig:powerothereffects) zijn verschillende scenario's vergeleken met het referentiescenario. Het referentiescenario is hetgeen het dichtste aansluit bij het bestaande meetnet.
 
-### Correlatie binnen een proefvlak
+Links van de blauwe lijn zie je de power voor 25 plots voor 20 bomen en 5 bomen, waarbij alle andere variabelen gelijk zijn gehouden. Het verviervoudigen van het aantal bomen leidt tot een hoger power.
 
-### Correlatie binnen een proefvlak over de jaren heen
+De grootste effecten op de power van het meetnet zijn hoe variabel de trend is tussen de verschillende plots, iets waar we niet echt veel controle op hebben, en het verhogen van het te verwachten detecteren effect. Een dubbele trend dan de vooropgestelde trend van 12% op 12 jaar, zorgt dat het meetnet met de ingestelde parameters bijna altijd dit effect zal kunnen detecteren met het huidige meetnet.
 
-### Correlatie van boommetingen over de jaren heen
+Een lagere variatie tussen de baseline vitaliteit van de plots en een lagere correlatie tussen de random intercept en trend - dit betekent dat deze minder afhankelijk zijn en dus elk meer verklaren -, kunnen de power gunstig beïnvloeden.
+
+In bovenstaande figuur is de power iets hoger indien een hogere residuele variantie. Dit is niet logisch, dus moet nader onderzocht worden, maar doordat er al heel veel variatie door de andere termen in het model verklaard wordt, is het mogelijk dat de residuele variatie niet veel verschil meer maakt. Het is natuurlijk ook wat artificieel, want met een hogere residuele variatie, wordt ook impact verwacht op de random slope en intercept op het plot niveau <<<NADER ONDERZOEKEN>>>
+
+## Berekenen kostenefficiëntie
+
+Voorlopig kunnen per dag 2 plots bezocht worden, wat leidt tot ongeveer 40 mensdagen veldwerk per jaar.
+
+De belangrijkste kosten
+
+- Inzet werknemer voor rapportage
+- Inzet werknemer voor veldwerk
+- Transport tussen plots
+- In mindere mate: materiaal
+
+Vanuit gaande van volgende parameters:
+
+- Gemiddelde rijtijd per dag : 
+    - pendeltijd: 120 minuten *pendel*
+    - afstand naar volgend plot: 50 minuten  *plottransp*
+- Gemiddelde rij-afstand per dag: 225 kilometer (9000km voor 75 plots, 2 plots per dag)
+- Wandelen naar de correcte plaats in een plot: 15 minuten *zoek*
+- Gemiddelde tijd om het bladverlies te evalueren van een boom: 5 minuten *nnv*
+- Gemiddelde tijd om andere symptomen en omtrek te evalueren: 2 minuten *sympt*
+- Gemiddeld aantal bomen per plot: 21 *trees*
+- Plots per dag *ppd*
+- Maximale tijd per dag: 10 uur *maxtpd*
+
+Tijd op het terrein per plot *terrein*: zoek + (nnv + sympt) * trees
+Transport naar een plot *trans*: pendel/ppd + plottransp * (ppd - 1)
+totale tijd: 75 plots * (terrein + trans)
+
+Vuistregel: power verdubbelt met verviervoudiging van plots (logit schaal)
+Vuistregel: <<<GEWOON RANDOM, CORRECTERE CIJFERS ZOEKEN>>> power verdubbelt met verachtvoudiging van bomen (logit schaal)
+Vuistregel: power verdubbelt bij verdubbeling effect isze
+
+```{r timesim}
+
+calcsim <- function(n_plots, n_trees, 
+                    maxd = 600, max_ppd = 4,
+                    zoek = 15, commute = 120, between_plots = 50,
+                    nnv = 5, sympt = 2
+                    ) {
+  timing <- data.frame(p1=NA, p2=NA, p3=NA, p4=NA, precisie=NA, 
+                       maxperday = NA)
+  for (ppd in 1:max_ppd) {
+    maxperday <- 0
+    timing_per_plot <- 
+          ((zoek + (nnv + sympt) * n_trees) + 
+          (commute/ppd + between_plots * (ppd-1)))
+    timing_per_day <- ppd * timing_per_plot
+    total_time <- n_plots * timing_per_plot
+    maxperday <- ifelse(timing_per_day <= maxd, ppd, maxperday) 
+    
+    timing[1, "maxperday"] <- maxperday
+    timing[1,ppd] <- timing_per_plot
+  }
+  timing[1, 1:max_ppd] <- n_plots * timing[1, 1:max_ppd]
+  
+  costfactor <- 1/sqrt(n_plots/100) * 1/((n_trees/20)**(1/3))
+  timing[1, "precisie"] <- 1/costfactor
+  timing
+}
+
+data <- expand.grid(plots = seq(15,150, by = 5),
+                    trees = c(5,10,15,20,25,30))
+
+calcs <- data %>% group_by(plots, trees) %>% 
+  summarise(timings = calcsim(plots, trees))
 
 
-## Analyse van jaar tot jaar
 
-### Methode
-
-### Over alle soorten heen
-
-### Specifiek voor boomsoorten
-
-## Standaard lineair mixed effect model
-
-### Methode
-
-### Over alle soorten heen
-
-### Specifiek voor boomsoorten
-
-
-## Mann-Kendall Tau en Sen-slope
-
-### Methode
-
-### Over alle soorten heen
-
-### Specifiek voor boomsoorten
-
-
-
+```

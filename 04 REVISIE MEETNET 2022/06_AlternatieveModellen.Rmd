@@ -1,0 +1,8 @@
+# Alternatieve modellen om de trend op te volgen
+
+## Niet jaarlijks meten
+
+## Beschadigde bomen ipv naaldverlies
+
+## Mann-Kendall Tau en Sen Slope
+
