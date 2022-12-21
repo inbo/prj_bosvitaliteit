@@ -7,38 +7,111 @@ In eerste instantie wil ik Geert bedanken dat hij heel transparent alle gegevens
 
 ### Welke vraag moet beantwoord worden?
 
+#### ICP Forests verplichting
+
+Alle gridpunten die in bos vallen in een 16x16km Europees grid moeten jaarlijks gerapporteerd worden in termen van  blad- of naadverlies (Level-I meetnet) en in detail voor andere kenmerken zoals bv. stikstof- en koolstofdepositie (Level-II meetnet).
+
+Hiervoor moet de door ICP forest opgelegde methodologie gebruikt worden.
+
+#### Interne vraag
+
 De hoofdvraag voor het meetnet is: hoe evolueert de gezondheidstoestand van de bomen in de Vlaamse bossen?
 
 Voor de rest zijn hier geen normen of concreet meetbare doelstellingen aan verbonden.
-
 Een mogelijke vraag, in lijn met andere meetnetten op het INBO zou hier kunnen zijn, om een verslechtering van de toestand van 12% te kunnen detecteren na een periode van 12 jaar. 
 
-Hier kunnen we nog het onderscheid maken dat we deze uitspraak willen doen over de volledige bosgemeenschap, of dat we ook uitspraak willen doen per soort of per regio.
+Hier kunnen we nog het onderscheid maken dat we deze uitspraak willen doen over de volledige bosgemeenschap, of dat we ook uitspraak willen doen per soort of per regio. Voor deze meer gedetailleerde uitspraken zal een aangepast meetnet ontworpen moeten worden.
+
+Het bladverlies geldt als proxy voor de vitaliteit van de bomen. Er wordt met een grens gewerkt van 25%, waarbij bomen met 25% of minder bladverlies als gezond worden aanzien en bomen met meer als beschadigd.
 
 
 ### Aanbod
 
 Een groot verschil met dit meetnet ten opzichte van het merendeel van andere INBO meetnetten is dat hier een jaarlijkse beoordeling gebeurt voor alle proefvlakken in plaats van gewoon op het startpunt en eindpunt te kijken.
 
-De hoofdvariabele die hiervoor opgemeten wordt is het bladverlies bij loofbomen en het naaldverlies bij naaldbomen. Deze metingen worden gedaan door een kroonbeoordeling met de verrekijker waarbij wordt ingeschat hoeveel procent van de kroon ontbreekt. Hiervoor is een meetprotocol uitgewerkt door ICP forests <<REFERENTIE>>. Naast de beoordeling van de kroon worden ook andere variabelen opgemeten die iets zeggen over de gezondheidstoestand van de boom. Hiervoor worden visueel symptomen van schade (verkleuring, insecten, harsuitvloei, ...) genoteerd op de kroon, takken en stam.
+De hoofdvariabele die hiervoor opgemeten wordt is het bladverlies bij loofbomen en het naaldverlies bij naaldbomen. Deze metingen worden gedaan door een kroonbeoordeling met de verrekijker waarbij wordt ingeschat hoeveel procent van de kroon ontbreekt. Hiervoor is een meetprotocol uitgewerkt door ICP forests <<REFERENTIE>>. 
+
+Naast de beoordeling van de kroon worden ook andere variabelen opgemeten die iets zeggen over de gezondheidstoestand van de boom. Hiervoor worden visueel symptomen van schade genoteerd op de kroon, takken en stam.
+
+- Aantal Naaldjaargangen
+- Zaadzetting
+- Waterscheuten
+
+Ook andere data van de bomen wordt opgemeten:
+
+- Omtrek ter hoogte van een geverfde lijn (niet jaarlijks)
+- Boomsoort
+- Leeftijdsklasse
+
+Per plot wordt opgemeten: 
+
+- Plotlocatiegegevens
+- Dichtstbijzijnde meteostation
+- Plothistoriek
+
+Verder wordt nog een meer gedetailleerde symptoombeschrijving uitgevoerd. Hier wordt zowel het symptoom als de vermoedelijke oorzaak genoteerd alsook waar dat symptoom terug te vinden is (tak, stam, blad).
+
+- Deels opgegeten
+- Groengele verkleuring
+- Roodbruine verkleuring
+- Microfilia
+- Abnormale groei
+- Gebroken delen
+- Afgerukte delen
+- Is boom stervende
+- Necrose
+- Rot, afbraak
+- Verwondingen
+- Harsuitvloei
+- Slijmuitvloei
+- Vervormingen
+- Insectaanwezighied
+- Schimmelaanwezigheid
+- Scheef
+- Gevallen
+
+In het begin van het meetnet werd een bodemanalyse uitgevoerd op de toen in het meetnet aanwezige plots. Mogelijks wordt dit in de toekomst nog eens herhaald. Daarnaast is het gemakkelijk alle klimaatdata te verkrijgen van meteostations in de buurt van de meetpunten.
+
+#### Verbruiksgoederen
+
+Voor dit meetnet zijn heel weinig verbruiksgoederen, aangezien bijna alles een visuele beoordeling is. De belangrijkste uitgavenkosten naast het personeel zijn:
+
+- Autokilometers naar de verschillende plots (ca 9000km in 2022)
+- Verf: Om bomen te nummeren of te markeren en om een streep te zetten voor de omtrekmeting. Dit is niet ieder jaar nodig, maar soms is een extra laagje verf nodig
+- Verrekijkers en rugondersteuning om naar boomtoppen te kijken
+- Meetlinten voor de omtrekmetingen
+- Kapmes voor toegankelijkheid
+- Gepaste kledij
+
 
 ### Eindgebruikers
 
 Er zijn 5 eindgebruikers voor dit meetnet:
 
-- ICP Forests
 - INBO
 - Statistiek Vlaanderen
+- ICP Forests
 - Pers
 - Doctoraats- en thesisstudenten en studiebureau's
 
-Jaarlijks is er ook een rapportage naar ICP forests, welke bestaat uit 2 belangrijke onderdelen. Het eerste deel is over de 8 vooropgestelde proefvlakken, het tweede deel omvat de data van alle proefvlakken en wordt gebruikt voor de statistische analyse van ICP forests.
+#### INBO
 
 Er wordt jaarlijks een gedetailleerd INBO rapport gemaakt die de data bespreekt, zowel over de bevindingen van het laatste jaar, als vergelijkingen tussen de laatste jaren en een trendanalyse. 
 
-Verder is er de INBO indicator beschadigde bosbomen die het resultaat is van deze data, en deze indicator wordt ook overgenomen door statistiek Vlaanderen.
+#### Statistiek Vlaanderen
 
-Soms komt er ook een vraag van de pers rond deze gegevens.
+Er is een INBO indicator `beschadigde bosbomen` die het resultaat is van deze data, en deze indicator wordt ook overgenomen door statistiek Vlaanderen.
+
+#### ICP forests
+
+Jaarlijks is er ook een rapportage naar ICP forests, welke bestaat uit 2 belangrijke onderdelen. Het eerste deel is over de 8 vooropgestelde proefvlakken, het tweede deel omvat de data van alle proefvlakken en wordt gebruikt voor de statistische analyse van ICP forests.
+
+
+#### Pers
+
+De bespreking van de evolutie van de bosvitaliteit wordt in de INBO nieuwsbrief opgenomen. Soms komt er ook een vraag van de pers rond deze gegevens.
+
+#### Doctoraats- en thesisstudenten en studiebureau's
 
 De gegevens worden voorlopig nog niet gepubliceerd, maar als er een degelijke vraag is om de gegevens te willen gebruiken, wordt dit altijd toegestaan. Zo kunnen de gegevens gebruikt worden in verschillende onderzoeken in Vlaanderen, voornamelijk voor thesissen en doctoraten, maar ook studiebureau's kunnen de data opvragen.
 
@@ -55,7 +128,7 @@ De gegevens worden voorlopig nog niet gepubliceerd, maar als er een degelijke vr
 
 De steekproef is niet volledig representatief voor de bossen in Vlaanderen:
 
-Zoals eerder gemeld worden punten verplaatst zodat ze volledig in een bos vallen, waardoor er geen uitspraak gedaan wordt over alles wat bos is in Vlaanderen, omdat bosranden niet in de steekproef voorkomen. Daarnaast worden er sedert 1995 steekproefpunten extra bemonsterd om bepaalde soorten beter mee te hebben, waardoor de steekproef niet meer volledig representatief is voor Vlaanderen.
+De proefvlakken worden verplaatst zodat ze volledig in een bos vallen, waardoor er geen uitspraak gedaan wordt over alles wat bos is in Vlaanderen, omdat bosranden niet in de steekproef voorkomen. Daarnaast worden er sedert 1995 steekproefpunten extra bemonsterd om bepaalde soorten beter mee te hebben, waardoor de steekproef niet meer volledig representatief is voor Vlaanderen.
 
 Heel jonge bestanden komen niet in aanmerking, omdat enkel gekozen wordt met proefvlakken met voldoend oudere bomen en er wordt enkel gemeten in plots met voldoende oudere bomen, dus de doelpopulatie bevat ook niet de jongste bestanden.
 
@@ -201,16 +274,15 @@ Op zich is de kost van het meetnet op te delen als volgt:
 
 ## Fase III: Plannen van de gegevensverwerking
 
-
 ### Data
 
 #### Data management plan
 
-Er is nog geen data management plan (DMP) gepubliceerd, maar er is een DMP in ontwikkeling, waarbij al redelijk wat stappen gezet zijn
+Er is nog geen data management plan (DMP) gepubliceerd, maar er is een DMP in ontwikkeling, waarbij al redelijk wat stappen gezet zijn.
 
 #### Data opslag
 
-De data wordt bewaard in een door het team databeheer beheerde databank D0004_Bosvitaliteit wat een SQL Server databank is, die op Amazon Web services (AWS) draait op de INBO server `inbo-sql07-prd.inbo.be`
+De data wordt bewaard in een door het team databeheer beheerde databank D0004_Bosvitaliteit wat een SQL Server databank is, die op Amazon Web services (AWS) draait op de INBO server `inbo-sql07-prd.inbo.be`. De databank is optimaal en genormaliseerd opgezet door team data en is vlot raadpleegbaar vanuit het INBO door INBO personeelsleden.
 
 #### FAIR principe
 
@@ -260,7 +332,11 @@ Omdat de fout op de sen-helling niet berekend wordt, zullen we dit kwantificeren
 
 Daarnaast wordt ook een mixed effect model gebruikt om de datatrends te analyseren. Hoewel het bladerlies binnen een range van 0% tot 100% ligt, liggen de meeste waarden eerder in het midden van het bereik en is een normale benadering niet onlogisch. Het vooropgestelde model is een random slope per proefvlak en een random intercept per boom met autocorelatie voor de metingen van dezelfde boom over de tijd.
 
-Er wordt gebruik gemaakt van het pakket `brms` in R, wat een gemakkelijke implementatie is om modellen in het Bayesiaanse programma `stan` uit te rekenen. Door gebruik te maken van dit pakket, is het gemakkelijk om de fout op  de schattingen te bekomen en grafisch voor te stellen.
+Er wordt gebruik gemaakt van verschillende R pakketten voor de analyses: `nlme`, `lme4` en  `brms` (brms is Bayesiaans en werkt met `stan`). Elk van de packages hebben hun specifieke voor- en nadelen:
+
+- nlme: nested random effects met autocorrelatie
+- lme4: modernere methode, die nested en crossed random effects toelaat, maar geen autocorrelatie. Het pakket `simr` werkt met dit pakket om power analyses te simuleren.
+- brms: bayesiaanse methode, zeer traag, maar wel onmiddellijk zonder extra berekeningen betrouwbaarheidsintervallen
 
 #### Lineair mixed effect model op fractie beschadigde bomen
 
@@ -277,6 +353,8 @@ Vroeger is er eens een verklarend model gemaakt om de oorzaken van patronen in h
     - Beschrijft de proefvlakken in detail
     - Via R scripts wordt een beperkte analyse gedaan rond de trend
 - Jaarlijks wordt ook gerapporteerd naar ICP forests
+    - de verplichte rapportage in de door ICP-forest opgelegde plots
+    - rapportage van alle proefvlakken voor ICP-forest jaarlijkse statistische analyse over de bosvitaliteit in Europa
 - Er is een natuurindicator "beschadigde bosbomen" die dit meetnet gebruikt
 - Verder nog publicaties naar de Vlaamse statistieken, INBO-nieuwsbrief, ...
 
@@ -285,3 +363,5 @@ Vroeger is er eens een verklarend model gemaakt om de oorzaken van patronen in h
 Dit is een lopend meetnet en is dus reeds geïmplementeerd, dus veel verdere implementatie is niet meer nodig.
 
 Het wel aangewezen om training te voorzien om metingen te doen voor dit meetnet omdat de pool van gekwalificeerde mensen op dit moment heel beperkt is.
+
+Een groot probleem dat op dit moment nog niet aangepakt is, is hoe verouderende en gekapte plots te vervangen door nieuwere plots.

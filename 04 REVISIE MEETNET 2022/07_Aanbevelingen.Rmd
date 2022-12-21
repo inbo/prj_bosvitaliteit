@@ -6,6 +6,10 @@ Hoewel de bosvitaliteitsinventaris gestart is met een grid opgelegd door ICP-for
 
 ## Kostprijs meetnet
 
+Indien gekozen wordt om een wijziging van 12% in blad- of naaldverlies te detecteren na 12 jaar lijkt de huidige steekproefopzet adequaat met ongeveer 75 plots met gemiddeld een 20-tal bomen per plot.
+
+Indien echter een uitspraak op soortniveau gedaan moet worden zullen extra plots nodig zijn.
+
 
 ### Algemene kostprijs
 
@@ -13,18 +17,24 @@ Het meetnet is niet heel duur omdat de veldwerk inzet beperkt is in de huidige s
 
 Er moet tijd voorzien worden voor het trainen van personeel om dit meetnet te kunnen verderzetten.
 
-Deels overlappend met dit meetnet en met dezelfde methodologie wordt ook de essenziekte onderzocht, maar het plan is dit heel binnenkort stop te zetten omdat XXX
+Qua veldwerk heeft het aantal plots de grootste impact op de kost en nodige tijd. Beperkingen van metingen binnen een plot kan ook iets helpen, maar veel minder. Het nadeel is natuurlijk dat het aantal plots ook de grootste invloedsfactor is voor de kracht van het meetnet. Dus hier is een afweging noodzakelijk.
+
+Mogelijks zijn er ook winsten te halen door de rapportage iets beperkter te houden, aangezien het jaarlijkse rapport veel overlap heeft met rapporten uit de voorgaande jaren. Er is al veel tijdswinst geboekt doordat de meeste tabellen en figuren reeds via een R script automatisch aangemaakt worden.
+
+Deels overlappend met dit meetnet en met dezelfde methodologie wordt ook de essenziekte onderzocht, maar het plan is dit heel binnenkort stop te zetten wegens de grote uitval door het aantal bomen die sterft aan de gevolgen van de ziekte. Dit neemt heel extreme proporties aan, waar in enkele jaren tijd reeds 1/3 van de bomen dood zijn.
 
 ### Welke uitspraken kunnen gedaan worden
 
-Het meetnet is gemaakt om een uitspraak te doen over heel Vlaanderen over alle boomsoorten heen (dat kan met XXX precisie met YYY meetpunten). Om een uitspraak per boomsoort te doen met betrouwbaarheid XXX, moet het meetnet uitgebreid worden met YYY.
+Het meetnet is gemaakt om een uitspraak te doen over heel Vlaanderen over alle boomsoorten heen (dat kan met XXX precisie met YYY meetpunten). Om een uitspraak per boomsoort te doen met betrouwbaarheid XXX, moet het meetnet uitgebreid worden met <<<YYY>>>.
 
 
 ## Technische verbeteringen voor de toekomst
 
 ### Representatitivteit
 
-Om een goede uitspraak over Vlaanderen te doen, moeten we een goed zicht krijgen voer hoe onze steekproef afwijkt (door stratificatie om sommige soorten meer mee te hebben) van de doelpopulatie in Vlaanderen. Hiervoor kan bijvoorbeeld de bosinventarisatie gebruikt worden, al zal hier wel duidelijk gezorgd moeten worden dat bosrandplots niet meegeteld worden, omdat die niet voorkomen in de bosvitaliteit, zo zal binvoorbeeld de bosinventarisatie veel meer berk bevatten dan de steekproefpopulatie van het bosvitaliteitsmeetnet.
+Om een goede uitspraak over Vlaanderen te doen, moeten we een goed zicht krijgen over hoe onze steekproef afwijkt (door stratificatie om sommige soorten meer mee te hebben) van de doelpopulatie in Vlaanderen. Hiervoor kan bijvoorbeeld de bosinventarisatie gebruikt worden, al zal hier wel duidelijk gezorgd moeten worden dat bosrandplots niet meegeteld worden, omdat die niet voorkomen in de bosvitaliteit, zo zal binvoorbeeld de bosinventarisatie veel meer berk bevatten dan de steekproefpopulatie van het bosvitaliteitsmeetnet.
+
+Om ruimtelijke balancering te garanderen kan ook het grts gebuikt worden van de bosinventarisatie om nieuwe plots toe te voegen, op voorwaarde ze voldoen aan de bosvitaliteitsvereisten, namelijk minstens 4km uit elkaar, en een plot moet volledig binnen een bos vallen.
 
 ### Verouderende proefvlakken
 

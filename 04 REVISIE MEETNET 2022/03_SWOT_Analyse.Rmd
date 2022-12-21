@@ -21,6 +21,8 @@ Het protocol is afgeklopt tussen de verschillende landen en er is een handleidin
 
 De hoofdmeetpunten zijn geselecteerd op basis van objectieve criteria, namelijk een systematisch raster van 16x16km met mogelijkheid tot verdichtingen voor de deelnemende landen.
 
+De hele dataset van de volle 35 jaar is volledig gedigitaliseerd en wordt bewaard in een genormaliseerde goed uitgewerkte databank op SQL Server.
+
 
 ## Zwaktes
 
@@ -34,8 +36,11 @@ Het meetnet is niet volledig representatief voor Vlaanderen, omdat gekozen is in
 
 Verder wordt niet alle bosvormen vertegenwoordigd in de proefvlakken, omdat punten weggehouden worden van de bosrand, en meetpunten niet gelegd kunnen worden in heel kleine clusters van bomen.
 
-Doordat de tijdreeks al heel lang loopt en door de keuze van de bomen in ieder proefvlak, begint de veroudering van de bomen een belangrijkere rol te spelen in de evolutie van de vitaliteit, waardoor een verslechterende trend het gevolg kan zijn van de leeftijd van deze specifieke bomen, dan de algemene gezondheidstoestand in Vlaanderen.
+Doordat de tijdreeks al heel lang loopt en door de keuze van de bomen in ieder proefvlak, begint de veroudering van de bomen een belangrijkere rol te spelen in de evolutie van de vitaliteit, waardoor een verslechterende trend het gevolg kan zijn van de leeftijd van deze specifieke bomen, dan de algemene gezondheidstoestand in Vlaanderen. Daarnaast is er  hierdoor ook een ondervertegenwoordiging van jongere bomen.
 
+Hoewel altijd in dezelfde periode gemeten wordt en de weersomstandigheden tijdens de metingen er niet zoveel aan toedoen, behalve voor de toegankelijkheid van het plot, is het niet mogelijk dezelfde metingen te herhalen op verschillende periodes in het jaar
+
+Het meetnet is oorspronkelijk ontworpen op basis van een representatief grid, maar er zijn veel plots toegevoegd uit interesse, zonder er specifieke doelstellingen van wat gedetecteerd moet worden aan gekoppeld zijn.
 
 ## Opportuniteiten
 
@@ -49,6 +54,8 @@ Vroeger (2003) zijn er eens bodemanalyses gebeurd in alle proefvlakken, maar dat
 
 Voorlopig worden gegevens niet meer in Fieldmap ingegeven (dateert van 2010) en dus staan de nieuwe plots hier nog niet in. Als alles ook in Fieldmap toegevoegd wordt waaronder ook de dendrometrische gegevens voor het hele proefvlak, biedt dat perspectieven naar links tussen vitaliteit en beheervormen, afstand tussen bomen, ... . Daarnaast is het ook gemakkelijk dat alle bomen via Fieldmap gemakkelijk teruggevonden kunnen worden.
 
+In Wallonië is het bosvitaliteitsmeetnet onlangs sterk uitgebreid, dus er zijn mogelijkheden voor kennisuitwisseling.
+
 ## Bedreigingen
 
 Het huidige meetnet wordt door een heel beperkte kern van gekwalificeerde personeelsleden uitgevoerd, daarnaast zijn 3 van de 4 intussen de leeftijd van 60 gepasseerd en komen die dicht bij hun pensioen.
@@ -57,5 +64,6 @@ Om het meetnet in de toekomst te kunnen blijven opvolgen zal op korte termijn tr
 
 Het laatste jaar is alles van het meetnet van veldwerk tot data-invoer tot rapportage door 1 persoon gebeurd, wat niet voordelig is voor de kennis hieromtrent bij andere collega's.
 
-De monitoring is niet de duurste van het INBO maar er moet wel voldoende budget zijn.
+De monitoring is niet de duurste van het INBO maar er moet wel voldoende budget zijn. De continuering is immers steeds bedreigd. Zo is een tijd geleden dit meetnet naar het vraaggestuurd onderzoek geplaasts in plaats van wettelijk vastgelegde taken.
 
+De rapportageverplichting van ICP forest zijn beperkter dan dit meetnet. Voor de jaarlijske rapportage moeten enkel de oorspronkelijke 16x16km plots geraporteerd worden. De andere resultaten worden ook wel nar ICP forests gestuurd en gebruikt in de Europese statistieken. Daarnaast is er op zich ook niets meer dat Vlaanderen verhindert om uit ICP forests te stappen.
