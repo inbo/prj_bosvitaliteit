@@ -194,8 +194,6 @@ scenario_power <- scenarios %>%
   mutate(NR = as.numeric(NR)) %>%  
   left_join(powers, by = "NR")
 
-scenario_power
-
 #standard varying plots and sd_tree
 ggplot(data = scenario_power %>% filter(NR %in% 1:12), 
        mapping = aes(x = plots, y=power.mean, color = factor(round(sd_tree,3)), 
@@ -208,4 +206,5 @@ ggplot(data = scenario_power %>% filter(NR %in% c(1,2,13:50)),
        mapping = aes(x = factor(NR), y=power.mean, color = paste(NR,Description, sep = ":"), 
                      ymin = power.lower, ymax = power.upper)) +
   geom_point() + geom_errorbar()
+
 

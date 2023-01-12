@@ -1,4 +1,31 @@
+simr_power_intervals <- function(obj, conf.level = 0.95) {
+  require("binom")
+  e <- try({
+    pval <- obj$pval
+    n <- obj$n
+    ci <- as.data.frame(
+      binom::binom.confint(sum(pval < conf.level), 
+                           n = n, 
+                           conf.level = conf.level,
+                           methods = 'exact'))
+  })
+  if (inherits(e, "try-error")) {
+    ci <- data.frame(method = NA, x = NA, n = NA, mean = NA, lower = NA, upper = NA)
+  }
+  return(ci)
+}
 
+mysummary <- function(x, 
+                      probs = c(0,0.025,0.10,0.25,0.50,0.75,0.90,0.975,1),
+                      digits = 4) {
+  avg <- mean(x, na.rm = TRUE)
+  quants <- quantile(x, probs = probs, na.rm = TRUE)
+  n <- length(x)
+  nas <- sum(is.na(x))
+  c(n=n, 
+    nas = nas, avg = round(avg, digits), 
+    quants = round(quants, digits = 4))
+}
 
 #' Bulk simulation with simr and custom power_simulate_lmer
 #'

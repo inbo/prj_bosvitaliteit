@@ -4,5 +4,25 @@
 
 ## Beschadigde bomen ipv naaldverlies
 
+Oorspronkelijk was het de bedoeling om hier ook een analyse voor uit te voeren, maar Geert geeft aan dat voor ICP forests de nadruk steeds minder op beschadigde bomen ligt en meer op het blad- en naaldverlies zelf. Dus het lijkt me niet opportuun hier nog extra analyses voor uit te voeren.
+
+Aangezien of een boom beschadigd is of niet een condensatie is van de informatie die in het bladverlies zit, is deze dataset minder krachtig en zal de steekproef groter moeten zijn om eenzelfde effect te kunnen aantonen.
+
+De beschadigde bomen worden wel nog gebruikt in de natuurindicator `beschadigde bosbomen` van het inbo, omdat dit in die context duidelijker is dan een gemiddeld bladverlies. Voor die indicator worden echter alle waarden uitgemiddeld per jaar en heeft dit niet veel te maken met de power van het bosvitaliteitsmeetnet. De probeert ook geen trend de berekenen omdat de periode 1987-2022 veel te lang is om nog te kunnen spreken van een globale trend.
+
 ## Mann-Kendall Tau en Sen Slope
 
+Dit is een niet-parametrische test die vaak gebruikt wordt in de bosbouw. Omdat de test niet-parametrisch is, is deze niet zo krachtig, maar wel een stuk robuuster. Hier wordt eerder gekeken hoe vaak de trend negatief en positief is tussen de verschillende jaren, omdat het bladverlies de neiging heeft om door klimatologische omstandigheden eens over de hele dataset een trendbreuk te plegen zonder dat daarbij permanente schade is. De toestand kan zich herstellen in de daaropvolgende jaren.
+
+```{r trend, fig.cap="Het niet-lineaire patroon van bladverlies over de jaren heen}
+df_trees %>% 
+  group_by(Jaar, PlotNr) %>% 
+  summarise(avg_nnv = mean(nnv, na.rm = TRUE), .groups = "drop_last") %>% 
+  summarise(nnv = mean(avg_nnv, na.rm = TRUE), .groups = "drop") %>% 
+  ggplot(aes(x = Jaar, y = nnv)) + 
+  geom_point() +
+  geom_smooth()
+
+```
+
+Om dit te berekenen is geen standaard software voorzien <<<NOG UITWERKEN>>>

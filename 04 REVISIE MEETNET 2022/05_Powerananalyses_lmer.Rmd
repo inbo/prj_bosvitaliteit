@@ -1,0 +1,199 @@
+# Poweranalyes via een mixed effect model
+
+## Model jaar per jaar
+
+Een eerste stap is om te onderzoeken welk effect de huidige dataset circa 75 plots met 20 bomen per plot kan detecteren tussen 2 opeenvolgende jaren.
+
+```{r, cache = TRUE, fig.cap = "verdeling variaties data in opeenvolgende jaren. Rode lijn is de gekozen parameter voor de simulaties.}
+modeljpj <- NULL
+for (i in 1995:2021) {
+modeljpj[[i-1994]] <- lmer(nnv ~ factor(Jaar) + (1|PlotNr/BoomNr), 
+                 data = df_trees %>% filter(Jaar %in% c(i,i+1) ))  
+}
+sd_plot <- sapply(modeljpj, function(x) sqrt(VarCorr(x)$PlotNr[1,1]))
+sd_tree <- sapply(modeljpj, function(x) sqrt(VarCorr(x)$`BoomNr:PlotNr`[1,1]))
+sd_resi <- sapply(modeljpj, function(x) attr(VarCorr(x), "sc"))
+
+
+ggplot(data = bind_rows(data.frame(type = "plot", 
+                                   sd = sd_plot, 
+                                   chosen = ceiling(median(sd_plot)*100)/100),
+                        data.frame(type = "tree", 
+                                   sd = sd_tree,
+                                   chosen = ceiling(median(sd_tree)*100)/100),
+                        data.frame(type = "resi", 
+                                   sd = sd_resi,
+                                   chosen = ceiling(median(sd_resi)*100)/100)), 
+       aes(x = sd)) + 
+  geom_histogram(bins = 20) + 
+  geom_vline(aes(xintercept = chosen), 
+             color = "red") + 
+  facet_wrap(~type, ncol = 1)
+
+#sd_plot = 0.07
+#sd_tree = 0.09
+#sd_resi = 0.07
+```
+
+Het model dat gebruikt wordt voor de  jaar op jaaranalyse is: 
+
+$$
+  Bladverlies \sim Jaar + (1|PlotNr/BoomNr)
+$$
+
+Onderstaande figuur toont de power voor het geval 10 of 20 bomen per plot gebruikt worden voor 10,25,50,75,100 plots
+
+```{r powerjpj}
+pwr_jpj <- readRDS(file.path("output", "simresult_jpj_10.RDS")) 
+ggplot(pwr_jpj, aes(x = effect, y = mean, color = factor(plots), 
+                    ymin = lower, ymax = upper)) + 
+  geom_point() + geom_errorbar() + facet_wrap(~trees, ncol = 1)
+
+```
+
+
+
+## Poweranalyse op de volledige dataset via een random effect model
+
+```{r readsims}
+
+scenarios <- read_csv2("scenarios_01_definition.csv")
+files <- list.files("output",  pattern = "power", full.names = TRUE)
+powers <- pwrlist <- NULL
+for (file in files) {
+  start <- regexpr("\\_NR\\_", file) + 4
+  end <- regexpr("\\.RDS", file) - 1
+  NR <- as.numeric(substring(file, start, end))
+  pwrdata <- readRDS(file)
+  pwr <- 100 * mean(pwrdata$pval <= 0.05)
+  powers <- bind_rows(powers, 
+                      cbind(NR = NR, 
+                            power = binom::binom.confint(x = sum(pwrdata$pval < pwrdata$alpha), 
+                                                         n = pwrdata$n, 
+                                                         methods = "exact")))
+  pwrlist[[NR]] <- pwrdata
+}
+scenario_power <- scenarios %>% 
+  mutate(NR = as.numeric(NR)) %>%  
+  left_join(powers, by = "NR")
+```
+
+```{r powerploteffect, echo = FALSE, fig.cap = "Impact op de power van het aantal plots en de standaardafwijking tussen de bomen (als proxy voor het aantal bomen, waar een kleinere sd betekent dat er meer bomen zijn, al werden de simulaties uitgevoerd met telkens 5 bomen)."}
+
+#standard varying plots and sd_tree
+ggplot(data = scenario_power %>% filter(NR %in% 1:12), 
+       mapping = aes(x = plots, y=power.mean, color = factor(round(sd_tree,3)), 
+                     ymin = power.lower, ymax = power.upper)) +
+  geom_point() + geom_line() + geom_errorbar() + 
+  labs(x = "aantal plots", y = "power", color = " stdev tussen bomen" )
+```
+
+De toename van het aantal plots is zoals verwacht heel sterk afhankelijk van het aantal plots, de standaardeviatie tussen de bomen hebben daarentegen een veel kleiner effect, waardoor die bijna volledig overlappen met elkaar, en zelfs soms door toeval verbetering brengen met kleinere stdev.
+
+
+```{r powerothereffects, echo = FALSE, fig.cap = "Vergelijking van de impact op de power voor verschillende scenario's, in vergelijking met het referentiescenario van 75 plots."}
+#varying other variables, keeping plots fixed at 75
+#make a ribbon for the reference, so everything is comparable
+ggplot(data = scenario_power %>% filter(!is.na(Desc2)), 
+       mapping = aes(x = Desc2, 
+                     y= power.mean, 
+                     color = Desc2, 
+                     ymin = power.lower, 
+                     ymax = power.upper)) +
+  geom_rect(xmin = 0, ymin = scenario_power$power.lower[1],
+            xmax = 9, ymax = scenario_power$power.upper[1], 
+            alpha = 0.1, 
+            color = inbo_palette()[2], 
+            fill = inbo_palette()[2]) +
+  geom_vline(xintercept = 2.5) + 
+  geom_point() + 
+  geom_errorbar() + 
+  scale_x_discrete(labels = sprintf("%02d", 1:8)) + 
+  labs(color = "Description", x = "Scenario", y = "Power" )
+
+
+
+```
+
+In figuur \@ref(fig:powerothereffects) zijn verschillende scenario's vergeleken met 
+
+het referentiescenario. Het referentiescenario is hetgeen het dichtste aansluit bij het bestaande meetnet.
+
+Links van de blauwe lijn zie je de power voor 25 plots voor 20 bomen en 5 bomen, waarbij alle andere variabelen gelijk zijn gehouden. Het verviervoudigen van het aantal bomen leidt tot een hoger power.
+
+De grootste effecten op de power van het meetnet zijn hoe variabel de trend is tussen de verschillende plots, iets waar we niet echt veel controle op hebben, en het verhogen van het te verwachten detecteren effect. Een dubbele trend dan de vooropgestelde trend van 12% op 12 jaar, zorgt dat het meetnet met de ingestelde parameters bijna altijd dit effect zal kunnen detecteren met het huidige meetnet.
+
+Een lagere variatie tussen de baseline vitaliteit van de plots en een lagere correlatie tussen de random intercept en trend - dit betekent dat deze minder afhankelijk zijn en dus elk meer verklaren -, kunnen de power gunstig beïnvloeden.
+
+In bovenstaande figuur is de power iets hoger indien een hogere residuele variantie. Dit is niet logisch, dus moet nader onderzocht worden, maar doordat er al heel veel variatie door de andere termen in het model verklaard wordt, is het mogelijk dat de residuele variatie niet veel verschil meer maakt. Het is natuurlijk ook wat artificieel, want met een hogere residuele variatie, wordt ook impact verwacht op de random slope en intercept op het plot niveau <<<NADER ONDERZOEKEN>>>
+
+## Berekenen kostenefficiëntie
+
+Voorlopig kunnen per dag 2 plots bezocht worden, wat leidt tot ongeveer 40 mensdagen veldwerk per jaar.
+
+De belangrijkste kosten
+
+- Inzet werknemer voor rapportage
+- Inzet werknemer voor veldwerk
+- Transport tussen plots
+- In mindere mate: materiaal
+
+Vanuit gaande van volgende parameters:
+
+- Gemiddelde rijtijd per dag : 
+    - pendeltijd: 120 minuten *pendel*
+    - afstand naar volgend plot: 50 minuten  *plottransp*
+- Gemiddelde rij-afstand per dag: 225 kilometer (9000km voor 75 plots, 2 plots per dag)
+- Wandelen naar de correcte plaats in een plot: 15 minuten *zoek*
+- Gemiddelde tijd om het bladverlies te evalueren van een boom: 5 minuten *nnv*
+- Gemiddelde tijd om andere symptomen en omtrek te evalueren: 2 minuten *sympt*
+- Gemiddeld aantal bomen per plot: 21 *trees*
+- Plots per dag *ppd*
+- Maximale tijd per dag: 10 uur *maxtpd*
+
+Tijd op het terrein per plot *terrein*: zoek + (nnv + sympt) * trees
+Transport naar een plot *trans*: pendel/ppd + plottransp * (ppd - 1)
+totale tijd: 75 plots * (terrein + trans)
+
+Vuistregel: power verdubbelt met verviervoudiging van plots (logit schaal)
+Vuistregel: <<<GEWOON RANDOM, CORRECTERE CIJFERS ZOEKEN>>> power verdubbelt met verachtvoudiging van bomen (logit schaal)
+Vuistregel: power verdubbelt bij verdubbeling effect isze
+
+```{r timesim}
+
+calcsim <- function(n_plots, n_trees, 
+                    maxd = 600, max_ppd = 4,
+                    zoek = 15, commute = 120, between_plots = 50,
+                    nnv = 5, sympt = 2
+                    ) {
+  timing <- data.frame(p1=NA, p2=NA, p3=NA, p4=NA, precisie=NA, 
+                       maxperday = NA)
+  for (ppd in 1:max_ppd) {
+    maxperday <- 0
+    timing_per_plot <- 
+          ((zoek + (nnv + sympt) * n_trees) + 
+          (commute/ppd + between_plots * (ppd-1)))
+    timing_per_day <- ppd * timing_per_plot
+    total_time <- n_plots * timing_per_plot
+    maxperday <- ifelse(timing_per_day <= maxd, ppd, maxperday) 
+    
+    timing[1, "maxperday"] <- maxperday
+    timing[1,ppd] <- timing_per_plot
+  }
+  timing[1, 1:max_ppd] <- n_plots * timing[1, 1:max_ppd]
+  
+  costfactor <- 1/sqrt(n_plots/100) * 1/((n_trees/20)**(1/3))
+  timing[1, "precisie"] <- 1/costfactor
+  timing
+}
+
+data <- expand.grid(plots = seq(15,150, by = 5),
+                    trees = c(5,10,15,20,25,30))
+
+calcs <- data %>% group_by(plots, trees) %>% 
+  summarise(timings = calcsim(plots, trees))
+
+
+
+```
+
