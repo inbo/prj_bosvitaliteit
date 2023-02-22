@@ -4,7 +4,7 @@ simr_power_intervals <- function(obj, conf.level = 0.95) {
     pval <- obj$pval
     n <- obj$n
     ci <- as.data.frame(
-      binom::binom.confint(sum(pval < conf.level), 
+      binom::binom.confint(sum(pval < (1 - conf.level)), 
                            n = n, 
                            conf.level = conf.level,
                            methods = 'exact'))

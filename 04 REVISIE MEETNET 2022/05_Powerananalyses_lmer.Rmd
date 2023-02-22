@@ -44,7 +44,7 @@ $$
 Onderstaande figuur toont de power voor het geval 10 of 20 bomen per plot gebruikt worden voor 10,25,50,75,100 plots
 
 ```{r powerjpj}
-pwr_jpj <- readRDS(file.path("output", "simresult_jpj_10.RDS")) 
+pwr_jpj <- readRDS(file.path("output", "simresult_jpj_200.RDS")) 
 ggplot(pwr_jpj, aes(x = effect, y = mean, color = factor(plots), 
                     ymin = lower, ymax = upper)) + 
   geom_point() + geom_errorbar() + facet_wrap(~trees, ncol = 1)

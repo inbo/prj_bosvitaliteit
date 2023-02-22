@@ -6,14 +6,14 @@
 recalc <- FALSE
 if (recalc) {
   config <- expand.grid(sd_resi = 0.07, sd_plot = 0.07, sd_tree = 0.09,  
-                        sims = 10,
-                        plots = c(25,50,75),
-                        trees = c(10, 20),
+                        sims = 200,
+                        plots = c(10, 25,50,75),
+                        trees = c(5, 10, 20),
                         effect = 0.0025 * c(1,2,3,4),
                         intercept = 0.25) %>% 
     mutate(row = 1:n())
   
-  for (i in 1:nrow(config)) {
+  for (i in 36:nrow(config)) {
     print(paste("scenario:", i,  "/", nrow(config)))
     S  = config$sd_resi[i]
     SP = config$sd_plot[i]
@@ -41,9 +41,10 @@ if (recalc) {
                       data = X)
     power <- powerSim(model, nsim = nsim)
     saveRDS(power, file = file.path("output", filedesc))
-  }  
+  }
+  
   jpjlist <- list.files(path = "output", pattern = "JPJ*")
-  jpjlist <- sort(jpjlist[grep("_10.RDS", jpjlist)])
+  jpjlist <- sort(jpjlist[grep("_200.RDS", jpjlist)])
   k <- 0
   jpj_sims <- NULL
   for (fn in jpjlist) {
@@ -54,7 +55,7 @@ if (recalc) {
   
   pwrs <- bind_rows(lapply(jpj_sims, simr_power_intervals))
   pwrs <- bind_cols(config, pwrs)
-  saveRDS(pwrs, file.path("output", "simresult_jpj_10.RDS"))
+  saveRDS(pwrs, file.path("output", "simresult_jpj_200.RDS"))
 }
 
 
