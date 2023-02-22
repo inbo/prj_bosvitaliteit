@@ -1,0 +1,18 @@
+
+# Historiek meetnet
+
+Het bosvitaliteitsmeetnet ook gekend als het Level-1 meetnet is een heel langlopend meetnet, vermoedelijk een van de oudste meetnetten op het INBO, waarbij de eerste gegevens reeds van 1987 dateren. Het meetnet is tot stand gekomen via de expertenpanel groep ICP forests, met vertegenwoordigers uit heel Europa.
+
+De bedoeling van het meetnet is om de gezondheidstoestand van de bomen in de Europese bossen te onderzoeken aan de hand van evaluaties van het blad- of naaldverlies in de kroon van (co-)dominante bomen. Verschillende proefvlakken worden bezocht en in ieder proefvlak worden verschillende boomkronen visueel geëvalueerd en er wordt een inschatting gemaakt van het blad- of naaldverlies in klassen van 5%, waarbij bomen met een verlies van meer dan 25% aanzien worden als beschadigde bomen.
+
+
+<!--
+## Gebruik van de data voor afgeleide projecten
+
+Op het INBO is er een analyse gebeurd op basis van deze dataset door Pieter Verschelde <<REFERENTIE>> waarbij getracht werd een verklarend statistisch model voor deze data te bouwen.
+
+De data wordt geleverd aan ICP forests zodat zij jaarlijks een Europese statistische analyse kunnen uitvoeren.
+
+Verder, hoewel de data niet gepubliceerd is, kan iedereen de data vrij opvragen, en is de data gebruikt voor verschillende thesissen en doctoraten <<REFERENTIES>>
+-->
+
