@@ -1,9 +1,9 @@
 
 # Beoordeling aan de hand van de fasen van het meetnetontwerp
 
-Het team BMK op het INBO heeft in XXXX een leidraad voor meetnetontwerp ontwikkeld <<<REFERENTIE>>>. Hier wordt het meetnetontwerp in verschillende fasen opgedeeld en geïllustreerd wat de belangrijkste vragen zijn die in iedere fase opgelost moeten worden. Op basis van deze leidraad wordt het meetnet in dit hoofdstuk bekeken.
+Het team BMK op het INBO heeft in 2008 een leidraad voor meetnetontwerp ontwikkeld [ @onkelinx2008ontwerp ]. Hier wordt het meetnetontwerp in verschillende fasen opgedeeld en geïllustreerd wat de belangrijkste vragen zijn die in iedere fase opgelost moeten worden. Op basis van deze leidraad wordt het meetnet in dit hoofdstuk bekeken.
 
-In eerste instantie wil ik Geert Sioen bedanken dat hij heel transparent alle gegevens wil geven rond het meetnet waarnaar ik vraag en dat hij tijd heeft genomen mij eens mee te nemen op het veld om te zien wat ik me moet voorstellen bij de metingen die in het kader van het Level-I meetnet gebeuren.
+In eerste instantie wil ik Geert Sioen bedanken dat hij heel transparant alle gevraagde gegevens wou hrbrn rond het meetnet en dat hij tijd heeft genomen mij eens mee te nemen op het veld om te zien wat ik me moet voorstellen bij de metingen die in het kader van het Level-I meetnet gebeuren.
 
 ## Fase I: Prioritering van de informatiebehoeften
 
@@ -21,18 +21,15 @@ De hoofdvraag voor het meetnet is: hoe evolueert de gezondheidstoestand van de b
 
 Voor de rest zijn hier geen normen of concreet meetbare doelstellingen aan verbonden, wat wel een belangrijk aspect is om een meetnet te kunnen dimensioneren.
 
-Een mogelijke vraag, in lijn met andere meetnetten op het INBO zou hier kunnen zijn, om een verslechtering van de toestand van 12% te kunnen detecteren na een periode van 12 jaar, of 24% op 24 jaar.
+Een mogelijke vraag, in lijn met andere meetnetten op het INBO zou hier kunnen zijn, om een verslechtering van de toestand van 12% te kunnen detecteren na een periode van 12 jaar, of 24% op 24 jaar. Daarnaast kan het ook interessant zijn om te zien welk verschil gedetecteerd kan worden tussen 2 opeenvolgende jaren, want hoe krachtiger dit is, hoe krachtiger ook het meetnet zal zijn op langere termijn.
 
-Een andere belangrijk aspect is om een onderscheid te maken of we een uitspraak willen doen voor de volledige bosgemeenschap in Vlaanderen of dat dit per soort of regio apart moet kunnen. Om hiervoor uitspraken te onderbouwen, zal een aangepast aantal steekproefpunten nodig zijn.
-
-Het bladverlies geldt als proxy voor de vitaliteit van de bomen. Er wordt met een grens gewerkt van 25%, waarbij bomen met 25% of minder bladverlies als gezond worden aanzien en bomen met meer als beschadigd.
-
+Een andere belangrijk aspect is om een onderscheid te maken of we een uitspraak willen doen over de volledige bosgemeenschap in Vlaanderen of dat dit per soort of regio apart moet kunnen. Om hiervoor uitspraken te onderbouwen, zal een aangepast aantal steekproefpunten nodig zijn.
 
 ### Aanbod
 
-Een groot verschil met dit meetnet ten opzichte van het merendeel van andere INBO meetnetten is dat hier een jaarlijkse beoordeling gebeurt voor alle proefvlakken in plaats van gewoon op het startpunt en eindpunt te kijken, of meetpunten slechts periodiek te bezoeken.
+Een groot verschil met dit meetnet ten opzichte van het merendeel van andere INBO meetnetten is dat hier voor alle proefvlakken een jaarlijkse beoordeling gebeurt  in plaats van gewoon op het startpunt en eindpunt van een meetnetcyclus.
 
-Voor alle proefvlakken zijn locatiegegevens beschikbaar, alsook enkele afgeleide variabelen zoals het type eigenaar. Voor de laatste nieuwe plots zitten die eind 2022 nog niet in de bosvitaliteitsdatabank.
+Voor alle proefvlakken zijn locatiegegevens beschikbaar, alsook enkele afgeleide variabelen zoals het type eigenaar. Voor de laatste nieuwe plots zitten de coördinaten eind 2022 nog niet in de bosvitaliteitsdatabank, maar die zullen toegevoegd worden.
 
 Per plot wordt opgemeten : 
 
@@ -43,16 +40,13 @@ Per plot wordt opgemeten :
 - Eigenaar + type (openbaar-privé)
 
 
-De hoofdvariabele die voor iedere boom opgemeten wordt is het bladverlies bij loofbomen en het naaldverlies bij naaldbomen. Deze metingen worden gedaan door een kroonbeoordeling met de verrekijker waarbij wordt ingeschat hoeveel procent van de kroon ontbreekt. Hiervoor is een meetprotocol uitgewerkt door ICP forests <<REFERENTIE>>. 
+De hoofdvariabele die voor iedere boom opgemeten wordt, is het bladverlies bij loofbomen en het naaldverlies bij naaldbomen. Deze metingen worden gedaan door een kroonbeoordeling met de verrekijker waarbij wordt ingeschat hoeveel procent van de kroon ontbreekt. Hiervoor is een meetprotocol uitgewerkt door ICP forests. De manual kan gevonden worden op de [handleidingenwebsite van ICP forests](http://icp-forests.net/page/icp-forests-manual).
 
+Dit beoordelen van de kroon is het meest tijdsintensieve van de verschillende metingen per boom, omdat de bomen regelmatig vanuit verschillende hoeken moeten beoordeeld worden. Aangezien de visuele beoordeling gedaan in klassen van 5%, wat vrij gedetailleerd is, is het belangrijk de bomen grondig te bekijken, zodat de metingen relevant zijn en niet teveel afwijken vertonen. 
 
-Dit is het meest tijdsintensieve van de verschillende metingen per boom, omdat de bomen regelmatig vanuit verschillende hoeken moeten beoordeeld worden. Aangezien de visuele beoordeling gedaan in klassen van 5%, wat vrij gedetailleerd is, is het belangrijk de bomen grondig te bekijken, zodat de metingen relevant zijn en niet teveel afwijken vertonen. 
+Het bladverlies geldt als proxy voor de vitaliteit van de bomen. Er wordt met een grens gewerkt van 25%, waarbij bomen met 25% of minder bladverlies als gezond worden aanzien en bomen met meer als beschadigd.
 
-Een afgeleide meetvariabele is of een boom beschadigd is of niet. Dit wordt volledig bepaald door het blad- of naaldverlies, waarbij een boom als beschadigd wordt aanschouwd indien dit verlies meer dan 25% bedraagt.
-
-Daarnaast worden ook afgeleide variabelen gemeten die vooral een visuele inspectie inhouden van verschillende symptomen die in relatie staan tot de gezondheid van de boom. Dit gebeurt zowel op kroon, takken en stam. Verder wordt hierbij ook getracht een oorzaak te bepalen. Naast de symptomen wordt ook de omtrek van de bomen gemeten.
-
-Ook andere data van de bomen wordt opgemeten:
+Andere indicatieve metingen voor de vitaliteit:
 
 - Aantal Naaldjaargangen
 - Zaadzetting
@@ -62,7 +56,9 @@ Ook andere data van de bomen wordt opgemeten:
 - Leeftijdsklasse op basis van bestandsleeftijd
 
 
-Verder wordt nog een meer gedetailleerde symptoombeschrijving uitgevoerd. Hier wordt zowel het symptoom als de vermoedelijke oorzaak genoteerd alsook waar dat symptoom terug te vinden is.
+. Hier wordt zowel het symptoom als de vermoedelijke oorzaak genoteerd alsook waar dat symptoom terug te vinden is.
+
+Verder wordt nog een meer gedetailleerde symptoombeschrijving uitgevoerd die vooral een visuele inspectie inhoudt van verschillende symptomen die in relatie staan tot de gezondheid van de boom. Dit gebeurt zowel op kroon, takken en stam. Verder wordt hierbij ook getracht een oorzaak te bepalen.
 
 De symptomen worden opgemeten in volgende vormen:
 
@@ -109,7 +105,7 @@ Aangetaste delen en symptomen (in klassen tenzij anders aangegeven):
     - tekenen aanwezigheid schimmels (aan- / afwezig)
     - tekenen van andere invloeden (aan- / afwezig)
 
-Beschreven oorzqken:
+Beschreven oorzaken:
 
 - wild- en begrazing
 - insecten
@@ -122,7 +118,7 @@ Beschreven oorzqken:
 - onderzocht maar niet geïdentificeerd
 
 
-In het begin van het meetnet werd een bodemanalyse uitgevoerd op de toen in het meetnet aanwezige proefvlakken. Mogelijks wordt dit in de toekomst nog eens herhaald. Daarnaast is het gemakkelijk alle klimaatdata te verkrijgen van meteostations in de buurt van de meetpunten.
+In het begin van het meetnet werd een bodemanalyse uitgevoerd op de toen in het meetnet aanwezige proefvlakken. Mogelijks wordt dit in de toekomst nog eens herhaald. Daarnaast is het gemakkelijk alle klimaatdata te verkrijgen van meteostations in de buurt van de meetpunten. Het dichtsbijzijnde meteostation wordt ook bewaard in de databank voor elk van de proefvlakken.
 
 ### Verbruiksgoederen
 
@@ -148,7 +144,7 @@ Er zijn 5 eindgebruikers voor dit meetnet:
 
 #### INBO
 
-Er wordt jaarlijks een gedetailleerd INBO rapport gemaakt die de data bespreekt, zowel over de bevindingen van het laatste jaar, als vergelijkingen tussen de laatste jaren en een trendanalyse. De laatste jaren zijn ook op een gelijkaardige manier specifiek de essen opgevolgd.
+Er wordt jaarlijks een gedetailleerd INBO rapport gemaakt die de data bespreekt, zowel over de bevindingen van het laatste jaar, als vergelijkingen tussen de laatste jaren en een trendanalyse. De laatste jaren zijn ook op een gelijkaardige manier specifiek de essen opgevolgd in een ander INBO project.
 
 #### Statistiek Vlaanderen
 
@@ -156,7 +152,7 @@ Er is een INBO indicator `beschadigde bosbomen` die het resultaat is van deze da
 
 #### ICP forests
 
-Jaarlijks is er ook een rapportage naar ICP forests, welke bestaat uit 2 belangrijke onderdelen. Het eerste deel is over de 8 vooropgestelde proefvlakken, het tweede deel omvat de data van alle proefvlakken en wordt gebruikt voor de statistische analyse van ICP forests. De resultaten van ICP forests worden  doorgcommuniceerd aan de Europese commissie.
+Jaarlijks is er ook een rapportage naar ICP forests, welke bestaat uit 2 belangrijke onderdelen. Het eerste deel is over een klein aantal vooropgestelde proefvlakken, het tweede deel omvat de data van alle proefvlakken en wordt gebruikt voor de statistische analyse van ICP forests. De resultaten van ICP forests worden  doorgcommuniceerd aan de Europese commissie.
 
 
 #### Pers
@@ -171,7 +167,15 @@ De gegevens worden voorlopig nog niet gepubliceerd, maar als er een degelijke vr
 
 ## Fase 2: Ontwerp gegevensinzameling
 
+### Veiligheid
+
+Er wordt nooit een proefvlak bezocht zonder expliciete toestemming van de eigenaar. Dit houdt in dat privé bossen iets minder in de steekproef zitten.
+
+Doordat het werk vrij belastend is voor de rug, doordat veel met een verrekijker hoog in de bomen moet gekeken worden, is het aangeraden dat er specifieke ondersteuning voor de rug gebruikt wordt om medische problemen te voorkomen.
+
 ### Doelpopulatie
+
+De doelpopulatie zijn de bossen in Vlaanderen, maar door verschillende redenen die aan bod komen later dan de tekst wijkt de populatie die de steekproef bestrijkt af van de vooropgestelde doelpopulatie 
 
 #### Representativiteit
 
@@ -179,24 +183,53 @@ De steekproef is niet volledig representatief voor de bossen in Vlaanderen:
 
 De proefvlakken worden verplaatst zodat ze volledig in een bos vallen, waardoor er geen uitspraak gedaan wordt over alles wat bos is in Vlaanderen, omdat bosranden niet in de steekproef voorkomen. 
 
-Daarnaast worden er sedert 1995 steekproefpunten extra bemonsterd om bepaalde soorten beter mee te hebben, waardoor de steekproef niet meer volledig representatief is voor Vlaanderen.
+Daarnaast worden er sedert 1995 steekproefpunten extra bemonsterd om bepaalde soorten beter mee te hebben (voornamelijk voor beuk), waardoor de steekproef niet meer volledig representatief is voor Vlaanderen.
+Vergelijking met de [bosinventarisatie](https://www.natuurenbos.be/sites/default/files/vlaamse-bosinventaris/WEBSITE_Boomsoortensamenstelling.html) (zie figuur \@ref(fig:soortenvgl)):
 
-Heel jonge bestanden komen niet in aanmerking, omdat enkel gekozen wordt met proefvlakken met voldoende oudere bomen, dus de doelpopulatie bevat niet de jongste bestanden.
+```{r soortenvgl, echo = FALSE, fig.cap= "Vergelijking aantal bomen in bosvitaliteitsmeetnet (punten) en de meest recente data uit de Vlaamse bosinventarisatie (balken)"}
+soorten_2022 <- 
+  read.table(sep = ";", header = TRUE,
+             text = 
+"Soort;VBI_low;VBI_high;LV1
+Grove den;15.5;18.8;470
+Berk;12.8;15.7;31
+Inlandse eik;9.8;11.8;443
+Zwarte Els;7;10.4;18
+Corsicaanse den;7;10.1;145
+Amerikaanse vogelkers;4.4;6.3;0
+Amerikaanse eik;3.8;5.7;93
+Wilg;1.6;3.3;0
+Gewone esdoorn;2.2;3.6;19
+Es;1.7;3.6;34
+Beuk;2;3.3;149
+Populier;1.8;2.5;16") %>% 
+  mutate(LV1 = LV1/14.86)
+
+ggplot(data = soorten_2022 %>% 
+         mutate(Soort = reorder(Soort, VBI_high, max, decreasing = TRUE))) + 
+  geom_segment(aes(x = Soort, xend = Soort, y = VBI_low, yend = VBI_high),
+               alpha = 0.7, color = inbo_lichtgroen, linewidth = 5) +
+    geom_point(aes(x = Soort, y = LV1)) + 
+  xlab("Soort") + ylab("Stamtal (%)") +
+  theme(axis.text.x=element_text(angle=90))
+```
+
+In het bosvitaliteitsmeetnet zijn duidelijk heel wat meer grove dennen, inlandse eiken en beuken aanwezig, en is er een duidelijke ondermaat in berken, elsen en Amerikaanse vogelkersen. Op zich is dit niet onlogisch omdat de manier van bomen selecteren helemaal anders is, waarbij het bosvitaliteitsmeetnet vooral de hogere en dikkere en dus ook oudere bomen zal bevoordelen, en de bosranden niet meegenomen worden.
 
 Verder zijn het vooral proefvlakken waar geen speciale toestemmingen voor nodig zijn, en liggen deze veelal in openbaar gebied.
 
-Proefvlakken heel lang opgevolgd, wat een mooie tijdreeks oplevert, maar intussen is de tijdsreeks al zo lang dat ook de leeftijd een rol begint te spelen in de vitaliteit van de proefvlakken, wat niet meer representatief is voor de volledige bosgemeenschap.
+De proefvlakken worden al heel lang opgevolgd, wat een mooie tijdreeks oplevert, maar intussen is de tijdsreeks al zo lang dat ook de leeftijd een rol begint te spelen in de vitaliteit van de proefvlakken, wat eveneens niet meer representatief is voor de volledige bosgemeenschap.
 
 #### Uitspraakeenheid
 
 De steekproefgrootte is oorspronkelijk gekozen om uitspraak te doen in Vlaanderen over alle soorten heen, voor analyse per soort of per regio zal een aangepaste en grotere steekproef nodig zijn om dezelfde evoluties als in Vlaanderen te kunnen vaststellen.
 
-Voor het huidige meetnet is het doenbaar om alle metingen in optimale omstandigheden te doen, namelijk in de zomer wanneer het kroondak het beste gesloten is en enkel op dagen waar het weer voldoende goed is, zodat alle metingen zonder problemen uitgevoerd kunnen worden. Hierdoor is de hoeveelheid uitval van metingen door overmacht heel beperkt.
+Voor het huidige meetnet is het doenbaar om alle metingen in optimale omstandigheden te uit te voeren, namelijk in de zomer wanneer het kroondak het beste gesloten is en enkel op dagen waar het weer voldoende goed is, zodat alle metingen zonder problemen uitgevoerd kunnen worden. Hierdoor is de hoeveelheid uitval van metingen door overmacht heel beperkt.
 
 
 ### Meetvariabele
 
-Dit kwam al eerder aan bod bij de beschrijving van het aanbod.
+Dit kwam al eerder aan bod bij de beschrijving van het aanbod. De hoofdvariabele bij uitstek is de visuele beoordeling van de kronen in 5% klassen.
 
 
 ### Statistisch eenheid
@@ -210,24 +243,24 @@ De statistische eenheid is dus het plotniveau, maar door verschillende bomen per
 ### Beperkingen rond de metingen
 
 Dit is eerder een opinie dan feit, vooral gevoed door eens mee te gaan op het veld. 
-Volgens mij is het heel moeilijk om een correcte objectieve beoordeling van de kroon te krijgen in klassen van 5%, niettemin zal het normaal gezien ook nooit heel ver ervan afwijken. Op zich is dit geen probleem, en is eigen aan ieder meetnet, dus dit is enkel een mogelijk meetfout die in rekening moet gebracht worden bij de dimensionering van het meetnet. Hoe meer bomen per plot beoordeeld worden, hoe zekerder we kunnen zijn over hoe het met het plot gesteld is, zelfs is niet elke beoordeling volledig nauwkeurig.
+Volgens mij is het heel moeilijk om een correcte objectieve beoordeling van de kroon te krijgen in klassen van 5%, maar ook zal de beoordeling niet meerdere klassen afwijken van de realiteit. Op zich is dit geen probleem, en is eigen aan ieder meetnet, dit is dus enkel een extra mogelijk meetfout die in het model in rekening gebracht wordt. Hoe meer bomen per plot beoordeeld worden, hoe zekerder we kunnen zijn over hoe het met het plot gesteld is, zelfs is niet elke beoordeling volledig nauwkeurig (zie figuur \@ref(fig:invloedaantalbomen).
 
-```{r invloedaantalbomen, echo = FALSE}
+```{r invloedaantalbomen, echo = FALSE, warning = FALSE, fig.cap="Schets van hoe onzeker het gemiddeld bladverlies per proefvlak wanneer het gemiddelde op meer bomen berekend wordt. Dit wordt gedaan voor een meetfout op het bladverlies op de boom van 0.5,0.1 en 0.15, waarbij het bladverlies gecodeerd is van 0 tot 1 (100%)."}
 set.seed(732)
 avg <- 0.25
-plotdata <- expand.grid(sd = c(0.05,0.10,0.15),
-                        aantal_bomen = c(1,3,5,10,15,20,25,30)) %>% 
-    group_by(sd, aantal_bomen) %>% 
-    summarise(v = rnorm(10000, avg, sd), .groups = "keep") %>% 
-    summarise(aantal_bomen = mean(aantal_bomen), 
-              mean = mean(v), 
-              sd = mean(sd), 
-              se = sd/sqrt(aantal_bomen), .groups = "drop")
+plotdata <- expand.grid(sd = c(0.05, 0.10, 0.15),
+                        aantal_bomen = c(1, 3, 5, 10, 15, 20, 25, 30)) %>%
+    group_by(sd, aantal_bomen) %>%
+    summarise(v = rnorm(10000, avg, sd), .groups = "keep") %>%
+    reframe(aantal_bomen = mean(aantal_bomen),
+              mean = mean(v),
+              sd = mean(sd),
+              se = sd / sqrt(aantal_bomen), .groups = "drop")
 
-ggplot(plotdata, aes(x = aantal_bomen, y = se, color = factor(sd))) + 
-    geom_line() + geom_point() + 
+ggplot(plotdata, aes(x = aantal_bomen, y = se, color = factor(sd))) +
+    geom_line() + geom_point() +
     labs(x = "aantal bomen",
-         y = "standaardfout op plot",
+         y = "standaardfout op proefvlakniveau",
          color = "stdev meting")
 
 ```
@@ -235,77 +268,70 @@ ggplot(plotdata, aes(x = aantal_bomen, y = se, color = factor(sd))) +
 
 ### Keuze van plots
 
-In de loop van de tijd is het meetnet geëvolueerd. Bij de opstart in 1987 is gestart met het selecteren van proefvlakken op een raster van 16x16km opgelegd door de Europese Commissie <<<REF BOSVITALITEITSRAPPORT>>>. Deze steekproef werd onmiddellijk uitgebreid tot een grid van 8x8km in Vlaanderen. 
+In de loop van de tijd is het meetnet geëvolueerd. Bij de opstart in 1987 is gestart met het selecteren van proefvlakken op een raster van 16x16km opgelegd door de Europese Commissie [@bosvitaliteit2022]. Deze steekproef werd onmiddellijk uitgebreid tot een grid van 8x8km in Vlaanderen. 
 Het opvolgen van de 8 proefvlakken die op het 16x16km grid vallen, werden verplicht door Europa via een verordening, waar naast Level-1 ook Level-2 metingen werden uitgevoerd. Deze level-2 metingen bekijken de proefvlakken in groot detail naar bijvoorbeeld stikstofdeposities.
 
-In 1995 werden op basis van een 4x4km subraster extra proefvlakken toegevoegd. Daarnaast werden selectief ook proefvlakken toegevoegd voor belangrijke soorten zoals beuk die niet genoeg gerepresenteerd leken in de steekproef. Zo steeg de steekproef van 40 à 45 plots naar 72 plots vanaf het jaar 1995, waarvan 1 plot door kapping wegviel vanaf 2011.
+In 1995 werden op basis van een 4x4km subraster extra proefvlakken toegevoegd. Daarnaast werden selectief ook proefvlakken toegevoegd voor belangrijke soorten zoals beuk die niet genoeg voorkwamen in de steekproef. Zo steeg de steekproef van 40 à 45 plots naar 72 plots vanaf het jaar 1995, waarvan 1 plot door kapping wegviel vanaf 2011.
 
-Omdat in 2018 nog 2 proefvlakken wegvielen en de bomen ook steeds ouder werden, is beslist om de jaren erop telkens enkele nieuwe proefvlakken toe te voegen, zo steeg het aantal proefvlakken jaar per jaar tot 78 in 2022, terwijl het aantal steekproefbomen geleidelijk af lijkt te nemen zelfs met de extra proefvlakken.
+Omdat in 2018 nog 2 proefvlakken wegvielen en de bomen ook steeds ouder werden, is beslist om de jaren erop telkens enkele nieuwe proefvlakken toe te voegen, zo steeg het aantal proefvlakken jaar per jaar tot 78 in 2022, terwijl het aantal steekproefbomen geleidelijk af lijkt te nemen zelfs met deze extra proefvlakken (figuur \@ref(fig:aantalproefvlakken)).
 
 ```{r aantalproefvlakken, fig.cap="Jaarlijks aantal bemonsterde proefvlakken"}
-df_trend <- readRDS("../data/dfTrees_trend.RDS")
-df_trend %>% group_by(Jaar) %>% 
+df_trend <- readRDS("data/dfTrees_trend.RDS")
+df_trend %>%
+  group_by(Jaar) %>%
   summarise(aantal_plots = n_distinct(PlotNr),
             aantal_bomen = n(),
-            aantal_bomen_scaled = aantal_bomen/24) %>% 
-  ggplot(aes(x = Jaar, y = aantal_plots)) + 
-  geom_point() + geom_line() + 
-  geom_point(aes(y = aantal_bomen_scaled), color = inbo_hoofd) + 
+            aantal_bomen_scaled = aantal_bomen / 24) %>%
+  ggplot(aes(x = Jaar, y = aantal_plots)) +
+  geom_point() + geom_line() +
+  geom_point(aes(y = aantal_bomen_scaled), color = inbo_hoofd) +
   geom_line(aes(y = aantal_bomen_scaled), color = inbo_hoofd) +
-  scale_y_continuous(name = "Aantal opgemeten proefvlakken",
-                     limits = c(0,90),
-                     sec.axis = sec_axis(~.*24, name = "Aantal opgemeten bomen")) +
+  scale_y_continuous(
+    name = "Aantal opgemeten proefvlakken",
+    limits = c(0, 90),
+    sec.axis = sec_axis(~ . * 24,
+                        name = "Aantal opgemeten bomen")) +
   theme(axis.title.y.right = element_text(color = inbo_hoofd),
         axis.title.y = element_text(color = inbo_steun_blauw))
-
-#voorlopig niet uitvoeren --> niet alle plots hebben coördinaten
-# df_proefvlakken <- read_delim("../data/Proefvlakken.txt", 
-#                               delim = "\t", 
-#                               locale = locale(decimal_mark = ",", 
-#                                               grouping_mark = "")) %>% 
-#   transmute(PlotNaam = PLOT_NAM, 
-#             PlotNr = as.numeric(PLOT_NUM), 
-#             Long = as.numeric(PLOT_LON_LMB), 
-#             Lat = as.numeric(PLOT_LAT_LMB))
-
-
 ```
 
 
 Vanaf het jaar 2014 is ook de methode van het selecteren van bomen in een proefvlak gewijzigd. Voor dit doorgevoerd is, is er uitgebreid onderzoek gedaan door o.a. Paul Quataert <<<REFERENTIE>>> om de impact van deze wijziging te evalueren. In plaats vanuit het centrum van het proefvlak, 4 clusters (1 voor elke windrichting) telkens 6 bomen te selecteren, werd overgeschakeld naar proefvlakken met vaste steekproefcirkels met een straal van 18m waarin alle relevante bomen werden bekeken. Voorwaarden voor relevantie is dat de boom dominant (of minstens codominant) moet zijn en minstens een bepaalde dikte moest hebben. Hierdoor werden er in 2014 een 60-tal bomen minder opgemeten.
 
+
 Steekproefpunten aan de rand van een bos werden in alle tijdsperiodes verlegd naar een plaats binnen het bos.
 
-Met het grootste grid hebben we slechts 9 ICP-forests punten, daardoor dat in Vlaanderen gekozen is voor een grid van 8x8km om regionale proefvlakken toe te voegen, waardoor er een goeie 30 proefvlakken bijgekkomen zijn, zodat dit er in de periode 1987-1994 tin het totaal tussen de 40 en 45 waren. De 9 hoofdpunten worden ook verder opgevolgd in een level-2 meetnet, uiteindelijk zijn voor level-2 5-meetpunten overgehouden.
+Met het grootste grid hebben we slechts 9 ICP-forests punten, daardoor dat in Vlaanderen gekozen is voor een grid van 8x8km om regionale proefvlakken toe te voegen, waardoor er een goeie 30 proefvlakken bijgekomen zijn, zodat dit er in de periode 1987-1994 tin het totaal tussen de 40 en 45 waren. De 9 hoofdpunten worden ook verder opgevolgd in een level-2 meetnet, uiteindelijk zijn voor level-2 5-meetpunten overgehouden.
 
 In 1995 werd de steekproef uitgebreid naar een grid van 4x4km, maar hier werden steekproefpunten selectief toegevoegd op basis van criteria om minder gerepresenteerde boomsoorten extra mee te hebben. Dit ging vooral over de beuk.
 
 De nieuwe steekproefbasis is in de periode 1995-2017 72 plots, waarbij sedert 2012 1 proefvlak is vervallen door kapping.
 
-Vanaf het jaar 2014 is ook de interne implementatie verandert en werd op vraag van ICP forests gekozen voor een vaste oppervlakte per plot in plaats van de windrichtingen methode. Voor het bosvitaliteitsmeetnet is gekozen om als synergie met bosecologie te werken met steekproefcirkels met een straal van 18m, wat ook de oppervlakte is die gebruikt wordt als grootste cirkel in de bosinventarisaties.
-
 Vanaf 2018 verdwenen nog extra proefvlakken door kappingen, herbestemmingen, stormschade, gebrek aan bomen, ... wat geleid heeft tot de keuze om ieder jaar enkele extra proefvlakken mee te nemen in het meetnet, zodat dit er in 2022 uiteindelijk 78 werden. 
-De basis voor deze laatste uitbreidingen is het 4x4m grid dat ook voor de bosinventarisatie gebruikt wordt, maar met extra voorwaarden dat er genoeg bomen moeten zijn, dat het plot volledig in bos ligt en minstens op 4km van een andere proefvlak. Er is echter wel nog geen duidelijk protocol welk geschikt gridpunt wordt genomen, en hier lijkt een selectie gebaseerd op het `grts` ruimtelijk gebalanceerd grid van de bosinventarisatie.
+De basis voor deze laatste uitbreidingen is het 4x4m grid dat compatbiel is met het 1 x 0.5km grid dat in de bosinventarisatie gebruikt wordt, maar met extra voorwaarden dat er genoeg bomen moeten zijn, dat het plot volledig in bos ligt en minstens op 4km van een andere proefvlak. Er is echter wel nog geen duidelijk protocol welk geschikt gridpunt wordt genomen. Een  selectie gebaseerd op het `grts` ruimtelijk gebalanceerd grid van de bosinventarisatie lijkt hiervoor een goede keuze in de toekomst.
 
-Doordat het merendeel van de steekproefpunten ouder en ouder wordt, wordt verwacht dat in de toekomst er nog meer plots gaan vervangen worden, en zal een duidelijke strategie moeten opgesteld worden over hoe hiermee omgegaan moet worden.
-
-
-#### Vergelijking met Europa
-
-In vergelijking met andere landen is ons meetnet veel dichter en beperken de andere Europese landen zich tot het 16x16km grid, al heeft dat ook veel te maken met de kleine oppervlakte van Vlaanderen, waarbij de bebossingsgraad dan ook niet zo groot is. Het meetnet in Wallonië is daarentegen nog veel dichter dan in Vlaanderen.
-
-Andere Europesse landen kiezen op Zweden na er ook voor om telkens dezelfde proefvlakken jaarlijks opnieuw te boezoeken. 
-
-De vorm van de proefvlakken en welke bomen gekozen worden verschilt van land per land, maar er is wel een basishandleiding van ICP forests uit waarop landen zich moeten baseren, maar lichte variaties toegelaten worden.
 
 ### Keuze van bomen binnen een plot
 
-Voor 2012 werd vanuit het gekozen gridpunt 4 clusters van 6 bomen gekozen binnen een vooropgestelde afstand van het gridpunt, waarbij de 4 clusters elk overeenkomen met 1 windrichting. Een boom die kapot gaat tussen de verschillend ejaren wordt vervangen door een boom in de buurt.
+Voor 2012 werd vanuit het gekozen gridpunt 4 clusters van 6 bomen gekozen binnen een vooropgestelde afstand van het gridpunt, waarbij de 4 clusters elk overeenkomen met 1 windrichting. Een boom die kapot gaat tussen de verschillende jaren wordt vervangen door een boom in de buurt.
 
 Vanaf 2012 is gekozen voor meer synergie met de Vlaamse bosinventarisatie (VBI) en wordt gekozen voor steekproefcirkels met een straal van 18 meter, waarbij alle dominante of co-dominante bomen gekozen worden waarbij de kroon in het zonlicht staat zonder hinder van andere bomen en die minstens een diameter hebben van 7 cm. Dit resulteert in een kleiner aantal bomen per steekproefpunt, en het aantal bomen in de dataset vermindert dan ook met een 70-tal tot rond 1660.
 
+![Oude methode van steekproeftrekking](data/designold.png){width=40%}
+![Nieuwe methode van steekproeftrekking](data/designnew.png){width=40%}
+```{r, echo=FALSE, out.width="5%", out.height="5%", fig.cap="Steekproeftrekking binnen een plot. Links de oude sattelietmethode, rechts de nieuwe steekproefcirkelmethode."}
+knitr::include_graphics("data/pixel.png")
+```
+
 De laatste jaren verdwijnen er steeds meer bomen, door externe oorzaken, maar ook doordat de bomen steeds ouder worden, dus worden deze vervangen door kandidaatbomen die ervoor net niet in aanmerking kwamen voor het meetnet.
 
+#### Vergelijking met Europa
+
+In vergelijking met andere landen is ons meetnet veel dichter en beperken de andere Europese landen zich tot het 16x16km grid, al heeft dat ook veel te maken met de kleine oppervlakte van Vlaanderen, waarbij de bebossingsgraad  ook niet zo groot is. Het meetnet in Wallonië is daarentegen nog veel dichter dan in Vlaanderen.
+
+Andere Europesse landen kiezen, op Zweden na, er ook voor om telkens dezelfde proefvlakken jaarlijks te boezoeken. 
+
+De vorm van de proefvlakken en welke bomen gekozen worden verschilt van land per land, maar er is wel een basishandleiding van ICP forests uit waarop landen zich moeten baseren, maar waarbij lichte variaties toegelaten worden.
 
 ### Kostprijs
 
@@ -326,22 +352,24 @@ Op zich is de kost van het meetnet op te delen als volgt:
     - materiaal: heel beperkte materiaalkost: verf, meetlint, verrekijker
     - gereden afstanden tussen de proefvlakken in 2022: 9000km
     - metingen op het proefvlak  in 2022: 38 mandagen
-        - proefvlak bereiken: heel variabel afhv locatie
+        - proefvlak bereiken: heel variabel afhankelijk van locatie
         - kroonbeoordeling: gros van de meettijd
         - symptoombeoordeling: beperkte extra tijd
 
 
-## Fase III: Plannen van de gegevensverwerking
+## Fase 3: Plannen van de gegevensverwerking
 
 ### Data
 
 #### Data management plan
 
-Er is nog geen data management plan (DMP) gepubliceerd, maar er is een DMP in ontwikkeling, waarbij al redelijk wat stappen gezet zijn.
+Er is nog geen data management plan (DMP) gepubliceerd, maar er is een DMP in ontwikkeling, waarbij al een aantal stappen gezet zijn.
 
 #### Data opslag
 
 De data wordt bewaard in een door het team databeheer beheerde databank D0004_Bosvitaliteit wat een SQL Server databank is, die op Amazon Web services (AWS) draait op de INBO server `inbo-sql07-prd.inbo.be`. De databank is optimaal en genormaliseerd opgezet door team data en is vlot raadpleegbaar vanuit het INBO door INBO personeelsleden.
+
+Ieder jaar worden de nieuwe data nog toegevoegd aan de dataset, maar ook niet veel meer dan dat. Zo zijn de nieuwste proefvlakken die bemonsterd worden nog niet toegevoegd aan de databank.
 
 #### FAIR principe
 
@@ -349,7 +377,7 @@ De data wordt bewaard in een door het team databeheer beheerde databank D0004_Bo
 
 Voorlopig is de data nog niet vindbaar, en moet als iemand de data wil, dit aan de betrokken partij vragen.
 
-Op zich zijn er geen bezwaren om in de toekomst de jaarlijkse data op zenodo te publiceren, zodat deze wel vindbaar en gemakkelijk bruikbaar zijn voor externen
+Op zich zijn er geen bezwaren om in de toekomst de jaarlijkse data op Zenodo te publiceren, zodat deze wel vindbaar en gemakkelijk bruikbaar zijn voor externen
 
 ##### Accessible: 
 
@@ -371,16 +399,16 @@ Doordat de data volgens een vast protocol ingezameld is op een methode die gedra
 
 ### Gegevensverwerking
 
-De gegevensverwerking komt in een later hoofdstuk meer in detail aan bod.
+De powerberekeningen voor de dimensionering van het meetnet komt in een later hoofdstuk meer in detail aan bod.
 
+De 2 belangrijkste analysemethoden zijn de robuuste Mann-Kendall Tau test en een lineair mixed effect model.
 
-#### Bemerkingen
-
-Doordat de tijdreeks reeds heel lang is, is het moeilijk uit te gaan van een vaste trend over de hele periode, dus zal beperkt worden tot analyses over een rollende 12 jaar.
 
 #### Mann-Kendall Tau
 
-In de omgeving van bosorganisaties  wordt vaak gekozen voor de Mann-Kendall tau test en de daarvan afgeleide sen-slope om een robuuste monotone trend te bepalen. In R kan dit gedaan worden met het pakket `rkt`. De analyse hiervoor is enkel mogelijk voor een enkele tijdreeks, maar het laat wel toe om bv. seizoenen als blokeffect mee te nemen. We gaan hier deze mogelijkheid gebruiken om de verschillende plots als blokeffect in rekening te brengen.
+In de omgeving van bosorganisaties  wordt vaak gekozen voor de Mann-Kendall tau test en de daarvan afgeleide sen-slope om een robuuste monotone trend te bepalen. In R kan dit gedaan worden met het pakket `rkt` [@mannkendall]. De analyse hiervoor is enkel mogelijk voor een enkele tijdreeks, maar het laat wel toe om bv. seizoenen als blokeffect mee te nemen. We gaan hier deze mogelijkheid gebruiken om de verschillende plots als blokeffect in rekening te brengen.
+
+Om de test te kunnen gebruiken zullen eerst alle bladverlieswaarden per plot per jaar uitgemiddeld worden.
 
 Naast de sen-helling wordt ook een soort sen-intercept berekend om de resultaten van dit model gemakkelijk grafisch voor te stellen.
 
@@ -388,6 +416,8 @@ Omdat de fout op de sen-helling niet berekend wordt, zullen we dit kwantificeren
 
 
 #### Lineair mixed effect model op bladverlies
+
+Doordat de tijdreeks reeds heel lang is, is het moeilijk uit te gaan van een vaste trend over de hele periode, dus zal beperkt worden tot analyses over een rollende 12 jaar.
 
 Daarnaast wordt ook een mixed effect model gebruikt om de datatrends te analyseren. Hoewel het bladerlies binnen een range van 0% tot 100% ligt, liggen de meeste waarden eerder in het midden van het bereik en is een normale benadering niet onlogisch. Het vooropgestelde model is een random slope per proefvlak en een random intercept per boom met autocorelatie voor de metingen van dezelfde boom over de tijd.
 
@@ -424,3 +454,76 @@ Dit is een lopend meetnet en is dus reeds geïmplementeerd, dus veel verdere imp
 Het wel aangewezen om training te voorzien om metingen te doen voor dit meetnet omdat de pool van gekwalificeerde mensen op dit moment heel beperkt is.
 
 Een groot probleem dat op dit moment nog niet aangepakt is, is hoe verouderende en gekapte plots te vervangen door nieuwere plots.
+
+Verder zal best ook wat aandacht gaan naar de representativiteit van de steekproef.
+
+# Samenvattende SWOT analyse en aanbevelingen
+
+
+Onderstaande info is tot stand gekomen via een gesprek met Geert Sioen.
+
+## Sterktes
+
+Het is een internationaal gedragen meetnet met een overkoepelende organisatie (ICP-Forests) die de kapstok vormt voor het meetnet. De monitoring wordt begeleid door verschillende expertengroepen van het internationale netwerk rond bossen.
+
+De ingezamelde data van de vele landen heeft geleid tot heel wat publicaties, wat wijst op de wetenschappelijke waarde van dit werk.
+
+Daarnaast is het al een heel langlopend meetnet, dit gaat reeds over 35 jaar in Vlaanderen en bijna 40 jaar in Duitsland, dus dit is een heel waardevolle tijdsreeks.
+
+
+Er zijn veel Europese landen die deelnemen, dus het meetnet is wijdverspreid in Europa.
+
+Doordat dezelfde proefvlakken telkens opnieuw bezocht worden, is dit heel informatief voor de evolutie in de tijd.
+
+Het is gegroeid uit een Europese verordening. Ondanks dat enkele verplichtingen zijn weggevallen nemen nog steeds veel landen deel aan dit netwerk van meetnetten.
+
+Het protocol is afgeklopt tussen de verschillende landen en er is een handleiding ter beschikking via ICP forests. Dit protocol wordt ook gevolgd door de meeste landen.
+
+De hoofdmeetpunten zijn geselecteerd op basis van objectieve criteria, namelijk een systematisch raster van 16x16km met mogelijkheid tot verdichtingen voor de deelnemende landen.
+
+De hele dataset van de volle 35 jaar is volledig gedigitaliseerd en wordt bewaard in een genormaliseerde goed uitgewerkte databank op SQL Server.
+
+
+## Zwaktes
+
+Hoewel er jaarlijks gemeten wordt, is het meetnet niet voldoende als early-warning systeem. Wanneer een nieuwe ziekte of infectie optreedt, kan niet gegarandeerd worden dat dit meetnet dit kan opmerken.
+
+Er wordt enkel basisinformatie verzameld, namelijk kroonbeoordeling en symptoombeschrijving, dus er is geen link met andere invloedsfactoren zoals bodem, klimatologische variabelen, ziektes en andere abiotische invloeden. Enkel voor de 5 locaties die ook in het level-2 meetnet opgenomen zijn is deze informatie ter beschikking
+
+Dit is ook een zwakte in Europese context, ook al de Europese meetpunten zijn enkel op een beperkt aantal locaties in detail bekeken.
+
+Het meetnet is niet volledig representatief voor Vlaanderen, omdat gekozen is in 1995 om enkele soorten te bevoordelen bij de selectie van nieuwe proefvlakpunten. Dit wil niet zeggen dat het meetnet daarvoor veel in waarde mindert, maar dit is wel iets om in het achterhoofd te houden.
+
+Verder wordt niet alle bosvormen vertegenwoordigd in de proefvlakken, omdat punten weggehouden worden van de bosrand, en meetpunten niet gelegd kunnen worden in heel kleine clusters van bomen.
+
+Doordat de tijdreeks al heel lang loopt en door de keuze van de bomen in ieder proefvlak, begint de veroudering van de bomen een belangrijkere rol te spelen in de evolutie van de vitaliteit, waardoor een verslechterende trend het gevolg kan zijn van de leeftijd van deze specifieke bomen, dan de algemene gezondheidstoestand in Vlaanderen. Daarnaast is er  hierdoor ook een ondervertegenwoordiging van jongere bomen.
+
+Hoewel altijd in dezelfde periode gemeten wordt en de weersomstandigheden tijdens de metingen er niet zoveel aan toedoen, behalve voor de toegankelijkheid van het plot, is het niet mogelijk dezelfde metingen te herhalen op verschillende periodes in het jaar
+
+Het meetnet is oorspronkelijk ontworpen op basis van een representatief grid, maar er zijn veel plots toegevoegd uit interesse, zonder er specifieke doelstellingen van wat gedetecteerd moet worden aan gekoppeld zijn.
+
+## Opportuniteiten
+
+Zonder veel extra budget zijn niet heel veel extra mogelijkheden voor het meetnet voorhanden.
+
+In sommige landen gebeuren ook nog bladanalyses binnen de meetnetproefvlakken, om een beter zicht te krijgen op de vitaliteit, iets wat in Vlaandern nog nooit gebeurd is. Daarnaast zouden ook leefijdsbepalingen van de bomen, vegetatie-opnames in de proefvlakken interessante informatie kunnen opleveren.
+
+In Vlaanderen zijn redelijk veel andere metingen voorhanden, dus misschien kan de trend beter verklaard worden door een statistisch model, zonder veel extra kostprijs, dan puur uit te gaan van een constante trend zoals in een standaardmeetnet. 
+
+Vroeger (2003) zijn er eens bodemanalyses gebeurd in alle proefvlakken, maar dat is nooit meer herhaald, terwijl er intussen op het INBO heel veel bodemonderzoek gebeurt. Op zich is er wel interesse in het MILKLIM team om de bosinventarisatieproefvlakken eens opnieuw te bezoeken voor bodemanalyses.
+
+Voorlopig worden gegevens niet meer in Fieldmap ingegeven (dateert van 2010) en dus staan de nieuwe plots hier nog niet in. Als alles ook in Fieldmap toegevoegd wordt waaronder ook de dendrometrische gegevens voor het hele proefvlak, biedt dat perspectieven naar links tussen vitaliteit en beheervormen, afstand tussen bomen, ... . Daarnaast is het ook gemakkelijk dat alle bomen via Fieldmap gemakkelijk teruggevonden kunnen worden.
+
+In Wallonië is het bosvitaliteitsmeetnet onlangs sterk uitgebreid, dus er zijn mogelijkheden voor kennisuitwisseling.
+
+## Bedreigingen
+
+Het huidige meetnet wordt door een heel beperkte kern van gekwalificeerde personeelsleden uitgevoerd, daarnaast zijn 3 van de 4 intussen de leeftijd van 60 gepasseerd en komen die dicht bij hun pensioen.
+
+Om het meetnet in de toekomst te kunnen blijven opvolgen zal op korte termijn training moeten voorzien worden voor enkele nieuwe experten, omdat de kroonbeoordeling wel iets is, waarvoor training en ervaring nodig is, om dit goed te doen.
+
+Het laatste jaar is alles van het meetnet van veldwerk tot data-invoer tot rapportage door 1 persoon gebeurd, wat niet voordelig is voor de kennis hieromtrent bij andere collega's.
+
+De monitoring is niet de duurste van het INBO maar er moet wel voldoende budget zijn. De continuering is immers steeds bedreigd. Zo is een tijd geleden dit meetnet naar het vraaggestuurd onderzoek geplaasts in plaats van wettelijk vastgelegde taken.
+
+De rapportageverplichting van ICP forest zijn beperkter dan dit meetnet. Voor de jaarlijske rapportage moeten enkel de oorspronkelijke 16x16km plots geraporteerd worden. De andere resultaten worden ook wel nar ICP forests gestuurd en gebruikt in de Europese statistieken. Daarnaast is er op zich ook niets meer dat Vlaanderen verhindert om uit ICP forests te stappen.

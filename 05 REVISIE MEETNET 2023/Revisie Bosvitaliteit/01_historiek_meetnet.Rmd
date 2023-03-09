@@ -1,10 +1,47 @@
+<!-- bookdown::render_book('Revisie Bosvitaliteit') -->
+<!-- bookdown::render_book(output_format = "INBOmd::pdf_report") -->
 
-# Historiek meetnet
+# Inleiding
 
-Het bosvitaliteitsmeetnet ook gekend als het Level-1 meetnet is een heel langlopend meetnet, vermoedelijk een van de oudste meetnetten op het INBO, waarbij de eerste gegevens reeds van 1987 dateren. Het meetnet is tot stand gekomen via de expertenpanel groep ICP forests, met vertegenwoordigers uit heel Europa.
+## Opdracht
+
+Het managementteam van het INBO wil de meetnetten die het INBO beheert reviseren om te onderzoeken of er winsten kunnen gehaald worden in efficiëntie en effectiviteit. Dit meetnet is een van de eerste meetnetten die gereviseerd worden, in de toekomst zal de manier van aanpakken wijzigen, zodat de meetnetbeheerder meer betrokken is bij het revisieproces met als resultaat een goed gedocumenteerd meetnet, waar de keuzes in het meetnet naar wat, waarom en hoeveel er gemeten wordt, duidelijk zijn.
+
+## Historiek meetnet
+
+Het bosvitaliteitsmeetnet - ook gekend als het Level-1 meetnet - is een heel langlopend meetnet, vermoedelijk een van de oudste meetnetten op het INBO, waarbij de eerste gegevens reeds van 1987 dateren. Het meetnet is tot stand gekomen via de expertenpanel groep ICP forests, met vertegenwoordigers uit heel Europa. Het huidige meetnet bevat 78 proefvlakpunten (zie figuur \@ref(fig:plotloc) ) waar telkens verschillende bomen worden bemonsterd.
 
 De bedoeling van het meetnet is om de gezondheidstoestand van de bomen in de Europese bossen te onderzoeken aan de hand van evaluaties van het blad- of naaldverlies in de kroon van (co-)dominante bomen. Verschillende proefvlakken worden bezocht en in ieder proefvlak worden verschillende boomkronen visueel geëvalueerd en er wordt een inschatting gemaakt van het blad- of naaldverlies in klassen van 5%, waarbij bomen met een verlies van meer dan 25% aanzien worden als beschadigde bomen.
 
+```{r plotloc, echo = FALSE, message = FALSE, fig.cap="Ligging van de meetpunten en de periode wanneer deze eerst opgemeten zijn"}
+
+df_trend <- readRDS('data/dfTrees_trend.RDS')
+startyears <- df_trend %>% 
+  group_by(PlotNr) %>% 
+  summarise(start = min(Jaar))
+
+proefvlakken <- readr::read_csv2("data/coords_proefvlakken.csv") %>% 
+  left_join(startyears, by = c('PROEFVLAK'= 'PlotNr') ) %>% 
+  mutate(startperiode = ifelse(start == 1987, 
+                              '1987 (34)',
+                              ifelse(start < 1995,
+                                     '1988-1992 (5)',
+                                    ifelse (start < 2018, 
+                                          '1995 (30)', 
+                                          '2019-2022 (9)'))))
+proefvlakken <- sf::st_as_sf(proefvlakken, 
+                             coords=c("LONGITUDE (X)","LATITUDE (Y)"), 
+                             crs=31370)
+
+vlaanderen <- sf::read_sf("data/vlaanderen.shp")
+
+ggplot() +
+  geom_sf(data = vlaanderen) +
+  geom_sf(data = proefvlakken, aes(color = startperiode, fill = startperiode), 
+          shape = 25, size = rel(1.0)) + 
+  theme(legend.position = "bottom")
+
+```
 
 <!--
 ## Gebruik van de data voor afgeleide projecten

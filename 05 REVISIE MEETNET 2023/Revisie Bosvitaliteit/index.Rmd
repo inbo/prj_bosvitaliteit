@@ -13,11 +13,11 @@ lang: nl
 # report specific options. See ?INBOmd::pdf_report() for full list and more details.
 # shortauthor: 
 corresponding: 
-reviewer:
-  - firstnaam: Firstname
-    name: Lastname
-    email: "firstname.lastname@inbo.be"
-    orcid: 0000-0002-1825-0097
+#reviewer:
+#  - firstnaam: Firstname
+#    name: Lastname
+#    email: "firstname.lastname@inbo.be"
+#    orcid: 0000-0002-1825-0097
 # year:
 cover_photo:
 # cover_description:
