@@ -1,0 +1,22 @@
+..generic:
+  git2rdata: 0.4.0
+  optimize: no
+  NA string: NA
+  sorting:
+  - Jaar
+  - niveau
+  hash: 421f801a5ecec82b7d69ada3ade82278f5891807
+  data_hash: a37f8505a16aaac9a0cdd90f30622c5c724fb899
+Jaar:
+  class: numeric
+niveau:
+  class: factor
+  labels:
+  - Europa
+  - Vlaanderen
+  index:
+  - 1
+  - 2
+  ordered: no
+Aandeel:
+  class: numeric
