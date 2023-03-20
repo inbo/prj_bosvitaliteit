@@ -7,6 +7,8 @@ In eerste instantie wil ik Geert Sioen bedanken dat hij heel transparant alle ge
 
 ## Fase I: Prioritering van de informatiebehoeften
 
+Het meetnet is gedragen door een overkoepelende organisatie (ICP-Forests) die de kapstok vormt voor het meetnet. De monitoring wordt begeleid door verschillende expertengroepen van het internationale netwerk rond bossen.
+
 ### Welke vraag moet beantwoord worden?
 
 #### ICP Forests verplichting
@@ -457,73 +459,72 @@ Een groot probleem dat op dit moment nog niet aangepakt is, is hoe verouderende 
 
 Verder zal best ook wat aandacht gaan naar de representativiteit van de steekproef.
 
-# Samenvattende SWOT analyse en aanbevelingen
 
+## Samenvattende SWOT analyse en generieke aanbevelingen
 
-Onderstaande info is tot stand gekomen via een gesprek met Geert Sioen.
+Hieronder een samenvatting van de tekst hierboven. De effectieve dimensionering van het meetnet komt in een volgend hoofdstuk aan bod.
+
 
 ## Sterktes
 
-Het is een internationaal gedragen meetnet met een overkoepelende organisatie (ICP-Forests) die de kapstok vormt voor het meetnet. De monitoring wordt begeleid door verschillende expertengroepen van het internationale netwerk rond bossen.
-
-De ingezamelde data van de vele landen heeft geleid tot heel wat publicaties, wat wijst op de wetenschappelijke waarde van dit werk.
-
-Daarnaast is het al een heel langlopend meetnet, dit gaat reeds over 35 jaar in Vlaanderen en bijna 40 jaar in Duitsland, dus dit is een heel waardevolle tijdsreeks.
-
-
-Er zijn veel Europese landen die deelnemen, dus het meetnet is wijdverspreid in Europa.
-
-Doordat dezelfde proefvlakken telkens opnieuw bezocht worden, is dit heel informatief voor de evolutie in de tijd.
-
-Het is gegroeid uit een Europese verordening. Ondanks dat enkele verplichtingen zijn weggevallen nemen nog steeds veel landen deel aan dit netwerk van meetnetten.
-
-Het protocol is afgeklopt tussen de verschillende landen en er is een handleiding ter beschikking via ICP forests. Dit protocol wordt ook gevolgd door de meeste landen.
-
-De hoofdmeetpunten zijn geselecteerd op basis van objectieve criteria, namelijk een systematisch raster van 16x16km met mogelijkheid tot verdichtingen voor de deelnemende landen.
-
-De hele dataset van de volle 35 jaar is volledig gedigitaliseerd en wordt bewaard in een genormaliseerde goed uitgewerkte databank op SQL Server.
-
+- Internationaal gedragen meetnet met een overkoepelende organisatie ICP-forests
+    - De ingezamelde data uit een groot deel van de Europese landen
+    - leidde tot heel wat publicaties
+    - wijst op wetenschappelijke waarde van dit werk
+    - ondanks enkele verplichtingen wegvielen, blijven veel landen deelnemen
+- Meetprotocol vastgelegd tussen de verschillende landen
+    - handleiding ter beschikking op de website van ICP forests
+    - protocol wordt goed gevolgd in de Europese landen
+    - keuze van meetpunten oorspronkelijk gebaseerd op een systematisch raster
+- Heel langlopend meetnet
+    - reeds 35 jaar in Vlaanderen en zelfs 40 jaar in Duitsland
+    - waardevolle tijdsreeks
+- Zelfde punten telkens opnieuw bezocht
+    - informatief voor de evolutie in de tijd
+- Alle data is volledig gedigitaliseerd in een goed uitgewerkte en genormaliseerde SQL server databank
 
 ## Zwaktes
 
-Hoewel er jaarlijks gemeten wordt, is het meetnet niet voldoende als early-warning systeem. Wanneer een nieuwe ziekte of infectie optreedt, kan niet gegarandeerd worden dat dit meetnet dit kan opmerken.
+- Jaarlijkse meting is niet voldoende als early-warning systeem voor ziektes
+- Enkel basisinformatie: de kroonbeoordeling en symptoombeschrijving
+    - geen link met andere invloedsfactoren zoals bodem, klimaat en andere abiotische invloeden
+    - deze exta invloedsfactoren zijn enkel in 5 van de 8 level-2 meetnetlocaties ter beschikking
+    - deze zwakte is hetzelfde in de voleldige Europese context
+- mogelijks modernere manieren om de gezondheidstoestand op te volgen
+- kroonbeoordeling is intens werk waar iedere boom toch enkele minuten bekeken moet worden
+    - voorlopig nog niet direct een betere methode
+- Representativiteit bij keuze van proefvlqkken
+    - oorspronkelijk een systematisch grid
+    - bij selectie extra steekproefpunten in 1995 soorten als beuk bevoordeeld
+- Niet alle bosvormen vertegenwoordigd
+    - geen informatie over bosranden, omdat punten verlegd worden tot in een bos
+    - vooral proefvlakken met vooral grote en oudere bomen
+- De proefvlakken worden ouder door de lange duur van h et meetnet
+    - veroudering begint invloed op vitaliteit te hebben
+    - en verslechterende trend kan door ouderdom komen in plaats van algemene vitaliteit in Vlaanderen
+- Metingen kunnen enkel gebeuren in de zomer met een vol bladerdek
+- Geen specifieke doelstelling van welke trend gedetecteerd moet kunnen worden
 
-Er wordt enkel basisinformatie verzameld, namelijk kroonbeoordeling en symptoombeschrijving, dus er is geen link met andere invloedsfactoren zoals bodem, klimatologische variabelen, ziektes en andere abiotische invloeden. Enkel voor de 5 locaties die ook in het level-2 meetnet opgenomen zijn is deze informatie ter beschikking
-
-Dit is ook een zwakte in Europese context, ook al de Europese meetpunten zijn enkel op een beperkt aantal locaties in detail bekeken.
-
-Het meetnet is niet volledig representatief voor Vlaanderen, omdat gekozen is in 1995 om enkele soorten te bevoordelen bij de selectie van nieuwe proefvlakpunten. Dit wil niet zeggen dat het meetnet daarvoor veel in waarde mindert, maar dit is wel iets om in het achterhoofd te houden.
-
-Verder wordt niet alle bosvormen vertegenwoordigd in de proefvlakken, omdat punten weggehouden worden van de bosrand, en meetpunten niet gelegd kunnen worden in heel kleine clusters van bomen.
-
-Doordat de tijdreeks al heel lang loopt en door de keuze van de bomen in ieder proefvlak, begint de veroudering van de bomen een belangrijkere rol te spelen in de evolutie van de vitaliteit, waardoor een verslechterende trend het gevolg kan zijn van de leeftijd van deze specifieke bomen, dan de algemene gezondheidstoestand in Vlaanderen. Daarnaast is er  hierdoor ook een ondervertegenwoordiging van jongere bomen.
-
-Hoewel altijd in dezelfde periode gemeten wordt en de weersomstandigheden tijdens de metingen er niet zoveel aan toedoen, behalve voor de toegankelijkheid van het plot, is het niet mogelijk dezelfde metingen te herhalen op verschillende periodes in het jaar
-
-Het meetnet is oorspronkelijk ontworpen op basis van een representatief grid, maar er zijn veel plots toegevoegd uit interesse, zonder er specifieke doelstellingen van wat gedetecteerd moet worden aan gekoppeld zijn.
 
 ## Opportuniteiten
 
-Zonder veel extra budget zijn niet heel veel extra mogelijkheden voor het meetnet voorhanden.
+- Beperkte mogelijkheden voor uitbreiding monitoringsnetwerk zonder extra budget.
+- Bladanalyses binnen proefvlakken in sommige landen voor vitaliteit, nog nooit in Vlaanderen.
+- Leeftijdsbepalingen en vegetatieopnames kunnen interessante informatie opleveren.
+- Trend beter te verklaren met statistisch model dan bij standaardmonitoringnetwerk.
+- Bodemanalyses in 2003 uitgevoerd, mogelijkheid tot hernieuwing voor de bosinventarisatieproefvlakken.
+- Nieuwe proefvlakken nog niet opgenomen in Fieldmap sinds 2010.
+- Perspectieven voor verbanden tussen vitaliteit en beheervormen, afstand tussen bomen, enzovoort als dendrometrische gegevens worden toegevoegd aan Fieldmap.
+- Mogelijkheden voor kennisuitwisseling met recent uitgebreid netwerk voor monitoring van bosvitaliteit in Wallonië.
 
-In sommige landen gebeuren ook nog bladanalyses binnen de meetnetproefvlakken, om een beter zicht te krijgen op de vitaliteit, iets wat in Vlaandern nog nooit gebeurd is. Daarnaast zouden ook leefijdsbepalingen van de bomen, vegetatie-opnames in de proefvlakken interessante informatie kunnen opleveren.
-
-In Vlaanderen zijn redelijk veel andere metingen voorhanden, dus misschien kan de trend beter verklaard worden door een statistisch model, zonder veel extra kostprijs, dan puur uit te gaan van een constante trend zoals in een standaardmeetnet. 
-
-Vroeger (2003) zijn er eens bodemanalyses gebeurd in alle proefvlakken, maar dat is nooit meer herhaald, terwijl er intussen op het INBO heel veel bodemonderzoek gebeurt. Op zich is er wel interesse in het MILKLIM team om de bosinventarisatieproefvlakken eens opnieuw te bezoeken voor bodemanalyses.
-
-Voorlopig worden gegevens niet meer in Fieldmap ingegeven (dateert van 2010) en dus staan de nieuwe plots hier nog niet in. Als alles ook in Fieldmap toegevoegd wordt waaronder ook de dendrometrische gegevens voor het hele proefvlak, biedt dat perspectieven naar links tussen vitaliteit en beheervormen, afstand tussen bomen, ... . Daarnaast is het ook gemakkelijk dat alle bomen via Fieldmap gemakkelijk teruggevonden kunnen worden.
-
-In Wallonië is het bosvitaliteitsmeetnet onlangs sterk uitgebreid, dus er zijn mogelijkheden voor kennisuitwisseling.
 
 ## Bedreigingen
 
-Het huidige meetnet wordt door een heel beperkte kern van gekwalificeerde personeelsleden uitgevoerd, daarnaast zijn 3 van de 4 intussen de leeftijd van 60 gepasseerd en komen die dicht bij hun pensioen.
+- Huidig meetnet uitgevoerd door beperkte kern van gekwalificeerde personeelsleden, waarvan 3 van de 4 de leeftijd van 60 hebben gepasseerd.
+- Training voorzien voor enkele nieuwe experts op korte termijn om meetnet te kunnen blijven opvolgen in de toekomst.
+- Veldwerk, data-invoer en rapportage van meetnet door 1 persoon gedaan, wat niet voordelig is voor kennisdeling.
+- Budget is nodig voor continuering monitoring.
+- Monitoring is bedreigd omdat meetnet naar vraaggestuurd onderzoek geplaatst is in plaats van wettelijk vastgelegde taken.
+- Rapportageverplichting van ICP forest beperkter dan dit meetnet.
+- Mogelijkheid voor Vlaanderen om uit ICP forests te stappen.
 
-Om het meetnet in de toekomst te kunnen blijven opvolgen zal op korte termijn training moeten voorzien worden voor enkele nieuwe experten, omdat de kroonbeoordeling wel iets is, waarvoor training en ervaring nodig is, om dit goed te doen.
-
-Het laatste jaar is alles van het meetnet van veldwerk tot data-invoer tot rapportage door 1 persoon gebeurd, wat niet voordelig is voor de kennis hieromtrent bij andere collega's.
-
-De monitoring is niet de duurste van het INBO maar er moet wel voldoende budget zijn. De continuering is immers steeds bedreigd. Zo is een tijd geleden dit meetnet naar het vraaggestuurd onderzoek geplaasts in plaats van wettelijk vastgelegde taken.
-
-De rapportageverplichting van ICP forest zijn beperkter dan dit meetnet. Voor de jaarlijske rapportage moeten enkel de oorspronkelijke 16x16km plots geraporteerd worden. De andere resultaten worden ook wel nar ICP forests gestuurd en gebruikt in de Europese statistieken. Daarnaast is er op zich ook niets meer dat Vlaanderen verhindert om uit ICP forests te stappen.
