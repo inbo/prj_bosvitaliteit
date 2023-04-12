@@ -11,21 +11,21 @@ style: INBO
 lang: nl
 
 # report specific options. See ?INBOmd::pdf_report() for full list and more details.
-# shortauthor: 
-corresponding: 
-#reviewer:
-#  - firstnaam: Firstname
-#    name: Lastname
-#    email: "firstname.lastname@inbo.be"
-#    orcid: 0000-0002-1825-0097
-# year:
-cover_photo:
-# cover_description:
+shortauthor: Verschelde P.
+corresponding: pieter.verschelde@inbo.be
+reviewer:
+  - firstnaam: Hans
+    name: Vanacalster
+    email: "hans.vancalster@inbo.be"
+    orcid: 0000-0001-8595-8426
+year: 2023
+cover_photo: aigeneratedforest.jpg
+cover_description: AI gegenereerd bos
 # cover:
-# doi:
-# reportnr:
+doi: XXXXXXXXX
+reportnr: INBO-2023-000000
 # ordernr:
-# depotnr: 
+depotnr: XXXXXXXXX
 #client:
 #  - Organisation (remove client section when not needed)
 #  - Street number
@@ -40,11 +40,11 @@ cover_photo:
 # cooperation_logo: uncomment and replace with path to logo or remove line
 
 # pdf report specific options. See ?INBOmd::pdf_report() for full list and more details.
-embargo:
-print:
-  copies: 0
-  motivation:
-  pages:
+embargo: 2023-06-01
+#print:
+#  copies: 0
+#  motivation:
+#  pages:
 
 bibliography: references.bib
 link-citations: TRUE
@@ -60,19 +60,32 @@ output:
   #bookdown::dontrun: default
 ---
 
-<!--
 # Dankwoord {-}
 
-De tekst voor het optionele dankwoord.
+Bedankt aan Geert Sioen om me mee te nemen op een veldmeting en de nodige informatie te verschaffen om dit document te kunnen maken.
+Daarnaast een bedankje aan OpenAI GPT-4 om mijn tekst te controleren op grammatica en spelling.
 
+<!--
 # Voorwoord {-}
--->
 
 De tekst voor het optionele voorwoord.
+-->
 
 # Samenvatting {-}
 
-Dit rapport probeert het bosvitaliteitsmeetnet in kaart te brengen, en onderzoekt of het meetnet goed gedimensioneerd is voor de vragen die het wil beantwoorden.
+Dit rapport brengt het bosvitaliteitsmeetnet in kaart en onderzoekt of het meetnet goed gedimensioneerd is voor de vragen die het wil beantwoorden.
+
+Het bosvitaliteitsmeetnet is een langlopend meetnet waarbij de vitaliteit van bomen wordt beoordeeld door een visuele inschatting van het percentage kroonverlies in stappen van 5%.
+
+Eerst wordt de geschiedenis en een analyse van het huidige meetnet gepresenteerd.
+Vervolgens worden de sterke en zwakke punten van het meetnet geëvalueerd op basis van de leidraad voor meetnetten.
+Daarna worden powerberekeningen uitgevoerd op een lineair trendmodel om te bepalen welke effecten gedetecteerd kunnen worden met de huidige steekproef en wat de impact zou zijn bij wijzigingen in de steekproefdimensies.
+Tot slot worden enkele aanbevelingen voor verbetering van het meetnet gedaan.
+
+Uit de huidige analyse blijkt dat het model, ondanks enkele tekortkomingen, vrij goed gedimensioneerd is om een effect van 12% verandering in bladverlies te kunnen detecteren over een periode van 12 jaar voor alle soorten.
+
+Het is echter belangrijk om geleidelijk aan de steekproefpunten te vervangen, aangezien de huidige steekproefpunten verouderd raken en niet meer representatief zijn voor Vlaanderen.
+Omdat we een analyse uitvoeren over alle soorten heen, is het van belang dat deze niet te veel afwijken van de soortendistributie in het bosvitaliteitsmeetnet voor steekproefpunten die volledig in het bos liggen.
 
 <!--
 De tekst voor de verplichte samenvatting.

@@ -5,13 +5,19 @@
 
 ## Opdracht
 
-Het managementteam van het INBO wil de meetnetten die het INBO beheert reviseren om te onderzoeken of er winsten kunnen gehaald worden in efficiëntie en effectiviteit. Dit meetnet is een van de eerste meetnetten die gereviseerd worden, in de toekomst zal de manier van aanpakken wijzigen, zodat de meetnetbeheerder meer betrokken is bij het revisieproces met als resultaat een goed gedocumenteerd meetnet, waar de keuzes in het meetnet naar wat, waarom en hoeveel er gemeten wordt, duidelijk zijn.
+Het managementteam van het INBO wil de meetnetten die het INBO beheert reviseren om te onderzoeken of er winsten kunnen gehaald worden in efficiëntie en effectiviteit.
+Dit meetnet is een van de eerste meetnetten die gereviseerd worden.
+In de toekomst zal de aanpak veranderen, zodat de meetnetbeheerder meer betrokken is bij het revisieproces.
+Het resultaat is een goed gedocumenteerd meetnet, waarbij de keuzes over wat, waarom en hoeveel er gemeten wordt, duidelijk zijn.
 
 ## Historiek meetnet
 
-Het bosvitaliteitsmeetnet - ook gekend als het Level-1 meetnet - is een heel langlopend meetnet, vermoedelijk een van de oudste meetnetten op het INBO, waarbij de eerste gegevens reeds van 1987 dateren. Het meetnet is tot stand gekomen via de expertenpanel groep ICP forests, met vertegenwoordigers uit heel Europa. Het huidige meetnet bevat 78 proefvlakpunten (zie figuur \@ref(fig:plotloc) ) waar telkens verschillende bomen worden bemonsterd.
+Het bosvitaliteitsmeetnet - ook gekend als het Level-1 meetnet - is een heel langlopend meetnet, vermoedelijk een van de oudste meetnetten op het INBO, waarbij de eerste gegevens reeds van 1987 dateren.
+Het meetnet is tot stand gekomen via de expertenpanel groep ICP forests, met vertegenwoordigers uit heel Europa.
+Het huidige meetnet bevat 78 proefvlakpunten (zie figuur \@ref(fig:plotloc) ) waar telkens verschillende bomen worden bemonsterd.
 
-De bedoeling van het meetnet is om de gezondheidstoestand van de bomen in de Europese bossen te onderzoeken aan de hand van evaluaties van het blad- of naaldverlies in de kroon van (co-)dominante bomen. Verschillende proefvlakken worden bezocht en in ieder proefvlak worden verschillende boomkronen visueel geëvalueerd en er wordt een inschatting gemaakt van het blad- of naaldverlies in klassen van 5%, waarbij bomen met een verlies van meer dan 25% aanzien worden als beschadigde bomen.
+De bedoeling van het meetnet is om de gezondheidstoestand van de bomen in de Europese bossen te onderzoeken aan de hand van evaluaties van het blad- of naaldverlies in de kroon van (co-)dominante bomen.
+Verschillende proefvlakken worden bezocht en in ieder proefvlak worden verschillende boomkronen visueel geëvalueerd en er wordt een inschatting gemaakt van het blad- of naaldverlies in klassen van 5%, waarbij bomen met een verlies van meer dan 25% aanzien worden als beschadigde bomen.
 
 ```{r plotloc, echo = FALSE, message = FALSE, fig.cap="Ligging van de meetpunten en de periode wanneer deze eerst opgemeten zijn"}
 
