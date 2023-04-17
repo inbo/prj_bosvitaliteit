@@ -498,7 +498,7 @@ Verder zal best ook wat aandacht gaan naar de representativiteit van de steekpro
 Hieronder een samenvatting van de tekst hierboven. De effectieve dimensionering van het meetnet komt in een volgend hoofdstuk aan bod.
 
 
-## Sterktes
+### Sterktes
 
 - Internationaal gedragen meetnet met een overkoepelende organisatie ICP-forests
     - De ingezamelde data uit een groot deel van de Europese landen
@@ -516,7 +516,7 @@ Hieronder een samenvatting van de tekst hierboven. De effectieve dimensionering 
     - informatief voor de evolutie in de tijd
 - Alle data is volledig gedigitaliseerd in een goed uitgewerkte en genormaliseerde SQL server databank
 
-## Zwaktes
+### Zwaktes
 
 - Jaarlijkse meting is niet voldoende als early-warning systeem voor ziektes
 - Enkel basisinformatie: de kroonbeoordeling en symptoombeschrijving
@@ -539,7 +539,7 @@ Hieronder een samenvatting van de tekst hierboven. De effectieve dimensionering 
 - Geen specifieke doelstelling van welke trend gedetecteerd moet kunnen worden
 
 
-## Opportuniteiten
+### Opportuniteiten
 
 - Beperkte mogelijkheden voor uitbreiding monitoringsnetwerk zonder extra budget.
 - Bladanalyses binnen proefvlakken in sommige landen voor vitaliteit, nog nooit in Vlaanderen.
@@ -551,7 +551,7 @@ Hieronder een samenvatting van de tekst hierboven. De effectieve dimensionering 
 - Mogelijkheden voor kennisuitwisseling met recent uitgebreid netwerk voor monitoring van bosvitaliteit in Wallonië.
 
 
-## Bedreigingen
+### Bedreigingen
 
 - Huidig meetnet uitgevoerd door beperkte kern van gekwalificeerde personeelsleden, waarvan 3 van de 4 de leeftijd van 60 hebben gepasseerd.
 - Training voorzien voor enkele nieuwe experts op korte termijn om meetnet te kunnen blijven opvolgen in de toekomst.
