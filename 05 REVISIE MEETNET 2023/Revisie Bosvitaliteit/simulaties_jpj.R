@@ -4,7 +4,7 @@ library(simr)
 X <- expand.grid(x = 0:1, p = 1:75)
 sdbp <- 0.060
 sdwp <- 0.030
-COV = list(PlotNr = sdbp ** 2)
+COV = list(p = sdbp ** 2)
 S <- sdwp
 intercept <- 0.25
 slopes <- seq(1,25)/1200

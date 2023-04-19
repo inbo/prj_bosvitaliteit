@@ -344,6 +344,46 @@ for (startjaar in startjaren) {
 }
 
 
+#voor een periode van 20 jaar
+startjaren20 <- 1995:2002 
+
+modellen <- simr_params20 <-  NULL
+for (startjaar in startjaren20) {
+  jaren <- startjaar:(startjaar + 20)
+  center <- median(jaren)
+  print(startjaar)
+  lmerdata <- df_trees_agg %>% filter(Jaar %in% startjaar:(startjaar + 20)) %>% 
+    mutate(JaarCC = Jaar - center)
+  model_calc <- 
+    lmer(nnv ~ JaarCC + (JaarCC|PlotNr), 
+         data = lmerdata)
+  
+  #aangepast naar op basis van geaggregeerd model
+  #sd_tree <- sqrt(VarCorr(model_calc)$prbo[1,1])
+  sd_between_plots <- sqrt(VarCorr(model_calc)$PlotNr[1,1])
+  sd_trend_between_plots <- sqrt(VarCorr(model_calc)$PlotNr[2,2])
+  COV_plot <- VarCorr(model_calc)$PlotNr
+  COR_plot <- attr(VarCorr(model_calc)$PlotNr, "correlation")
+  correlation <- COR_plot[1,2]
+  sd_resid <- attr(VarCorr(model_calc), "sc")
+  simr <- list(
+    #sd_tree = sd_tree, 
+    sd_plot = sd_between_plots,
+    sd_trend = sd_trend_between_plots,
+    cor_trend_plot = correlation, 
+    sd_resid = sd_resid, 
+#   COV_tree = VarCorr(model_calc)$prbo,
+    COV_plot = VarCorr(model_calc)$PlotNr)
+  
+  modellen[[startjaar-1994]] <- model_calc
+  simr_params20[[startjaar-1994]] <- simr
+}
+
+
+
+
+
+
 ```
 
 
@@ -435,12 +475,21 @@ Hezelfde procedé als voorheen, maar nu niet meer apart op de ruwe data berekend
 ```{r sdtrendmodel, echo = FALSE}
 
 sd_trend <- data.frame(
+  periode = "over 12 jaar",
   startjaar = startjaren, 
   sd_trend = sapply(simr_params, function(x) x$sd_trend))
 
-sd_trend_chosen <- 0.065
+sd_trend_chosen <- 0.0065
 
-ggplot(sd_trend, aes(x = startjaar, y = sd_trend)) + geom_point()
+
+sd_trend20 <- data.frame(
+  periode = "over 20 jaar",
+  startjaar = startjaren20,
+  sd_trend = sapply(simr_params20, function(x) x$sd_trend))
+
+ggplot(bind_rows(sd_trend, sd_trend20), 
+       aes(x = startjaar, y = sd_trend, color = periode)) + geom_point()
+
 
 ```
 

@@ -87,19 +87,46 @@ Instelvariabelen:
 
 - Standaarddeviatie tussen plots is `0.07`, dus 0.05, 0.07 en 0.09 worden bekeken
 - Standaarddeviatie tussen  bomen in een plot is `0.175`, en varieert weinig, dus blijft behouden
+- Aantal plots is 20,40,60,80,100,120
 - Aantal bomen is 5, 10, 15, 20 of 25, de standaarddeviatie tussen bomen wordt omgezet door de standaardfout op het plotgemiddelde door deze standaarddeviatie te delen door de vierkantswortel van het aantal bomen.
 - De standaardeviatie van de trend per plot is `0.065` en varieert tussen 0.04 en 0.09
-- De correlatie tussen trend en intercept per plot is `0.40`, dit is een worst case scenario, ze zullen dit instellen op 0.00, 0.30 en 0.40.
+- De correlatie tussen trend en intercept per plot is `0.20`, en we zullen dit instellen op 0.00, 0.20 en 0.40.
 - De verschillende trends die we willen zien is 6,12,18 of 24 procent op 12 jaar en 5, 10, 15 en 20 procent op 20 jaar.
 
 Als basis zal ik werken met 12% op 12 jaar, dus de verschillende instelvariabelen van iedere variabele wordt enkel in dat scenario bekeken.
 De verschillende trends wordten bekeken op de basisinstelvariabelen en niet op de varianten daarop.
 
+### Kracht met de huidige steekproef
+
+```{r instelv}
+
+                       
+```
+
 Deze powerberekeningen gebeuren op basis van een extern R script, die als aparte scripts bij het document gevoegd worden.
 
+```{r simrfixedvars, fig.cap="Powerberekening voor de berekende instelvariabelen voor 20 tot 120 proefvlakken voor detectie van 12% op 12 jaar en 20% op 20 jaar"}
+powers1 <- read_csv2('data/modelsim_fixed.csv')
+ggplot(powers1, 
+       aes(x = N_plots, y = power, ymin = lcl, ymax = ucl,
+           color = factor(N_years))) + 
+  geom_point() + geom_line(linetype = "dashed") +  geom_errorbar() +
+  geom_hline(yintercept = 0.8, color = "green4") + 
+  labs(x = "Aantal plots", y = "Kracht", color = "Jaren") + 
+  scale_y_continuous(labels = scales::percent)
+```
+
+Uit figuur \@ref(fig:simrfixedvars) blijkt dat de huidige dataset volstaat voor een trend van 20% over een periode van 20 jaar te vinden, maar met  deze resultaten moeten wel voorzichtig omgesprongen worden, want de invloed van de instelvariabelen is groot. 
+Het lijkt bijzonder dat er weinig verschil is in power tussen een periode van 12 jaar om 12% verschil te detecteren en een periode van 20 jaar om een verschil van 20% te detecteren.
+Hier ligt dit vermoedelijk door het gebruik van een random helling op jaar, dus over een langere periode zal ook de random helling leiden tot grotere verschillen tussen de plots. Indien geen random helling in het model wordt opgenomen dan blijkt duidelijk dat 20% over 20 jaar veel gemakkelijker gedetecteerd wordt dan 12% op 12 jaar.
+Om een correcte analyse te hebben zou de random helling ook eens op 20 jaar moeten berekend worden, en hier zal vermoedelijk het effect van deze helling een stuk kleiner zijn, en dus de steekproef veel krachtiger zijn. <<<Uit de gegevens blijkt dat op 20 jaar de standaarddeviatie op de trend nog ongeveer 0.005 is in plaats van 0.0065.Toch is dit niet overtuigend>>>
 
 
 
+### Invloed van instelvariabelen op de power
+
+```{r rsiminstelvars1}
+```
 
 <!---
 ## Model jaar per jaar
