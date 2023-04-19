@@ -70,36 +70,33 @@ ggplot(data = bind_rows(data.frame(type = "plot",
 
 
 ```{r jpjpwr, cache = TRUE}
-X <- expand.grid(x = 0:1, p = 1:75)
-sdbp <- 0.060
-sdwp <- 0.030
-COV = list(PlotNr = sdbp ** 2)
-S <- sdwp
-intercept <- 0.25
-slopes <- seq(1,25)/1200
-#sdt  <- 0.065 #
-#cor  <- 0.400
-nsim <-  100
 
-PWR <- NULL
-for (i in 1:length(slopes)) {
-  print(i)
-  B <- c(intercept, slopes[i])
-  model <- makeLmer(y ~ x + (1 | p), 
-                  fixef = B, VarCorr = COV, sigma = S, 
-                  data = X )
+datajpj <- read_csv2('data/power_jpj.csv')
 
-  PWR[[i]] <- powerSim(model, nsim = nsim)    
-}
-
-rv <- data.frame(jaarlijkse_trend = slopes, 
-                 jaarlijkse_power = sapply(PWR, function(obj) obj$x / obj$n))
-ggplot(rv, aes(x = jaarlijkse_trend, y = jaarlijkse_power)) + 
+ggplot(datajpj, aes(x = jaarlijkse_trend, y = jaarlijkse_power)) + 
   geom_point() + geom_line() + geom_hline(yintercept = 0.80, color = "red")
   
 ```
-
+De berekeningen gebeuren in het script _*simulaties_jpj.R*_
 Een trend van ongeveer 0.12 kan aangetoond worden met 80% power. Dat wil zeggen dat een bladverlies die stijgt van 0.25 naar 0.262 aangetoond (ofwel een stijging van 5%) kan worden aangetoond tussen 2 verschillende jaren.
+
+
+## Berekening power op de geaggregeerde dataset voor een langere periode
+
+Instelvariabelen: 
+
+- Standaarddeviatie tussen plots is `0.07`, dus 0.05, 0.07 en 0.09 worden bekeken
+- Standaarddeviatie tussen  bomen in een plot is `0.175`, en varieert weinig, dus blijft behouden
+- Aantal bomen is 5, 10, 15, 20 of 25, de standaarddeviatie tussen bomen wordt omgezet door de standaardfout op het plotgemiddelde door deze standaarddeviatie te delen door de vierkantswortel van het aantal bomen.
+- De standaardeviatie van de trend per plot is `0.065` en varieert tussen 0.04 en 0.09
+- De correlatie tussen trend en intercept per plot is `0.40`, dit is een worst case scenario, ze zullen dit instellen op 0.00, 0.30 en 0.40.
+- De verschillende trends die we willen zien is 6,12,18 of 24 procent op 12 jaar en 5, 10, 15 en 20 procent op 20 jaar.
+
+Als basis zal ik werken met 12% op 12 jaar, dus de verschillende instelvariabelen van iedere variabele wordt enkel in dat scenario bekeken.
+De verschillende trends wordten bekeken op de basisinstelvariabelen en niet op de varianten daarop.
+
+Deze powerberekeningen gebeuren op basis van een extern R script, die als aparte scripts bij het document gevoegd worden.
+
 
 
 
