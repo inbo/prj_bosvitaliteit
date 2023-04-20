@@ -58,24 +58,23 @@ Een normale verdeling als benadering zal een onderschatting geven van de respons
 library(tidyverse)
 library(nlme)
 library(lme4)
-df_trees <- readRDS("data/dfTrees_trend.RDS") %>% 
-  filter(!is.na(BladverliesNetto),
-         Jaar >= 1995) %>% 
-  mutate(JaarC = Jaar - 2000, 
-         nnv = BladverliesNetto / 100,
-         prbo = paste(PlotNr, BoomNr, sep = "."))
+df_trees <- read_csv2("data/inputdata.csv") %>% 
+  filter(!is.na(nnv),
+         jaar >= 1995) %>% 
+  mutate(jaarC = jaar - 2000, 
+         prbo = paste(plot, tree, sep = "."))
 
 df_plots <- df_trees %>% 
-  group_by(PlotNr, Jaar) %>% 
+  group_by(plot, jaar) %>% 
   summarize(n_trees = n(), 
-            nnv =  mean(BladverliesNetto)/100, 
-            sd_tree = sd(BladverliesNetto/100),
+            sd_tree = sd(nnv),
+            nnv =  mean(nnv), 
             se_resid = sd_tree / sqrt(n()),
             se_resid = ifelse(is.na(se_resid), se_resid, 0),
             .groups = "drop") %>% 
-  filter(Jaar >= 1995) %>% 
-  mutate(PlotNr = as.factor(PlotNr),
-         JaarC = Jaar - 2000) %>% 
+  filter(jaar >= 1995) %>% 
+  mutate(plot = as.factor(plot),
+         jaarC = jaar - 2000) %>% 
   na.omit()
 
 
@@ -92,11 +91,11 @@ Dus vermoedelijk zal het aantal bomen en de variatie tussen de bomen binnen een 
 Er wordt natuurlijk wel impact verwacht op de betrouwbaarheid van de schattingen van het proefvlakgemiddelde, die hoger is wanneer meer bomen per proefvlak gemeten worden.
 
 ```{r trendperjaar, fig.cap= "trend per jaar (zwart geaggregeerd per plot, groen gewoon naïef over alle bomen heen zonder rekening te houden met plot)", echo=FALSE}
-  tr_plot <- df_plots %>% group_by(Jaar) %>% 
+  tr_plot <- df_plots %>% group_by(jaar) %>% 
     summarise(mean_nnv = mean(nnv), .groups = "drop")
-  tr_tree <- df_trees %>% group_by(Jaar) %>% 
+  tr_tree <- df_trees %>% group_by(jaar) %>% 
     summarise(mean_nnv = mean(nnv), .groups = "drop")
-  ggplot(data = tr_plot, aes(x = Jaar, y = mean_nnv)) + 
+  ggplot(data = tr_plot, aes(x = jaar, y = mean_nnv)) + 
     geom_point() + geom_line() + 
     geom_point(data = tr_tree, color = "green4") + 
     geom_line(data = tr_tree, color = "green4") +
@@ -108,7 +107,7 @@ Daarnaast is er veel verschil is tussen de plots in figuur \@ref(fig:evolutieper
 
 ```{r evolutieperplot, fig.cap = "Evolutie bladverlies geaggregeerd per plot. Groene lijn is gemiddeld bladverlies over de dataset", echo = FALSE}
 
-ggplot(df_plots, aes(x = Jaar, y = nnv, groups = PlotNr)) + 
+ggplot(df_plots, aes(x = jaar, y = nnv, groups = plot)) + 
   geom_line() + 
   geom_hline(yintercept = mean(df_plots$nnv), color = "darkgreen", linewidth = 1) +
   theme(legend.position = "none")
@@ -153,11 +152,11 @@ Enkele anomalieën kunnen niet vermeden worden door de normale benadering, waard
 
 ```{r modeltest, eval = TRUE, echo = TRUE, cache = TRUE ,warning=FALSE, echo = FALSE}
 library(nlme)
-base_lme <- lme(nnv ~ JaarC, 
-                random = ~ 1 + JaarC|PlotNr/BoomNr, 
-                #correlation = corExp(form = ~Jaar|PlotNr/BoomNr, nugget = TRUE),
+base_lme <- lme(nnv ~ jaarC, 
+                random = ~ 1 + jaarC|plot/tree, 
+                #correlation = corExp(form = ~jaar|plot/tree, nugget = TRUE),
                 correlation = corExp(value = c(7, 0.14), nugget = TRUE, fixed = TRUE),
-                data = df_trees %>% filter(Jaar >= 2010), 
+                data = df_trees %>% filter(jaar >= 2010), 
                 control = lmeControl(maxiter = 100, 
                                      tolerance = 1e-4,
                                      opt = "optim",
@@ -167,9 +166,9 @@ base_lme <- lme(nnv ~ JaarC,
 plotdata_full <- data.frame(
   fit = fitted(base_lme), 
   resid = resid(base_lme, type = "n"),
-  Jaar = df_trees %>% filter(Jaar >= 2010) %>% pull(Jaar))
+  jaar = df_trees %>% filter(jaar >= 2010) %>% pull(jaar))
 
-  ggplot(plotdata_full, aes(x = fit, y = resid, color = Jaar)) + 
+  ggplot(plotdata_full, aes(x = fit, y = resid, color = jaar)) + 
   geom_point(pch = 1) + labs(x = "Gefitte waarden", 
                              y = "Genormaliseerde residu's", 
                              color = "Jaar")
@@ -181,60 +180,59 @@ plotdata_full <- data.frame(
 ```
                                   
 
+<!---
 ```{r modeltestx, echo = FALSE, eval = FALSE, include = FALSE}
-base_lme2 <- lme(BladverliesNetto ~ JaarC, 
-                random = ~ 1 + JaarC|PlotNr/BoomNr, 
+base_lme2 <- lme(nnv ~ jaarC, 
+                random = ~ 1 + jaarC|plot/tree, 
                 #correlation = corExp(form = ~JaarC|PlotNr/BoomNr, nugget = TRUE),
                 #correlation = corExp(value = c(7, 0.14), nugget = TRUE, fixed = TRUE),
-                data = df_trees %>% filter(JaarC >= 0), 
+                data = df_trees %>% filter(jaarC >= 0), 
                 control = lmeControl(maxiter = 100, 
                                      tolerance = 1e-4,
                                      opt = "optim",
                                      optimMethod = "L-BFGS-B"))
 
-base_lme3 <- lme(BladverliesNetto ~ JaarC, 
-                random = ~ 1 |PlotNr/BoomNr, 
-                correlation = corExp(form = ~JaarC|PlotNr/BoomNr, nugget = TRUE),
+base_lme3 <- lme(nnv ~ jaarC, 
+                random = ~ 1 |plot/tree, 
+                correlation = corExp(form = ~jaarC|plot/tree, nugget = TRUE),
                 #correlation = corExp(value = c(7, 0.14), nugget = TRUE, fixed = TRUE),
-                data = df_trees %>% filter(JaarC >= 0), 
+                data = df_trees %>% filter(jaarC >= 0), 
                 control = lmeControl(maxiter = 100, 
                                      tolerance = 1e-4,
                                      opt = "optim",
                                      optimMethod = "L-BFGS-B"))
 
-cs1 <- corARMA(0.7, ~ JaarC | group, p = 1)
+cs1 <- corARMA(0.7, ~ jaarC | group, p = 1)
 
-base_lme4 <- lme(BladverliesNetto ~ JaarC, 
-                random = ~ JaarC |PlotNr/BoomNr, 
+base_lme4 <- lme(nnv ~ jaarC, 
+                random = ~ jaarC |plot/tree, 
                 correlation = corARMA(c(0.9), 
-                                      form = ~ JaarC | PlotNr/BoomNr, 
+                                      form = ~ jaarC | plot/tree, 
                                       p = 1, q = 0),
-                data = df_trees %>% filter(JaarC >= 0), 
+                data = df_trees %>% filter(jaarC >= 0), 
                 control = lmeControl(maxiter = 100, 
                                      tolerance = 1e-4,
                                      opt = "optim",
                                      optimMethod = "L-BFGS-B"))
 
-testdata <- dfTrees %>% 
-  filter(JaarC >= 0) %>% 
-  select(JaarC, PlotNr, BoomNr, BladverliesNetto)
+testdata <- df_trees %>% 
+  filter(jaarC >= 0) %>% 
+  select(jaarC, plot, tree, nnv)
 testdata$residraw_noac <- resid(base_lme2)
 testdata$resid_noac <- resid(base_lme2, type = "n")
 
 testac <- gls(resid_noac ~ 1, data = testdata, 
-            correlation = corExp(form = ~ JaarC | PlotNr/BoomNr, nugget = TRUE))
+            correlation = corExp(form = ~ jaarC | plot/tree, nugget = TRUE))
 
 
 anova(base_lme, base_lme2, base_lme3, base_lme4)
 
 
-base_tmb <- glmmTMB(BladverliesNetto ~ JaarC  +
-                      (JaarC|PlotNr/BoomNr) + 
+base_tmb <- glmmTMB(nnv ~ jaarC  +
+                      (jaarC|plot/tree) + 
                       exp(times  + 0 | group), 
-                    data = dfTrees %>% filter(JaarC >= 0))
+                    data = df_trees %>% filter(jaarC >= 0))
 
-                
-                
 resids <- data.frame(resn = resid(base_lme, type = "n")) %>% 
   mutate(qqprob = seq(0,1, length = n()),
          norm = qnorm(qqprob))
@@ -245,6 +243,7 @@ ggplot(resids) + geom_density(aes(x = resn )) +
 #summary(base_lme)
 
 ```
+--->
 
 Op basis van bovenstaand plot \@ref(fig:verdelingbladverlies) blijkt dat de meeste bomen een bladverlies hebben onder de 50% en dat binnen het bereik 0-50% de verdeling er vrij normaal uit ziet. Om dit iets exacter te bekijken is er figuur \@ref(fig:normaleverdeling) waaruit blijkt dat het eenvoudige model (mixed effect model met fixed effect op Jaar en random effect PlotNr met daarin BoomNr genest) leidt tot een vrij goed een gaussiaanse distributie te benaderen.
 
@@ -269,19 +268,19 @@ $$
 
 ```{r vereenvoudigdmodel, echo = FALSE, message=FALSE, warning = FALSE, message=FALSE, cache = TRUE}
 library(lme4)
-df_trees_agg <- df_trees %>% group_by(PlotNr, Jaar, JaarC) %>% 
+df_trees_agg <- df_trees %>% group_by(plot, jaar, jaarC) %>% 
   summarise(nnv = mean(nnv),
             sdw = sd(nnv) / sqrt(n()), 
             sdw = ifelse(is.na(sdw), 0, sdw))
-model <- lmer(nnv ~ JaarC + (JaarC|PlotNr) , 
-              data = df_trees_agg %>% filter(Jaar >= 2010))
+model <- lmer(nnv ~ jaarC + (jaarC|plot) , 
+              data = df_trees_agg %>% filter(jaar >= 2010))
 #summary(model)
 plotdata_red <- data.frame(
   fit = fitted(model), 
   resid = resid(model, type = "pe"),
-  Jaar = df_trees_agg %>% filter(Jaar >= 2010) %>% pull(Jaar))
+  jaar = df_trees_agg %>% filter(jaar >= 2010) %>% pull(jaar))
 
-  ggplot(plotdata_red, aes(x = fit, y = resid, color = Jaar)) + 
+  ggplot(plotdata_red, aes(x = fit, y = resid, color = jaar)) + 
   geom_point(pch = 1) + labs(x = "Gefitte waarden", 
                              y = "Genormaliseerde residu's", 
                              color = "Jaar")
@@ -310,24 +309,23 @@ Als we naast een algemeen beeld over de soorten heen ook per soort een inschatti
 ```{r inputmodels, echo = FALSE, eval = TRUE, cache = TRUE, results='hide', warning = FALSE, message = FALSE}
 
 startjaren <- 1995:2010 
-
 modellen <- simr_params <-  NULL
 for (startjaar in startjaren) {
   jaren <- startjaar:(startjaar + 12)
   center <- median(jaren)
   print(startjaar)
-  lmerdata <- df_trees_agg %>% filter(Jaar %in% startjaar:(startjaar + 12)) %>% 
-    mutate(JaarCC = Jaar - center)
+  lmerdata <- df_trees_agg %>% filter(jaar %in% startjaar:(startjaar + 12)) %>% 
+    mutate(jaarCC = jaar - center)
   model_calc <- 
-    lmer(nnv ~ JaarCC + (JaarCC|PlotNr), 
+    lmer(nnv ~ jaarCC + (jaarCC|plot), 
          data = lmerdata)
   
   #aangepast naar op basis van geaggregeerd model
   #sd_tree <- sqrt(VarCorr(model_calc)$prbo[1,1])
-  sd_between_plots <- sqrt(VarCorr(model_calc)$PlotNr[1,1])
-  sd_trend_between_plots <- sqrt(VarCorr(model_calc)$PlotNr[2,2])
-  COV_plot <- VarCorr(model_calc)$PlotNr
-  COR_plot <- attr(VarCorr(model_calc)$PlotNr, "correlation")
+  sd_between_plots <- sqrt(VarCorr(model_calc)$plot[1,1])
+  sd_trend_between_plots <- sqrt(VarCorr(model_calc)$plot[2,2])
+  COV_plot <- VarCorr(model_calc)$plot
+  COR_plot <- attr(VarCorr(model_calc)$plot, "correlation")
   correlation <- COR_plot[1,2]
   sd_resid <- attr(VarCorr(model_calc), "sc")
   simr <- list(
@@ -352,18 +350,18 @@ for (startjaar in startjaren20) {
   jaren <- startjaar:(startjaar + 20)
   center <- median(jaren)
   print(startjaar)
-  lmerdata <- df_trees_agg %>% filter(Jaar %in% startjaar:(startjaar + 20)) %>% 
-    mutate(JaarCC = Jaar - center)
+  lmerdata <- df_trees_agg %>% filter(jaar %in% startjaar:(startjaar + 20)) %>% 
+    mutate(jaarCC = jaar - center)
   model_calc <- 
-    lmer(nnv ~ JaarCC + (JaarCC|PlotNr), 
+    lmer(nnv ~ jaarCC + (jaarCC|plot), 
          data = lmerdata)
   
   #aangepast naar op basis van geaggregeerd model
   #sd_tree <- sqrt(VarCorr(model_calc)$prbo[1,1])
-  sd_between_plots <- sqrt(VarCorr(model_calc)$PlotNr[1,1])
-  sd_trend_between_plots <- sqrt(VarCorr(model_calc)$PlotNr[2,2])
-  COV_plot <- VarCorr(model_calc)$PlotNr
-  COR_plot <- attr(VarCorr(model_calc)$PlotNr, "correlation")
+  sd_between_plots <- sqrt(VarCorr(model_calc)$plot[1,1])
+  sd_trend_between_plots <- sqrt(VarCorr(model_calc)$plot[2,2])
+  COV_plot <- VarCorr(model_calc)$plot
+  COR_plot <- attr(VarCorr(model_calc)$plot, "correlation")
   correlation <- COR_plot[1,2]
   sd_resid <- attr(VarCorr(model_calc), "sc")
   simr <- list(
@@ -373,19 +371,13 @@ for (startjaar in startjaren20) {
     cor_trend_plot = correlation, 
     sd_resid = sd_resid, 
 #   COV_tree = VarCorr(model_calc)$prbo,
-    COV_plot = VarCorr(model_calc)$PlotNr)
+    COV_plot = VarCorr(model_calc)$plot)
   
   modellen[[startjaar-1994]] <- model_calc
   simr_params20[[startjaar-1994]] <- simr
 }
 
-
-
-
-
-
 ```
-
 
 
 ### Inschatten variabiliteit tussen proefvlakken
@@ -396,7 +388,7 @@ We kijken over alle jaren sedert 1995 wat de standaarddeviatie van het bladverli
 ```{r sdbetweenplotsraw, echo = FALSE, fig.cap="Verdeling op basis van ruwe gegevens"}
 sd_between_plots <- 
   df_plots %>%  
-  group_by(Jaar) %>% 
+  group_by(jaar) %>% 
   summarise(sd_between_plots = sd(nnv))
 
 sd_bp_avg <- mean(sd_between_plots$sd_between_plots)
@@ -439,7 +431,7 @@ Om de variabiliteit tussen bomen in een proefvlak te onderzoeken wordt op dezelf
 ```{r sdbetweentreesraw, echo = FALSE}
 
 sd_between_trees <- df_trees %>% 
-  group_by(PlotNr, BoomNr, Jaar) %>% 
+  group_by(plot, tree, jaar) %>% 
     summarise(sd_between_trees = mean(nnv))
 
 sd_bt_avg <- mean(sd_between_trees$sd_between_trees)
@@ -509,164 +501,44 @@ ggplot(cor_slope, aes(x = startjaar, y = cor_slope)) + geom_point()
 
 Ook hier is een groot verschil tussen modellen met de beginjaren en de modellen die de middelste jaren gebruiken. Omdat correlatie tussen random trend en intercept belangrijk zijn, gaan we hier eerder een worst-case scenario gebruiken, en gebruiken we als instelwaarde `r cor_chosen`
 
-<!--- NIET MEER RELEVANT, WANT GEAGGREGFEERD, dus sd_resid= sd_tree
-
-
-### Inschatten variabiliteit tussen metingen van eenzelfde  boom in de tijd
-
-We werken met geaggregeerde plotdata, dus de informatie in dit deel is niet relevant voor het uiteindelijke proces van powerberekening en is louter illustratief.
-
-Doordat dezelfde bomen doorheen jaarlijks gemeten worden, zal een resultaat van eenzelfde boom het jaar later, doorgaans dichter liggen bij de vorige meting, dus er is autocorrelatie tussen de jaren voor iedere boom.
-
-```{r sdbetweentrees1, echo = FALSE, cache = TRUE, fig.cap = "Correlatie tussen observaties van eenzelfde boom met de volgende jaren. De verschillende punten per lag komt omdat een correlatiematrix gebruikt wordt als plotdata, dus voor 1 jaar lag zijn er 12 punten en dat vermindert totdat er voor 12 jaar lag slechts 1 punt meer is."}
-#Houdt geen rekening met een interne trend of autocorrelatie.
-
-df2 <- df_trees %>% 
-  group_by(PlotNr, BoomNr, Jaar) %>% 
-  summarise(avg = mean(nnv), .groups = "drop") %>% 
-  mutate(avg0 = avg, 
-         J0 = Jaar, J1 = Jaar - 1, J2 = Jaar - 2, J3 = Jaar - 3,
-         J4 = Jaar - 4, J5 = Jaar - 5, J6 = Jaar - 6, J7 = Jaar - 7, 
-         J8 = Jaar - 8, J9 = Jaar - 9, J10 = Jaar - 10,
-         J11 = Jaar -11, J12 = Jaar - 12)
-
-df2m <- df2 %>% 
-  inner_join(df2 %>% select(J1, avg1 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J1", "PlotNr", "BoomNr")) %>% 
-  inner_join(df2 %>% select(J2, avg2 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J2", "PlotNr", "BoomNr")) %>% 
-    inner_join(df2 %>% select(J3, avg3 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J3", "PlotNr", "BoomNr")) %>% 
-    inner_join(df2 %>% select(J4, avg4 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J4", "PlotNr", "BoomNr")) %>% 
-    inner_join(df2 %>% select(J5, avg5 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J5", "PlotNr", "BoomNr")) %>% 
-    inner_join(df2 %>% select(J6, avg6 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J6", "PlotNr", "BoomNr")) %>% 
-    inner_join(df2 %>% select(J7, avg7 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J7", "PlotNr", "BoomNr")) %>% 
-    inner_join(df2 %>% select(J8, avg8 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J8", "PlotNr", "BoomNr")) %>% 
-    inner_join(df2 %>% select(J9, avg9 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J9", "PlotNr", "BoomNr")) %>% 
-    inner_join(df2 %>% select(J10, avg10 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J10", "PlotNr", "BoomNr")) %>% 
-    inner_join(df2 %>% select(J11, avg11 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J11", "PlotNr", "BoomNr")) %>% 
-    inner_join(df2 %>% select(J12, avg12 = avg, PlotNr, BoomNr),
-             by = c("J0" = "J12", "PlotNr", "BoomNr"))
-
-y2ydev <- c(sd(df2m$avg0 - df2m$avg1), 
-            sd(df2m$avg1 - df2m$avg2), 
-            sd(df2m$avg2 - df2m$avg3),
-            sd(df2m$avg3 - df2m$avg4), 
-            sd(df2m$avg4 - df2m$avg5),
-            sd(df2m$avg5 - df2m$avg6), 
-            sd(df2m$avg6 - df2m$avg7),
-            sd(df2m$avg7 - df2m$avg8),
-            sd(df2m$avg8 - df2m$avg9), 
-            sd(df2m$avg9 - df2m$avg10),
-            sd(df2m$avg10 - df2m$avg11), 
-            sd(df2m$avg11 - df2m$avg12))
-#mean(y2ydev)
-#sd(y2ydev)
-            
-cormat <- cor(df2m[c("avg0", "avg1", "avg2", "avg3", "avg4", "avg5", "avg6",
-                     "avg7", "avg8", "avg9", "avg10", "avg11", "avg12")])
-
-get_cor_per_lag <- function(cormat, lag = 1, return_vec = TRUE) {
-  rv <- NULL
-  for (l in lag) {
-    #cat("lag is:", l, "\n")
-    xpos <- 1:(nrow(cormat) - l)
-    ypos <- xpos + l
-    #print(xpos)
-    #print(ypos)
-    for(i in xpos) {
-      rv <-  bind_rows(rv,  data.frame(lag = l, cor = cormat[xpos[i], ypos[i]]))     
-    }    
-  }
-  rv
-}
-
-lags <- 1:12 #best fit met 1:12 en corstruct_exp
-corrs <- get_cor_per_lag(cormat, lag = lags)
-corrs2 <- corrs %>% group_by(lag) %>% summarize(cor = mean(cor))
-
-#corrs2 #DIT IS DE STRUCTUUR IN DE DATA
-
-corstruct_exp <- nls(formula = cor ~ (1-n) * exp(-lag/d), 
-                     data = corrs, 
-                     start = list(n = 0.2, d = 7))
-
-preds <- data.frame(lag = lags, 
-                    fit1 = predict(corstruct_exp, 
-                                   newdata = data.frame(lag = lags)))
-
-ggplot(corrs, aes(x = lag, y = cor)) + geom_point() + 
-  geom_line(data = preds, aes(y = fit1))
-
-```
-
-
-
-
-### Inschatten van overgebleven variabiliteit
-
-Ook hier gebruiken we de waarden uit de berekende modellen
-
-```{r sdresidmodel, echo = FALSE}
-
-sd_resid <- data.frame(
-  startjaar = startjaren, 
-  sd_resid = sapply(simr_params, function(x) x$sd_resid))
-
-sd_resid_chosen <- 0.07
-
-ggplot(sd_resid, aes(x = startjaar, y = sd_resid)) + geom_point()
-
-```
-
-De gekozen restvariabiliteit is `r sd_resid_chosen`. <<< IN DE SIMS HEB IK 0.05 GEBRUIKT>>>
--->
 
 ### Inschatting autocorrelatie op plotniveau
 
 ```{r autocorplot}
 df2 <- df_trees_agg %>% 
-  group_by(PlotNr, Jaar) %>% 
+  group_by(plot, jaar) %>% 
   summarise(avg = mean(nnv), .groups = "drop") %>% 
   mutate(avg0 = avg, 
-         J0 = Jaar, J1 = Jaar - 1, J2 = Jaar - 2, J3 = Jaar - 3,
-         J4 = Jaar - 4, J5 = Jaar - 5, J6 = Jaar - 6, J7 = Jaar - 7, 
-         J8 = Jaar - 8, J9 = Jaar - 9, J10 = Jaar - 10,
-         J11 = Jaar -11, J12 = Jaar - 12)
+         J0 = jaar, J1 = jaar - 1, J2 = jaar - 2, J3 = jaar - 3,
+         J4 = jaar - 4, J5 = jaar - 5, J6 = jaar - 6, J7 = jaar - 7, 
+         J8 = jaar - 8, J9 = jaar - 9, J10 = jaar - 10,
+         J11 = jaar -11, J12 = jaar - 12)
 
 df2m <- df2 %>% 
-  inner_join(df2 %>% select(J1, avg1 = avg, PlotNr),
-             by = c("J0" = "J1", "PlotNr")) %>% 
-  inner_join(df2 %>% select(J2, avg2 = avg, PlotNr),
-             by = c("J0" = "J2", "PlotNr")) %>% 
-    inner_join(df2 %>% select(J3, avg3 = avg, PlotNr),
-             by = c("J0" = "J3", "PlotNr")) %>% 
-    inner_join(df2 %>% select(J4, avg4 = avg, PlotNr),
-             by = c("J0" = "J4", "PlotNr")) %>% 
-    inner_join(df2 %>% select(J5, avg5 = avg, PlotNr),
-             by = c("J0" = "J5", "PlotNr")) %>% 
-    inner_join(df2 %>% select(J6, avg6 = avg, PlotNr),
-             by = c("J0" = "J6", "PlotNr")) %>% 
-    inner_join(df2 %>% select(J7, avg7 = avg, PlotNr),
-             by = c("J0" = "J7", "PlotNr")) %>% 
-    inner_join(df2 %>% select(J8, avg8 = avg, PlotNr),
-             by = c("J0" = "J8", "PlotNr")) %>% 
-    inner_join(df2 %>% select(J9, avg9 = avg, PlotNr),
-             by = c("J0" = "J9", "PlotNr")) %>% 
-    inner_join(df2 %>% select(J10, avg10 = avg, PlotNr),
-             by = c("J0" = "J10", "PlotNr")) %>% 
-    inner_join(df2 %>% select(J11, avg11 = avg, PlotNr),
-             by = c("J0" = "J11", "PlotNr")) %>% 
-    inner_join(df2 %>% select(J12, avg12 = avg, PlotNr),
-             by = c("J0" = "J12", "PlotNr"))
+  inner_join(df2 %>% select(J1, avg1 = avg, plot),
+             by = c("J0" = "J1", "plot")) %>% 
+  inner_join(df2 %>% select(J2, avg2 = avg, plot),
+             by = c("J0" = "J2", "plot")) %>% 
+    inner_join(df2 %>% select(J3, avg3 = avg, plot),
+             by = c("J0" = "J3", "plot")) %>% 
+    inner_join(df2 %>% select(J4, avg4 = avg, plot),
+             by = c("J0" = "J4", "plot")) %>% 
+    inner_join(df2 %>% select(J5, avg5 = avg, plot),
+             by = c("J0" = "J5", "plot")) %>% 
+    inner_join(df2 %>% select(J6, avg6 = avg, plot),
+             by = c("J0" = "J6", "plot")) %>% 
+    inner_join(df2 %>% select(J7, avg7 = avg, plot),
+             by = c("J0" = "J7", "plot")) %>% 
+    inner_join(df2 %>% select(J8, avg8 = avg, plot),
+             by = c("J0" = "J8", "plot")) %>% 
+    inner_join(df2 %>% select(J9, avg9 = avg, plot),
+             by = c("J0" = "J9", "plot")) %>% 
+    inner_join(df2 %>% select(J10, avg10 = avg, plot),
+             by = c("J0" = "J10", "plot")) %>% 
+    inner_join(df2 %>% select(J11, avg11 = avg, plot),
+             by = c("J0" = "J11", "plot")) %>% 
+    inner_join(df2 %>% select(J12, avg12 = avg, plot),
+             by = c("J0" = "J12", "plot"))
 
 y2ydev <- c(sd(df2m$avg0 - df2m$avg1), 
             sd(df2m$avg1 - df2m$avg2), 
@@ -723,7 +595,6 @@ Rekening houden met autocorrelatie zorgt dat modellen fitten heel ingewikkeld wo
 
 Omdat de autocorrelatie ook na 12 jaar nog vrij hoog is, zal een random intercept zonder autocorrelatie toch nog een vrij goede benadering zijn.
 
-<!--
 ## Dimensionering meetnet op soortniveau
 
 ### Soortenkeuze
@@ -735,59 +606,59 @@ Enkel soorten die ieder jaar in minstens 5 plots voorkomen en in die plots minst
 ```{r soortenevaluatie, cache=TRUE, include = FALSE, message = FALSE, warning = FALSE}
 
 voorkomen_soorten <- df_trees %>% 
-  group_by(Jaar, Soort ) %>% 
-  summarize(Aantal = n()) %>% 
-  arrange(Jaar, desc(Aantal))
+  group_by(jaar, soort ) %>% 
+  summarize(aantal = n()) %>% 
+  arrange(jaar, desc(aantal))
 
 voorkomen_tabel <- voorkomen_soorten %>% 
-  pivot_wider(id_cols = Jaar, names_from = Soort, values_from = Aantal) 
+  pivot_wider(id_cols = jaar, names_from = soort, values_from = aantal) 
 
 
 voorkomen_plots <- df_trees %>% 
-  group_by(Jaar, PlotNr, Soort) %>% 
-  summarize(Aantal = n(), .groups = "drop")
+  group_by(jaar, plot, soort) %>% 
+  summarize(aantal = n(), .groups = "drop")
 
 voorkomen_plots %>% 
-  group_by(Jaar, Soort, PlotNr) %>% 
-  summarise(ThreeOrMore = Aantal >= 3, .groups = "drop_last") %>% 
-  summarise(n_plots = sum(ThreeOrMore))
+  group_by(jaar, soort, plot) %>% 
+  summarise(three_or_more = aantal >= 3, .groups = "drop_last") %>% 
+  summarise(n_plots = sum(three_or_more))
 
 ieder_jaar_5_plots <- voorkomen_plots %>% 
-  mutate(aanwezig = Aantal >= 3) %>% 
-  group_by(Soort, Jaar) %>% 
+  mutate(aanwezig = aantal >= 3) %>% 
+  group_by(soort, jaar) %>% 
   summarise(aantal_plots = sum(aanwezig), .groups = "drop_last") %>% 
   summarise(min_aantal_plots = min(aantal_plots)) %>% 
   arrange(desc(min_aantal_plots))
 
 soorten_behouden <- ieder_jaar_5_plots %>% 
   filter(min_aantal_plots >= 5) %>% 
-  pull(Soort)
+  pull(soort)
 
 sd_all <- df_trees %>% 
-  group_by(Jaar, PlotNr) %>% 
+  group_by(jaar, plot) %>% 
   summarise(Soort = "allemaal", sds = sd(nnv))
 summary(sd_all$sds)
 
 sd_spec <- df_trees %>% 
-  filter(Soort %in% soorten_behouden) %>% 
-  group_by(Jaar, Soort, PlotNr) %>% 
+  filter(soort %in% soorten_behouden) %>% 
+  group_by(jaar, soort, plot) %>% 
   summarise(sds = sd(nnv))
 
 sds <- bind_rows(sd_all, sd_spec)
 ```
 
 ```{r relevantesoorten}
-kable(ieder_jaar_5_plots)
+knitr::kable(ieder_jaar_5_plots)
 ```
 
 
 ```{r soortenfig, fig.cap = "Overzicht van de standaardeviaties binnen een plot,voor alle jaren in de dataset. De rode lijn geeft de mediaan standaarddviatie aan."}
 ggplot(sds, aes(x = sds)) + geom_histogram() + 
   geom_vline(data = sds %>% 
-               group_by(Soort) %>% 
+               group_by(soort) %>% 
                summarise(median = median(sds, na.rm = TRUE)), 
              aes(xintercept = median), color = "red") +
-  facet_wrap(~Soort, ncol = 1, scales = "free_y")
+  facet_wrap(~soort, ncol = 1, scales = "free_y")
 
 ```
 

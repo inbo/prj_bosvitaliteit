@@ -19,7 +19,14 @@ Het huidige meetnet bevat 78 proefvlakpunten (zie figuur \@ref(fig:plotloc) ) wa
 De bedoeling van het meetnet is om de gezondheidstoestand van de bomen in de Europese bossen te onderzoeken aan de hand van evaluaties van het blad- of naaldverlies in de kroon van (co-)dominante bomen.
 Verschillende proefvlakken worden bezocht en in ieder proefvlak worden verschillende boomkronen visueel geëvalueerd en er wordt een inschatting gemaakt van het blad- of naaldverlies in klassen van 5%, waarbij bomen met een verlies van meer dan 25% aanzien worden als beschadigde bomen.
 
-```{r plotloc, echo = FALSE, message = FALSE, fig.cap="Ligging van de meetpunten en de periode wanneer deze eerst opgemeten zijn"}
+![](data/punten_in_vlaanderen.png)
+
+```{r plotloc, echo=FALSE, out.width="5%", out.height="5%", fig.cap="Ligging van de punten in VLaanderen (paars vanaf 1987 (34), blauw vanaf 1988-1992 (5), groen vanaf 1995 (30) en geel later dan 2018 (9)). Enkele proefvlakken zijn intussen verdwenen."}
+knitr::include_graphics("data/pixel.png")
+```
+
+<!--
+```{r plotlocold, eval = FALSE, include = FALSE, echo = FALSE, message = FALSE, fig.cap="Ligging van de meetpunten en de periode wanneer deze eerst opgemeten zijn"}
 
 df_trend <- readRDS('data/dfTrees_trend.RDS')
 startyears <- df_trend %>% 
@@ -48,14 +55,5 @@ ggplot() +
   theme(legend.position = "bottom")
 
 ```
-
-<!--
-## Gebruik van de data voor afgeleide projecten
-
-Op het INBO is er een analyse gebeurd op basis van deze dataset door Pieter Verschelde <<REFERENTIE>> waarbij getracht werd een verklarend statistisch model voor deze data te bouwen.
-
-De data wordt geleverd aan ICP forests zodat zij jaarlijks een Europese statistische analyse kunnen uitvoeren.
-
-Verder, hoewel de data niet gepubliceerd is, kan iedereen de data vrij opvragen, en is de data gebruikt voor verschillende thesissen en doctoraten <<REFERENTIES>>
--->
+--> 
 

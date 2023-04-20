@@ -9,11 +9,11 @@ In eerste instantie willen we zien welke verschil het huidige meetnet kan aanton
 ```{r, cache = TRUE, fig.cap = "verdeling variaties data in opeenvolgende jaren. Rode lijn is de gekozen parameter voor de simulaties."}
 modeljpj <- NULL
 for (i in 1995:2021) {
-modeljpj[[i-1994]] <- lmer(nnv ~ factor(Jaar) + (1|PlotNr/BoomNr), 
-                 data = df_trees %>% filter(Jaar %in% c(i,i+1) ))  
+modeljpj[[i-1994]] <- lmer(nnv ~ factor(jaar) + (1|plot/tree), 
+                 data = df_trees %>% filter(jaar %in% c(i,i+1) ))  
 }
-sd_plot <- sapply(modeljpj, function(x) sqrt(VarCorr(x)$PlotNr[1,1]))
-sd_tree <- sapply(modeljpj, function(x) sqrt(VarCorr(x)$`BoomNr:PlotNr`[1,1]))
+sd_plot <- sapply(modeljpj, function(x) sqrt(VarCorr(x)$plot[1,1]))
+sd_tree <- sapply(modeljpj, function(x) sqrt(VarCorr(x)$`tree:plot`[1,1]))
 sd_resi <- sapply(modeljpj, function(x) attr(VarCorr(x), "sc"))
 
 
@@ -44,10 +44,10 @@ ggplot(data = bind_rows(data.frame(type = "plot",
 modeljpj <- NULL
 for (i in 1995:2021) {
   modeljpj[[i-1994]] <- 
-    lmer(nnv ~ factor(Jaar) + (1|PlotNr), 
-         data = df_trees_agg %>% filter(Jaar %in% c(i,i+1)))  
+    lmer(nnv ~ factor(jaar) + (1|plot), #factor jaar want toch enkel jaar per jaar
+         data = df_trees_agg %>% filter(jaar %in% c(i,i+1)))  
 }
-sd_plot <- sapply(modeljpj, function(x) sqrt(VarCorr(x)$PlotNr[1,1]))
+sd_plot <- sapply(modeljpj, function(x) sqrt(VarCorr(x)$plot[1,1]))
 sd_resi <- sapply(modeljpj, function(x) attr(VarCorr(x), "sc"))
 
 

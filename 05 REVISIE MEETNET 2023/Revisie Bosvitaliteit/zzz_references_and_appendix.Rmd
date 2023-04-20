@@ -4,6 +4,18 @@
 INBOmd::references(appendix = TRUE)
 ```
 
-# Eerste hoofdstuk van de bijlage
+# R scripts ter ondersteuning van dit rapport
 
-Inhoud van de eerste bijlage
+Onderstaande scripts zijn te vinden in de github repository
+
+## rscript_data_import.R
+
+Dit script bevat de code die gegevens uit de bosvitaliteitsdatabank haalt en deze bewaart samen met de tekst van het rapport, zodat ook zonder toegang tot de databank, het rapport gecompileerd kan worden.
+
+## rscript_simulaties_jpj.R
+
+Dit script bevat de code om de powerberekeningen uit te voeren wanneer 2 opeenvolgende jaren met elkaar vergeleken worden.
+
+## rscript_simulaties_scenarios.R
+
+Dit script bevat de code om de power te berekenen voor de verschillende scenario's zoals voorgesteld in het hoofstuk rond powerberekeningen.

@@ -186,7 +186,7 @@ Zo kunnen de gegevens gebruikt worden in verschillende onderzoeken in Vlaanderen
 
 <!------------------------------------------------------>
 
-## Fase 2: Ontwerp gegevensinzameling
+## Fase II: Ontwerp gegevensinzameling
 
 ### Veiligheid
 
@@ -282,7 +282,8 @@ Doordat we uitmiddelen over de bomen in een proefvlak heen, zal de inschatting o
 Het grootste nadeel is dat een dode boom heel het proefvlak sterk kan duwen in de richting van slechtere vitaliteit, omdat dit een bladverlies van 100% is terwijl de rest meestal beneden de 50% ligt.
 
 ```{r invloedaantalbomen, echo = FALSE, warning = FALSE, fig.cap="Schets van hoe onzeker het gemiddeld bladverlies per proefvlak wanneer het gemiddelde op meer bomen berekend wordt. Dit wordt gedaan voor een meetfout op het bladverlies op de boom van 0.5,0.1 en 0.15, waarbij het bladverlies gecodeerd is van 0 tot 1 (100%)."}
-set.seed(732)
+set.seed(733)
+
 avg <- 0.25
 plotdata <- expand.grid(sd = c(0.05, 0.10, 0.15),
                         aantal_bomen = c(1, 3, 5, 10, 15, 20, 25, 30)) %>%
@@ -315,14 +316,14 @@ Zo steeg het aantal proefvlakken jaar per jaar tot 78 in 2022, terwijl het aanta
 
 De basis voor deze laatste uitbreidingen is het 4x4m grid dat compatbiel is met het 1 x 0.5km grid dat in de bosinventarisatie gebruikt wordt, maar met extra voorwaarden dat er genoeg bomen moeten zijn, dat het plot volledig in bos ligt en minstens op 4km van een andere proefvlak. Er is echter wel nog geen duidelijk protocol welk geschikt gridpunt wordt genomen. Een  selectie gebaseerd op het `grts` ruimtelijk gebalanceerd grid van de bosinventarisatie lijkt hiervoor een goede keuze in de toekomst.
 
-```{r aantalproefvlakken, fig.cap="Jaarlijks aantal bemonsterde proefvlakken"}
-df_trend <- readRDS("data/dfTrees_trend.RDS")
+```{r aantalproefvlakken, message = FALSE, fig.cap="Jaarlijks aantal bemonsterde proefvlakken"}
+df_trend <- read_csv2("data/inputdata.csv")
 df_trend %>%
-  group_by(Jaar) %>%
-  summarise(aantal_plots = n_distinct(PlotNr),
+  group_by(jaar) %>%
+  summarise(aantal_plots = n_distinct(plot),
             aantal_bomen = n(),
             aantal_bomen_scaled = aantal_bomen / 24) %>%
-  ggplot(aes(x = Jaar, y = aantal_plots)) +
+  ggplot(aes(x = jaar, y = aantal_plots)) +
   geom_point() + geom_line() +
   geom_point(aes(y = aantal_bomen_scaled), color = inbo_hoofd) +
   geom_line(aes(y = aantal_bomen_scaled), color = inbo_hoofd) +
@@ -390,7 +391,7 @@ Op zich is de kost van het meetnet op te delen als volgt:
         - symptoombeoordeling: beperkte extra tijd
 
 
-## Fase 3: Plannen van de gegevensverwerking
+## Fase III: Plannen van de gegevensverwerking
 
 ### Data
 
@@ -471,7 +472,7 @@ In plaats van het modelleren van het gemiddeld bladverlies, kan ook gekozen om d
 Vroeger is er eens een verklarend model gemaakt om de oorzaken van patronen in het blad- of naaldverlies te achterhalen. Misschien is het een idee om dit periodiek eens te herhalen, maar voorlopig is daar nog niets voor gepland.
 
 
-## Fase 4: Ontwerp rapportering en communicatie
+## Fase IV: Ontwerp rapportering en communicatie
 
 - Het hoofdrapport is een jaarlijks INBO-rapport
     - Beschrijft de proefvlakken in detail
@@ -482,7 +483,7 @@ Vroeger is er eens een verklarend model gemaakt om de oorzaken van patronen in h
 - Er is een natuurindicator "beschadigde bosbomen" die dit meetnet gebruikt
 - Verder nog publicaties naar de Vlaamse statistieken, INBO-nieuwsbrief, ...
 
-## Fase 5: Implementatie
+## Fase V: Implementatie
 
 Dit is een lopend meetnet en is dus reeds geïmplementeerd, dus veel verdere implementatie is niet meer nodig.
 
