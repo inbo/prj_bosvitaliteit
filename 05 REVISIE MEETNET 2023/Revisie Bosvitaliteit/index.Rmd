@@ -52,7 +52,7 @@ site: bookdown::bookdown_site
 
 output:
   INBOmd::gitbook: default
-  #INBOmd::pdf_report: default
+  INBOmd::pdf_report: default
   #INBOmd::epub_book: default
   # Don't run the format below.
   # Only required for RStudio to recognise the project as a bookdown project.
