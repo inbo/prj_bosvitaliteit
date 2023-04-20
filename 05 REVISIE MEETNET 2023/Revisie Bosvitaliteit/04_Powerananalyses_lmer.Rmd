@@ -98,11 +98,6 @@ De verschillende trends wordten bekeken op de basisinstelvariabelen en niet op d
 
 ### Kracht met de huidige steekproef
 
-```{r instelv}
-
-                       
-```
-
 Deze powerberekeningen gebeuren op basis van een extern R script, die als aparte scripts bij het document gevoegd worden.
 
 ```{r simrfixedvars, fig.cap="Powerberekening voor de berekende instelvariabelen voor 20 tot 120 proefvlakken voor detectie van 12% op 12 jaar en 20% op 20 jaar"}
@@ -125,8 +120,73 @@ Om een correcte analyse te hebben zou de random helling ook eens op 20 jaar moet
 
 ### Invloed van instelvariabelen op de power
 
-```{r rsiminstelvars1}
+```{r rsiminstelvarstrees, fig.cap = "Power in functie van het aantal opgemeten bomen per plot. De referentie is de power voor 80 proefvlakken met 20 bomen per proefvlak.}
+powers2 <- read_csv2("data/modelsim_var.csv")
+
+ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_tree")), 
+        aes(x = N_trees, y = power, ymin = lcl, ymax = ucl, 
+            color = Mtype == "Fix")) + 
+  geom_point() + geom_errorbar() + 
+  labs(x = "Aantal bomen", y = "Power", color = "Referentie")
+
+
 ```
+
+Het aantal bomen in de steekproef heeft impact op de variabiliteit op het gemiddeld bladverlies per plot. Minder bomen opmeten betekent meer onzekerheid op dat gemiddelde en een lagere power.
+
+De verplaatsing naar ieder proefvlak is de meest doorslaggevende factor in de tijd die het duurt om een meetnet op te meten. Het bladverlies inschatten voor iedere boom vergt ook redelijk wat tijd, maar het verminderen van de bomen kan een beperkte tijdsbesparking opleveren, maar de vraag is of het waard is om niet meer te houden aan de protocolafspraken voor deze vrij beperkte tijdswinst.
+
+
+```{r rsiminstelvarstrend, fig.cap = "Power in functie van de te detecteren trend, gebaseerd op een basiswaarde van 25% bladverlies per proefvlak. 12% op 12 jaar komt overeen met een trend van 0.0025 per jaar, 24% op 12 jaar komt overeen met een trend van 0.0050 per jaar. De steekproef bestaat hier uit 80 proefvlakken met 20 bomen per proefvlak.}
+
+ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_trend")), 
+       aes(x = trend, y = power, ymin = lcl, ymax = ucl, 
+           color = Mtype == "Fix")) + 
+  geom_point() + geom_errorbar() + 
+  labs(x = "Te detecteren trend (12% op 12 jaar of 24% op 12 jaar)", 
+       y = "Power", color = "Referentie")
+
+```
+
+Zoals verwacht heeft de te detecteren trend een heel grote invloed op de kracht. Hoe groter het effect is dat ten minste gedetecteerd moet worden, hoe meer kans en dus kracht dat het model dit effect zal kunnen detecteren.
+
+```{r rsiminstelvarsbp, fig.cap = "Power in functie van hoe groot de variatie tussen de verschillende proefvlakken is. Ook hier vertrekken we van een steekproef van 80 proefvlakken met 20 bomen per proefvlak"}
+
+ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_bp")), 
+       aes(x = sd_bp, y = power, ymin = lcl, ymax = ucl, 
+           color = Mtype == "Fix")) + 
+  geom_point() + geom_errorbar() + 
+  labs(x = "variatie (stdev) tussen verschillende proefvlakken", 
+       y = "Power", color = "Referentie")
+
+```
+
+Hoe groot de variatie is tussen de plots heeft ook een impact op de power, maar is heel verwaarloosbaar. Het is ook onduidelijk in welke richting dit invloed heeft, langs de ene kant is er meer variatie dus verwacht je een lagere power, langs de andere kant heeft ieder plot meer informatie, zeker omdat er per plot ook nog een random helling aanwezig is. In bovenstaande figuur lijkt meer variatie contra-intuïtief te leiden tot een hogere power.
+
+```{r rsiminstelvarscor, fig.cap = "Power in functie van hoe groot de correlatie is tussen de inschatting van de random intercept en random slope van het model. Ook hier vertrekken we van een steekproef van 80 proefvlakken met 20 bomen per proefvlak"}
+
+ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_cor")), 
+       aes(x = cor_is, y = power, ymin = lcl, ymax = ucl, 
+           color = Mtype == "Fix")) + 
+  geom_point() + geom_errorbar() + 
+  labs(x = "Correlatie tussen random intercept van ieder plot en random helling van ieder plot", 
+       y = "Power", color = "Referentie")
+```
+
+De correlatie tussen intercept en helling op tijd, lijkt een verwaarloosbare invloed te hebben op de power in de huidige setup.
+
+```{r rsiminstelvarssdstrend, fig.cap = "Power in functie van hoe groot de variatie op de trend is tussen de verschillende proefvlakken. Ook hier vertrekken we van een steekproef van 80 proefvlakken met 20 bomen per proefvlak"}
+
+ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_sdt")), 
+       aes(x = sd_trend, y = power, ymin = lcl, ymax = ucl, 
+           color = Mtype == "Fix")) + 
+  geom_point() + geom_errorbar() + 
+  labs(x = "Random variatie van de helling per plot (stdev)", 
+       y = "Power", color = "Referentie")
+```
+
+Deze invloed van de random variatie van de trend per plot heeft een gigantische impact op de power. Hoe meer ieder plot een andere trend volgt, hoe lager de power om een specifieke trend te detecteren. 
+
 
 <!---
 ## Model jaar per jaar
