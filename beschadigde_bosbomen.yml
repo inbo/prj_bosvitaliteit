@@ -1,0 +1,17 @@
+..generic:
+  git2rdata: 0.4.0
+  optimize: no
+  NA string: NA
+  sorting: jaar
+  hash: 702399dd6fac621b0c4a0e074f86ddf1ec3c5bc3
+  data_hash: 385676ab80a6135b5eaf15f665089dae84dcc5be
+jaar:
+  class: integer
+beschadigd:
+  class: integer
+gezond:
+  class: integer
+totaal:
+  class: integer
+schade_pct:
+  class: numeric

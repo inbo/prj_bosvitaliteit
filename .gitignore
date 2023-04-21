@@ -44,6 +44,11 @@ data/
 *.RDS
 # Output
 output/
+*.png
+*.eps
+*.Rdata
+
+
 
 #build variables
 my-report.Rmd

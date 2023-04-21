@@ -1,0 +1,40 @@
+{
+  "title": "Revisie bosvitaliteitsmeetnet",
+  "description": "<p>Replace this with a short description of the project. It becomes the\nabstract of the project in the citation information. And the project\ndescription at https://zenodo.org<\/p>",
+  "keywords": [
+    "meetnet",
+    "bosvitaliteit",
+    "klimaat",
+    "monitoring",
+    "forest",
+    "flanders"
+  ],
+  "upload_type": "software",
+  "license": "CC-BY-4.0",
+  "language": "nld",
+  "contributors": [
+    {
+      "name": "Verschelde, Pieter",
+      "affiliation": "INBO",
+      "orcid": "0000-0002-9199-421X",
+      "type": "ContactPerson"
+    },
+    {
+      "name": "Research Institute for Nature and Forest (INBO)",
+      "type": "RightsHolder"
+    }
+  ],
+  "creators": [
+    {
+      "name": "Verschelde, Pieter",
+      "affiliation": "INBO",
+      "orcid": "0000-0002-9199-421X"
+    }
+  ],
+  "access_right": "open",
+  "communities": [
+    {
+      "identifier": "inbo"
+    }
+  ]
+}

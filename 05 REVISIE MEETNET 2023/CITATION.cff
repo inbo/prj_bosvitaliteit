@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it using these metadata.
+title: Revisie bosvitaliteitsmeetnet
+authors:
+- given-names: Pieter
+  family-names: Verschelde
+  affiliation: INBO
+  orcid: 0000-0002-9199-421X
+keywords:
+- meetnet
+- bosvitaliteit
+- klimaat
+- monitoring
+- forest
+- flanders
+contact:
+- given-names: Pieter
+  family-names: Verschelde
+  affiliation: INBO
+  orcid: 0000-0002-9199-421X
+doi: ~
+license: CC-BY-4.0
+repository-code: https://github.com/inbo/bosvitaliteit/
+type: software
+abstract: |-
+  Replace this with a short description of the project.
+  It becomes the abstract of the project in the citation information.
+  And the project description at https://zenodo.org
