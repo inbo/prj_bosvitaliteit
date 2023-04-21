@@ -2,6 +2,50 @@ library(tidyverse)
 library(lme4)
 library(simr)
 
+execute_simr <- function(insteldata, nnv0, nsim = 50, logfile = "modelsim.csv") {
+  PWR <- NULL
+  rv <- NULL
+  for (i in 1:nrow(insteldata)) {
+    print(paste("Modelnummer: ", sprintf("%03d", i)))
+    Nyears   <- slice(insteldata, i) %>% pull(N_years)
+    Nplots   <- slice(insteldata, i) %>% pull(N_plots)
+    Ntrees   <- slice(insteldata, i) %>% pull(N_trees)
+    trend    <- slice(insteldata, i) %>% pull(trend)
+    sdbp     <- slice(insteldata, i) %>% pull(sd_bp)
+    sdwp     <- slice(insteldata, i) %>% pull(sd_wp)
+    sdtr     <- slice(insteldata, i) %>% pull(sd_trend)
+    coris    <- slice(insteldata, i) %>% pull(cor_is)
+    Nsim     <- nsim
+    nnv0     <- nnv0
+    
+    X <- expand.grid(x = 0:Nyears, p = 1:Nplots)
+    COV = list(p = rbind(c(sdbp ** 2, coris * sdbp * sdtr), 
+                         c(coris * sdbp * sdtr, sdtr ** 2)))
+    S <- sdwp / sqrt(Ntrees)
+    B <- c(0.25, trend)
+    
+    model <- makeLmer(y ~ x + (x | p), 
+                      fixef = B, VarCorr = COV, sigma = S, 
+                      data = X )
+    powerres <- powerSim(model, nsim = nsim)
+    propres <- prop.test(powerres$x, powerres$n)
+    PWR[[i]] <- list(modelsimnr = i, 
+                     power = powerres$x/powerres$n,
+                     lcl = propres$conf.int[1],
+                     ucl = propres$conf.int[2]) 
+    rvdata <- bind_cols(slice(insteldata, i), 
+                        data.frame(PWR[[i]]))
+    if (i == 1) append = FALSE else append = TRUE
+    write_excel_csv2(rvdata, file = logfile, append = append)
+    rv <- bind_rows(rv, rvdata)
+  }
+  rv
+}
+
+
+
+
+
 dataset1 <- expand.grid(Mtype = 'Fix',
                         N_plots = c(20,40,60,80,100,120),
                         N_years = c(12, 20),
@@ -116,44 +160,4 @@ ggplot(powers2 %>% slice(c(1, 11:12)),
 #   labs(x = "Aantal plots", y = "Kracht", color = "Jaren") + 
 #   scale_y_continuous(labels = scales::percent)
 
-
-execute_simr <- function(insteldata, nnv0, nsim = 50, logfile = "modelsim.csv") {
-  PWR <- NULL
-  rv <- NULL
-  for (i in 1:nrow(insteldata)) {
-    print(paste("Modelnummer: ", sprintf("%03d", i)))
-    Nyears   <- slice(insteldata, i) %>% pull(N_years)
-    Nplots   <- slice(insteldata, i) %>% pull(N_plots)
-    Ntrees   <- slice(insteldata, i) %>% pull(N_trees)
-    trend    <- slice(insteldata, i) %>% pull(trend)
-    sdbp     <- slice(insteldata, i) %>% pull(sd_bp)
-    sdwp     <- slice(insteldata, i) %>% pull(sd_wp)
-    sdtr     <- slice(insteldata, i) %>% pull(sd_trend)
-    coris    <- slice(insteldata, i) %>% pull(cor_is)
-    Nsim     <- nsim
-    nnv0     <- nnv0
-    
-    X <- expand.grid(x = 0:Nyears, p = 1:Nplots)
-    COV = list(p = rbind(c(sdbp ** 2, coris * sdbp * sdtr), 
-                         c(coris * sdbp * sdtr, sdtr ** 2)))
-    S <- sdwp / sqrt(Ntrees)
-    B <- c(0.25, trend)
-    
-    model <- makeLmer(y ~ x + (x | p), 
-                      fixef = B, VarCorr = COV, sigma = S, 
-                      data = X )
-    powerres <- powerSim(model, nsim = nsim)
-    propres <- prop.test(powerres$x, powerres$n)
-    PWR[[i]] <- list(modelsimnr = i, 
-                     power = powerres$x/powerres$n,
-                     lcl = propres$conf.int[1],
-                     ucl = propres$conf.int[2]) 
-    rvdata <- bind_cols(slice(insteldata, i), 
-                        data.frame(PWR[[i]]))
-    if (i == 1) append = FALSE else append = TRUE
-    write_excel_csv2(rvdata, file = logfile, append = append)
-    rv <- bind_rows(rv, rvdata)
-  }
-  rv
-}
 

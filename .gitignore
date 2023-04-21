@@ -40,13 +40,17 @@ vignettes/*.pdf
 .Renviron
 
 #data
-data/
+#data/
+temp.html
+temp_files/
+!"05 REVISIE MEETNET 2023/Revisie Bosvitaliteit/data/"
 *.RDS
 # Output
 output/
-*.png
+#*.png
 *.eps
 *.Rdata
+*.xlsx
 
 
 

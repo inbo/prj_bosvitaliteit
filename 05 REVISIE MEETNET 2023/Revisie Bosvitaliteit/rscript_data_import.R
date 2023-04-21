@@ -19,7 +19,7 @@ tree_sql <- readLines("data/tree_info.SQL")
 
 df_trend <- get_treedata(conn, jaar = 1995:2022,
                              tree_indeling = df_soortinfo,
-                             sql = tree_sql) 
+                             sqlfile = "package") 
 #df_trend <- readRDS("data/dfTrees_trend.RDS") #uit lokale save
 
 df_trend <- df_trend %>%
