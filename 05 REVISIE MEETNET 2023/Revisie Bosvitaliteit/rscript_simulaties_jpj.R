@@ -10,7 +10,7 @@ intercept <- 0.25
 slopes <- seq(1,25)/1200
 #sdt  <- 0.065 #
 #cor  <- 0.400
-nsim <-  200
+nsim <-  50
 
 PWR <- NULL
 for (i in 1:length(slopes)) {
