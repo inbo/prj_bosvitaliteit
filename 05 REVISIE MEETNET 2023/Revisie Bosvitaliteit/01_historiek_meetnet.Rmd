@@ -8,16 +8,22 @@
 Het managementteam van het INBO wil de meetnetten die het INBO beheert reviseren om te onderzoeken of er winsten kunnen gehaald worden in efficiëntie en effectiviteit.
 Dit meetnet is een van de eerste meetnetten die gereviseerd worden.
 In de toekomst zal de aanpak veranderen, zodat de meetnetbeheerder meer betrokken is bij het revisieproces.
-Het resultaat is een goed gedocumenteerd meetnet, waarbij de keuzes over wat, waarom en hoeveel er gemeten wordt, duidelijk zijn.
+
+De doelstelling is het bekomen van een goed gedocumenteerd meetnet, waarbij de keuzes over wat, hoe, waarom en hoeveel er gemeten wordt, duidelijk zijn.
 
 ## Historiek meetnet
 
-Het bosvitaliteitsmeetnet - ook gekend als het Level-1 meetnet - is een heel langlopend meetnet, vermoedelijk een van de oudste meetnetten op het INBO, waarbij de eerste gegevens reeds van 1987 dateren.
-Het meetnet is tot stand gekomen via de expertenpanel groep ICP forests, met vertegenwoordigers uit heel Europa.
-Het huidige meetnet bevat 78 proefvlakpunten (zie figuur \@ref(fig:plotloc) ) waar telkens verschillende bomen worden bemonsterd.
+Halverwege de jaren 80 van vorige eeuw is in opdracht van de  Europese comissie een expertenpanel opgericht om de gezondheidstoestand van de Europese bossen op te volgen.
+Dit panel werd gedoopt als *ICP Forests* waarin de Europese landen vertegenwoordigd zijn
 
-De bedoeling van het meetnet is om de gezondheidstoestand van de bomen in de Europese bossen te onderzoeken aan de hand van evaluaties van het blad- of naaldverlies in de kroon van (co-)dominante bomen.
-Verschillende proefvlakken worden bezocht en in ieder proefvlak worden verschillende boomkronen visueel geëvalueerd en er wordt een inschatting gemaakt van het blad- of naaldverlies in klassen van 5%, waarbij bomen met een verlies van meer dan 25% aanzien worden als beschadigde bomen.
+Vanuit ICP Forests werd een Europees meetnet ontworpen die deze gezondheidstoestand opvolgt doormiddel van kroonbeoordelingen waar het blad- en naaldverlies  van (co)-dominante bomen in klassen van 5% visueel wordt beoordeeld. 
+Bomen worden als beschadigd aanzien vanaf een bladverlies groter dan 25%.
+
+Het bosvitaliteitsmeetnet - ook gekend als het Level-1 meetnet - is hiervan het resultaat. 
+Het is intussen een heel langlopend meetnet, vermoedelijk een van de oudste meetnetten op het INBO, waarbij de eerste gegevens reeds van 1987 dateren.
+
+Het huidige meetnet bevat 78 proefvlakpunten (zie figuur \@ref(fig:plotloc) ) waar dezelfde  20-25 bomen jaarlijks bemonsterd worden.
+Oorspronkelijk was het meetnet veel kleiner, en werden enkel punten gelegen in bossen in een 16x16km grid over Europa meegenomen. In Vlaanderen werd dat al snel uitgebreid tot 8x8km en vanaf 1995 zelfs nog denser in punten op een grid van 4x4km.
 
 ![](data/punten_in_vlaanderen.png)
 

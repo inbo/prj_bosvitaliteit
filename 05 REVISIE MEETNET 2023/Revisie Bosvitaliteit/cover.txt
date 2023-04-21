@@ -2,6 +2,6 @@ Titel: Revisie bosvitaliteitsmeetnet 2022-2023
 Subtitel: Zoeken naar efficiëntie en effectiviteit
 Auteur(s): Pieter Verschelde
 Contactpersoon: pieter.verschelde@inbo.be
-Afbeelding voor cover: aigeneratedforest.jpg
+Afbeelding voor cover: data/coverplaceholder.png
 Embargo tot: 2023-06-01
 Geen druk

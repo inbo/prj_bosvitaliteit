@@ -19,8 +19,8 @@ reviewer:
     email: "hans.vancalster@inbo.be"
     orcid: 0000-0001-8595-8426
 year: 2023
-cover_photo: aigeneratedforest.jpg
-cover_description: AI gegenereerd bos
+cover_photo: data/coverplaceholder.png
+cover_description: Proefvlak in een bos
 # cover:
 doi: XXXXXXXXX
 reportnr: INBO-2023-000000
@@ -52,7 +52,7 @@ site: bookdown::bookdown_site
 
 output:
   INBOmd::gitbook: default
-  #INBOmd::pdf_report: default
+  INBOmd::pdf_report: default
   #INBOmd::epub_book: default
   # Don't run the format below.
   # Only required for RStudio to recognise the project as a bookdown project.
@@ -77,8 +77,7 @@ Dit rapport brengt het bosvitaliteitsmeetnet in kaart en onderzoekt of het meetn
 
 Het bosvitaliteitsmeetnet is een langlopend meetnet waarbij de vitaliteit van bomen wordt beoordeeld door een visuele inschatting van het percentage kroonverlies in stappen van 5%.
 
-Eerst wordt de geschiedenis en een analyse van het huidige meetnet gepresenteerd.
-Vervolgens worden de sterke en zwakke punten van het meetnet geëvalueerd op basis van de leidraad voor meetnetten.
+Dit rapport zoekt eerst de sterke en zwakke punten van het meetnet op basis van de leidraad voor meetnetten.
 Daarna worden powerberekeningen uitgevoerd op een lineair trendmodel om te bepalen welke effecten gedetecteerd kunnen worden met de huidige steekproef en wat de impact zou zijn bij wijzigingen in de steekproefdimensies.
 Tot slot worden enkele aanbevelingen voor verbetering van het meetnet gedaan.
 
@@ -119,7 +118,7 @@ opts_chunk$set(
   cache = FALSE,
   warning = TRUE,
   error = FALSE,
-  message = TRUE
+  message = FALSE
 )
 library(tidyverse)
 library(INBOtheme)

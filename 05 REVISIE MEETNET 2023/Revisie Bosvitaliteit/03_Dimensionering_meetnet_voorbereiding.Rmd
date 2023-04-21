@@ -1,4 +1,4 @@
-# Ontwerp van een meetnet met gemengde effecten model
+# Ontwerp van een meetnet met mixed effects model
 
 ## Inleiding
 
@@ -7,7 +7,7 @@ Er worden 3 basisscenario's gebruikt:
 
 - Standaard: een detectie van 12% verandering in 12 jaar, zoals in enkele andere meetnetten
 - Een detectie van 20% verandering in 20 jaar
-- Hoeveel verschi kan gedetecteerd worden in 2 opeenvolgende jaren.
+- Hoeveel verschil kan gedetecteerd worden in 2 opeenvolgende jaren.
 
 ### Modellen
 
@@ -46,7 +46,7 @@ In dit document, waarbij we alle data aggregeren per proefvlak, zullen volgende 
 ### Normale benadering
 
 De data die we gaan gebruiken als basis voor conclusies is de volledige data van het bosvitaliteitsmeetnet vanaf het jaar 1995. In de jaren van 1987 tot 1994 waren er veel minder proefvlakken, dus deze data gaan we hier niet gebruiken omdat die veel minder representatief zijn voor het huidige meetnet.
-Deze gereduceerde periode omvat nog altijd een tijdreeks van 28 jaar.
+Deze gereduceerde periode omvat nog steeds een tijdreeks van 28 jaar.
 
 Omdat een normale verdeling voor een respons het gemakkelijkst en snelste werkt, wordt in eerste instantie onderzocht dat een normale benadering in het model acceptabel is.
 
@@ -115,7 +115,7 @@ ggplot(df_plots, aes(x = jaar, y = nnv, groups = plot)) +
 ```
 
 
-Omdat we in deze studie vooral geïnteresseerd zijn in trends over een periode van 12 jaar, zullen we voor de trendanalyses de modellen opsplitsen in rollende 12 jaar. Dat betekent dat we een model gaan fitten van 1995 tot en met 2007, een volgend model van 1996 tot en met 2008, enzovoort, tot en met 2010 tot en met 2022. Een inschatting van de variantieparameters zal dan gebeuren op basis van de resultaten van al deze modellen. De schattingen hiervan komen aan bod in het punt rond bepalen van correlaties. Deze berekende parameters worden ook gebruikt voor de modellen die de power kvoor kortere en langere tijdsperiodes berekenen. Dus er is geen speciale betekenis van een rollend gemiddelde op 12 jaar, maar dit laat toe een nauwkeurigere schatting te maken ven de instelparameters, en ook een zicht te hebben hoe die variëren in de tijd.
+Omdat we in deze studie vooral geïnteresseerd zijn in trends over een periode van 12 jaar, zullen we voor de trendanalyses de modellen opsplitsen in rollende 12 jaar. Dat betekent dat we een model gaan fitten van 1995 tot en met 2007, een volgend model van 1996 tot en met 2008, enzovoort, tot en met 2010 tot en met 2022. Een inschatting van de variantieparameters zal dan gebeuren op basis van de resultaten van al deze modellen. De schattingen hiervan komen aan bod in het punt rond bepalen van correlaties. Deze berekende parameters worden ook gebruikt voor de modellen die de power voor kortere en langere tijdsperiodes berekenen. Dus er is geen speciale betekenis van een rollend gemiddelde op 12 jaar, maar dit laat toe een nauwkeurigere schatting te maken ven de instelparameters, en ook een zicht te hebben hoe die variëren in de tijd.
 
 ### Bepalen van het geschikte model
 
@@ -263,8 +263,18 @@ Daarnaast veronderstellen we ook dat alle bomen in eenzelfde plot dezelfde trend
 Het vereenvoudigde model voor de powerberekeningen ziet er dan als volgt uit:
 
 $$
-Bladverlies \sim Jaar + (Jaar|Plot)
+Bladverlies \sim 1 + Jaar + (Jaar|Plot)
 $$
+
+Dus hier berekenen we een algemeen effect van jaar, maar laten we toe dat ieder plot een eigen trendlijn heeft met een eigen intercept en helling.
+Volgende parameters worden berekend:
+
+- globale intercept: het geschatte bladverlies in het jaar 0 (na centrering)
+- globale helling op jaar: de gemiddelde helling die ieder plot volgt
+- random intercept: de variatie van de afwijking van ieder plot in het jaar 0 ten opzichte van de globale intercept
+- random helling op jaar: de variatie van de trend van ieder plot ten opzichte van de globale helling voor jaar
+- correlatie tussen random intercept en random helling
+
 
 ```{r vereenvoudigdmodel, echo = FALSE, message=FALSE, warning = FALSE, message=FALSE, cache = TRUE}
 library(lme4)
@@ -303,8 +313,45 @@ De schattingen tussen het ingewikkelde en vereenvoudigde model zijn compatibel m
 
 Op basis van de dataset kunnen we zo goed mogelijke instelwaarden vinden om later een poweranalyse uit te voeren die toch iets van betekenis heeft.
 
+## Inschattingen per soort
 
-Als we naast een algemeen beeld over de soorten heen ook per soort een inschatting willen kunnen maken moet dit voor iedere soort apart in kaart  gebracht worden, wat we in dit document niet gaan doen.
+Als we naast een algemeen beeld over de soorten heen ook per soort een inschatting willen kunnen maken moet dit voor iedere soort apart in kaart  gebracht worden, wat we in dit document niet gaan doen. Maar op zich is dit vergelijkbaar met een meetnet met het aantal proefvlakken iedere soort te vinden is, als we aannemen dat de variatie van trend voor iedere soort vergelijkbaar is met over alle soorten heen
+
+```{r soortenevaluatie, fig.cap = "Aantal plots waar de soort minstens 3 bomen beslaat", cache=TRUE, include = TRUE, message = FALSE, warning = FALSE}
+
+voorkomen_soorten <- df_trees %>% 
+  group_by(jaar, soort ) %>% 
+  summarize(aantal = n()) %>% 
+  arrange(jaar, desc(aantal))
+
+voorkomen_tabel <- voorkomen_soorten %>% 
+  pivot_wider(id_cols = jaar, names_from = soort, values_from = aantal) 
+
+
+voorkomen_per_plot <- df_trees %>% 
+  group_by(jaar, plot, soort) %>% 
+  summarize(aantal = n(), .groups = "drop") %>% 
+  mutate(three_or_more = aantal >= 3)
+
+voorkomen_aantal_plots <- voorkomen_per_plot %>% 
+  filter(aantal >= 3) %>% 
+  group_by(jaar, soort) %>% 
+  summarise(aantal_plots = n())
+
+
+ggplot(voorkomen_aantal_plots %>% 
+         filter(soort %in% c("Amerikaanse eik", "beuk", "Corsicaanse den", "es",
+                             "esdoorn", "grove den", "ruwe berk", "zomereik")) , 
+                aes(x = jaar, y = aantal_plots, color = soort)) +
+  geom_line() + geom_point() + ylab("aantal proefvlakken")
+```
+
+
+
+
+In figuur \@ref(fig:soortenevaluatie) is te zien per jaar in hoeveel plots een soort minstens 3 keer voorkomt. 
+
+
 
 ```{r inputmodels, echo = FALSE, eval = TRUE, cache = TRUE, results='hide', warning = FALSE, message = FALSE}
 
@@ -383,7 +430,7 @@ for (startjaar in startjaren20) {
 ### Inschatten variabiliteit tussen proefvlakken
 
 Eerst bekijken we op basis van de ruwe data wat de variatie tussen de plots is.
-We kijken over alle jaren sedert 1995 wat de standaarddeviatie van het bladverlies is tussen de plots in de data geaggregeerd per plot.
+We kijken over alle jaren sedert 1995 wat de standaarddeviatie van het bladverlies is tussen de plots in de data geaggregeerd per plot. Dit is te vindein in figuur \@ref(fig:sdbetweenplotsraw).
 
 ```{r sdbetweenplotsraw, echo = FALSE, fig.cap="Verdeling op basis van ruwe gegevens"}
 sd_between_plots <- 
@@ -394,7 +441,8 @@ sd_between_plots <-
 sd_bp_avg <- mean(sd_between_plots$sd_between_plots)
 
 ggplot(sd_between_plots, aes(x = sd_between_plots)) + 
-  geom_density() + geom_vline(xintercept = sd_bp_avg, color = inbo_palette()[3])
+  geom_density() + geom_vline(xintercept = sd_bp_avg, color = inbo_palette()[3]) + 
+  xlab("standaarddeviatie tussen plots op basis vatn ruwe data") + ylab("densiteit")
 
 #quantile(sd_between_plots, prob = c(0,0.10,0.25,0.50,0.75,0.90,1))
 #mean(sd_between_plots)
@@ -402,7 +450,7 @@ ggplot(sd_between_plots, aes(x = sd_between_plots)) +
 #hist(sd_between_plots)  
 ```
 
-In een tweede methode, maken we een model op de geaggregeerde data per plot voor iedere rollende 13 (trend na 12 jaar: startjaar + 12 jaar) jaar beginnende vanaf 1995. Dus het eerste model is de periode 1995-2007, het tweede van 1996-2008 tot tenslotte 2010-2022.
+In een tweede methode, maken we een model op de geaggregeerde data per plot voor iedere rollende 13 (trend na 12 jaar: startjaar + 12 jaar) jaar beginnende vanaf 1995. Dus het eerste model is de periode 1995-2007, het tweede van 1996-2008 tot tenslotte 2010-2022. De resultaten hiervan staan in figuur  \@ref(fig:sdbetweenplotsmodel).
 
 De variatie tussen al deze modellen zullen een inzicht geven op wat te verwachten is van de standdaarddeviatie tussen de plots. Hiervoor wordt de random intercept schatting gebruikt. Als model gebruiken we het vereenvoudigde model zoals hogerop beschreven. Voor iedere dataset van 13 jaar, centreren we jaar in het midden van iedere 13 jaar, dus de dataset die in 1995 begint wordt gecentreerd op 2001, die in 1996 op 2002, enz ... 
 
@@ -413,9 +461,10 @@ df_bp <- data.frame(
   startjaar = startjaren, 
   sd_between_plots = sapply(simr_params, function(x) x$sd_plot))
 
-sd_bp_chosen <- 0.10
+sd_bp_chosen <- 0.07
 
-ggplot(df_bp, aes(x = startjaar, y = sd_between_plots)) + geom_point()
+ggplot(df_bp, aes(x = startjaar, y = sd_between_plots)) + geom_point() +
+  ylab("standaarddeviatie tussen plots")
 
 ```
 
@@ -425,10 +474,10 @@ Vermoedelijk is dit door introductie van nieuwe plots en het verouderen van de b
 
 ### Inschatten variabiliteit tussen bomen in eenzelfde proefvlak
 
-Om de variabiliteit tussen bomen in een proefvlak te onderzoeken wordt op dezelfde manier te werk gegaan als voor de variabiliteit tussen plots, eerst op basis van de ruwe data en daarna op basis van dezelfde modellen als bij tussen de proefvlakken.
 
 
-```{r sdbetweentreesraw, echo = FALSE}
+
+```{r sdbetweentreesraw, echo = FALSE, fig.cap="Verdeling standaarddeviatie tussen bomen in een plot op basis van de ruwe data." }
 
 sd_between_trees <- df_trees %>% 
   group_by(plot, tree, jaar) %>% 
@@ -438,11 +487,14 @@ sd_bt_avg <- mean(sd_between_trees$sd_between_trees)
 
 ggplot(sd_between_trees, aes(x = sd_between_trees)) + 
   geom_histogram(binwidth = 0.05) + 
-  geom_vline(xintercept = sd_bt_avg, color = inbo_palette()[3])
+  geom_vline(xintercept = sd_bt_avg, color = inbo_palette()[3]) + 
+  xlab("standaarddeviatie over bomen in een plot") + ylab("aantal")
 
 ```
 
-```{r sdbetweentreesmodel, echo = FALSE}
+Om de variabiliteit tussen bomen in een proefvlak te onderzoeken wordt op dezelfde manier te werk gegaan als voor de variabiliteit tussen plots, eerst op basis van de ruwe data (figuur \@ref(fig:sdbetweentreesraw) ) en daarna op basis van dezelfde modellen als bij tussen de proefvlakken \@ref(fig:sdbetweentreesmodel) ).
+
+```{r sdbetweentreesmodel, echo = FALSE, fig.cap="Verdeling standaarddeviatie tussen bomen in een plot op basis van het vooropgestelde model."}
 df_bt <- data.frame(
   startjaar = startjaren, 
   sd_between_trees = sapply(simr_params, function(x) x$sd_resid))
@@ -450,7 +502,8 @@ df_bt <- data.frame(
 sd_bt_chosen <- 0.036 * sqrt(24) 
 sd_bt_chosen <- 0.175
 
-ggplot(df_bt, aes(x = startjaar, y = sd_between_trees)) + geom_point()
+ggplot(df_bt, aes(x = startjaar, y = sd_between_trees)) + geom_point() + 
+  ylab("standaarddeviatie over bomen in een plot")
 
 ```
 
@@ -462,9 +515,9 @@ Ook hier is de inschatting verschillend voor verschillende startjaren van het mo
 
 Voor de inschatting van de random helling die ieder plot volgt rond de globale trend wordt op een vergelijkbare manier als voor de andere parameters gewerkt.
 Nu wordt enkel nog berekend op basis van het model, niet meer op de ruwe data.
-Hezelfde procedé als voorheen, maar nu niet meer apart op de ruwe data berekend, maar nu is het de inschatting van de random helling tussen de plots.
+Hezelfde procedé als voorheen, maar nu niet meer apart op de ruwe data berekend, maar nu is het de inschatting van de random helling tussen de plots (figuur \@ref(fig:sdtrendmodel) ).
 
-```{r sdtrendmodel, echo = FALSE}
+```{r sdtrendmodel, echo = FALSE, fig.cap="Variatie van de trends per plot"}
 
 sd_trend <- data.frame(
   periode = "over 12 jaar",
@@ -480,16 +533,17 @@ sd_trend20 <- data.frame(
   sd_trend = sapply(simr_params20, function(x) x$sd_trend))
 
 ggplot(bind_rows(sd_trend, sd_trend20), 
-       aes(x = startjaar, y = sd_trend, color = periode)) + geom_point()
+       aes(x = startjaar, y = sd_trend, color = periode)) + geom_point() + 
+  ylab("standaardafwijking van de hellingen tussen de plots")
 
 
 ```
 
-De standaardarwijking op de trend is voor de middelste startjaren heel wat sterker dan de rest. Dit heeft veel te maken met de extreme stijgiging in bladverlies in de jaren 2011 en 2012. In de latere jaren wordt de invloed van deze jaren veel minder en zwakt de standaardafwijking tussen de trend terug af. Als instelwaarde gebruiken we `r sd_trend_chosen`
+De standaardarwijking op de trend is voor de middelste startjaren heel wat sterker dan de rest. Dit heeft veel te maken met de extreme stijgiging in bladverlies in de jaren 2011 en 2012. In de latere jaren wordt de invloed van deze jaren veel minder en zwakt de standaardafwijking tussen de trend terug af. Als instelwaarde gebruiken we `r sd_trend_chosen`. Als de variabiliteit op de trend over 20 jaar zordt bekeken is die wat lager, wat wijst dat de plots over lange tijd minder afwijken van de globale trend. Toch is dit verschil vrij klein en mogelijks niet relevant.
 
 ### Inschatten van correlatie tussen random intercept van plot met trend per plot
 
-```{r correlatietrndplot, echo = FALSE}
+```{r correlatietrndplot, echo = FALSE, fig.cap="Verdeling correlaties tussen random trend en random intercept"}
 cor_slope <- data.frame(
   startjaar = startjaren, 
   cor_slope = sapply(simr_params, function(x) x$cor_trend_plot))
@@ -499,12 +553,12 @@ cor_chosen <- 0.40
 ggplot(cor_slope, aes(x = startjaar, y = cor_slope)) + geom_point()
 ```
 
-Ook hier is een groot verschil tussen modellen met de beginjaren en de modellen die de middelste jaren gebruiken. Omdat correlatie tussen random trend en intercept belangrijk zijn, gaan we hier eerder een worst-case scenario gebruiken, en gebruiken we als instelwaarde `r cor_chosen`
+Ook hier is een groot verschil tussen modellen met de beginjaren en de modellen die de middelste jaren gebruiken (figuur \@ref(fig:correlatietrndplot) ). Omdat correlatie tussen random trend en intercept belangrijk kunnen zijn, gaan we hier eerder een worst-case scenario gebruiken, en gebruiken we als instelwaarde `r cor_chosen`
 
 
 ### Inschatting autocorrelatie op plotniveau
 
-```{r autocorplot}
+```{r autocorplot, fig.cap="Correlatie in de tijd"}
 df2 <- df_trees_agg %>% 
   group_by(plot, jaar) %>% 
   summarise(avg = mean(nnv), .groups = "drop") %>% 
@@ -595,6 +649,7 @@ Rekening houden met autocorrelatie zorgt dat modellen fitten heel ingewikkeld wo
 
 Omdat de autocorrelatie ook na 12 jaar nog vrij hoog is, zal een random intercept zonder autocorrelatie toch nog een vrij goede benadering zijn.
 
+<!--
 ## Dimensionering meetnet op soortniveau
 
 ### Soortenkeuze
@@ -603,64 +658,33 @@ Enkel soorten die ieder jaar in minstens 5 plots voorkomen en in die plots minst
 
 ### Voorkomen van soorten in dataset
 
-```{r soortenevaluatie, cache=TRUE, include = FALSE, message = FALSE, warning = FALSE}
+```{r soortenbis}
+# soorten_behouden <- ieder_jaar_5_plots %>% 
+#   filter(min_aantal_plots >= 5) %>% 
+#   pull(soort)
+# 
+# sd_all <- df_trees %>% 
+#   group_by(jaar, plot) %>% 
+#   summarise(Soort = "allemaal", sds = sd(nnv))
+# summary(sd_all$sds)
+# 
+# sd_spec <- df_trees %>% 
+#   filter(soort %in% soorten_behouden) %>% 
+#   group_by(jaar, soort, plot) %>% 
+#   summarise(sds = sd(nnv))
+# 
+# sds <- bind_rows(sd_all, sd_spec)
 
-voorkomen_soorten <- df_trees %>% 
-  group_by(jaar, soort ) %>% 
-  summarize(aantal = n()) %>% 
-  arrange(jaar, desc(aantal))
-
-voorkomen_tabel <- voorkomen_soorten %>% 
-  pivot_wider(id_cols = jaar, names_from = soort, values_from = aantal) 
-
-
-voorkomen_plots <- df_trees %>% 
-  group_by(jaar, plot, soort) %>% 
-  summarize(aantal = n(), .groups = "drop")
-
-voorkomen_plots %>% 
-  group_by(jaar, soort, plot) %>% 
-  summarise(three_or_more = aantal >= 3, .groups = "drop_last") %>% 
-  summarise(n_plots = sum(three_or_more))
-
-ieder_jaar_5_plots <- voorkomen_plots %>% 
-  mutate(aanwezig = aantal >= 3) %>% 
-  group_by(soort, jaar) %>% 
-  summarise(aantal_plots = sum(aanwezig), .groups = "drop_last") %>% 
-  summarise(min_aantal_plots = min(aantal_plots)) %>% 
-  arrange(desc(min_aantal_plots))
-
-soorten_behouden <- ieder_jaar_5_plots %>% 
-  filter(min_aantal_plots >= 5) %>% 
-  pull(soort)
-
-sd_all <- df_trees %>% 
-  group_by(jaar, plot) %>% 
-  summarise(Soort = "allemaal", sds = sd(nnv))
-summary(sd_all$sds)
-
-sd_spec <- df_trees %>% 
-  filter(soort %in% soorten_behouden) %>% 
-  group_by(jaar, soort, plot) %>% 
-  summarise(sds = sd(nnv))
-
-sds <- bind_rows(sd_all, sd_spec)
-```
-
-```{r relevantesoorten}
-knitr::kable(ieder_jaar_5_plots)
-```
-
-
-```{r soortenfig, fig.cap = "Overzicht van de standaardeviaties binnen een plot,voor alle jaren in de dataset. De rode lijn geeft de mediaan standaarddviatie aan."}
-ggplot(sds, aes(x = sds)) + geom_histogram() + 
-  geom_vline(data = sds %>% 
-               group_by(soort) %>% 
-               summarise(median = median(sds, na.rm = TRUE)), 
-             aes(xintercept = median), color = "red") +
-  facet_wrap(~soort, ncol = 1, scales = "free_y")
+# knitr::kable(ieder_jaar_5_plots)
+# ggplot(sds, aes(x = sds)) + geom_histogram() + 
+#   geom_vline(data = sds %>% 
+#                group_by(soort) %>% 
+#                summarise(median = median(sds, na.rm = TRUE)), 
+#              aes(xintercept = median), color = "red") +
+#   facet_wrap(~soort, ncol = 1, scales = "free_y")
 
 ```
+
 
 De variatie tussen bomen in een plot is in dezelfde grootte-orde wanneer alle bomen tegelijk beschouwd worden of per belangrijke soort apart. Dit wil zeggen dat de conclusies voor alle soorten samen doorgetrokken kunnen worden naar de belangrijke soorten apart. Het heeft geen zin om uitspraken te doen over soorten die te weinig voorkomen in de dataset.
 

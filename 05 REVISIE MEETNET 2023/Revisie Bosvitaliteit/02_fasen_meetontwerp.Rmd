@@ -24,17 +24,18 @@ Hiervoor moet de door ICP forest opgelegde methodologie gebruikt worden waarbij 
 
 De hoofdvraag voor het meetnet is: hoe evolueert de gezondheidstoestand van de bomen in de Vlaamse bossen?
 
-Voor de rest zijn hier geen normen of concreet meetbare doelstellingen aan verbonden, wat wel een belangrijk aspect is om een meetnet te kunnen dimensioneren.
+Er zijn hier geen normen of concreet meetbare doelstellingen aan verbonden. Dit is een hiaat die moet worden aangepakt, omdat juist deze doelstellingen heel belangrijk zijn om het meetnet te kunnen dimensioneren. Ook een ruimere kadering zou nuttig zijn: wat is het belang voor de maatschappij, voor de natuur in kader van klimaatverandering.
 
-Een mogelijke vraag, in lijn met andere meetnetten op het INBO zou hier kunnen zijn, om een verslechtering van de toestand van 12% te kunnen detecteren na een periode van 12 jaar, of 24% op 24 jaar.
-Daarnaast kan het ook interessant zijn om te zien welk verschil gedetecteerd kan worden tussen 2 opeenvolgende jaren, want hoe krachtiger dit is, hoe krachtiger ook het meetnet zal zijn op langere termijn.
+Een mogelijke vraag, in lijn met andere meetnetten op het INBO, zou hier kunnen zijn dat een verslechtering van de toestand van 12% gedecteerd kan worden na een periode van 12 jaar, of 20% op 20 jaar.
+Daarnaast is het ook interessant om te zien welk verschil gedetecteerd kan worden tussen 2 opeenvolgende jaren, want hoe krachtiger dit is, hoe krachtiger ook het meetnet zal zijn op langere termijn.
 
 Een andere belangrijk aspect is om een onderscheid te maken of we een uitspraak willen doen over de volledige bosgemeenschap in Vlaanderen of dat dit per soort of regio apart moet kunnen.
-Om hiervoor uitspraken te onderbouwen, zal een aangepast aantal steekproefpunten nodig zijn.
+Om hiervoor uitspraken te onderbouwen, zal een aangepast aantal steekproefpunten nodig zijn. Enkel Grove den en zomereik komen in de steekproef veel voor (>= 20 plots).
 
 ### Aanbod
 
-Een groot verschil met dit meetnet ten opzichte van het merendeel van andere INBO meetnetten is dat hier voor alle proefvlakken een jaarlijkse beoordeling gebeurt  in plaats van gewoon op het startpunt en eindpunt van een meetnetcyclus.
+Een groot verschil met dit meetnet ten opzichte van het merendeel van andere INBO meetnetten is dat hier voor alle proefvlakken een jaarlijkse beoordeling gebeurt.
+In veel meetnetten wordt gewerkt met een meetcyclus van meerdere jaren en wordt enkel gemeten in het begin en einde van de cyclus.
 
 Voor alle proefvlakken zijn locatiegegevens beschikbaar, alsook enkele afgeleide variabelen zoals het type eigenaar.
 Voor de laatste nieuwe plots zitten de coördinaten eind 2022 nog niet in de bosvitaliteitsdatabank, maar die zullen toegevoegd worden.
@@ -55,10 +56,10 @@ Hiervoor is een meetprotocol uitgewerkt door ICP forests.
 De manual kan gevonden worden op de [handleidingenwebsite van ICP forests](http://icp-forests.net/page/icp-forests-manual).
 
 Dit beoordelen van de kroon is het meest tijdsintensieve van de verschillende metingen per boom, omdat de bomen regelmatig vanuit verschillende hoeken moeten beoordeeld worden.
-Aangezien de visuele beoordeling gedaan in klassen van 5%, wat vrij gedetailleerd is, is het belangrijk de bomen grondig te bekijken, zodat de metingen relevant zijn en niet teveel afwijken vertonen. 
+Aangezien de visuele beoordeling gedaan in klassen van 5%, wat vrij gedetailleerd is, is het belangrijk de bomen grondig te bekijken, zodat de metingen relevant zijn en niet teveel afwijkingen vertonen. 
 
 Het bladverlies geldt als proxy voor de vitaliteit van de bomen.
-Er wordt met een grens gewerkt van 25%, waarbij bomen met 25% of minder bladverlies als gezond worden aanzien en bomen met meer als beschadigd.
+Er wordt met een grens van 25% gewerkt , waarbij bomen met 25% of minder bladverlies als gezond worden aanzien en bomen met meer als beschadigd.
 
 Andere indicatieve metingen voor de vitaliteit:
 
@@ -70,9 +71,9 @@ Andere indicatieve metingen voor de vitaliteit:
 - Leeftijdsklasse op basis van bestandsleeftijd
 
 
-Hier wordt zowel het symptoom als de vermoedelijke oorzaak genoteerd alsook waar dat symptoom terug te vinden is.
+Zowel het symptoom als de vermoedelijke oorzaak wordt genoteerd alsook waar dat symptoom op de boom terug te vinden is.
 
-Verder wordt nog een meer gedetailleerde symptoombeschrijving uitgevoerd die vooral een visuele inspectie inhoudt van verschillende symptomen die in relatie staan tot de gezondheid van de boom. Dit gebeurt zowel op kroon, takken en stam.
+Verder gebeurt een nog meer gedetailleerde symptoombeschrijving die in relatie staan tot de gezondheid van de boom. Dit is vooramelijk door een visuele inspectie op kroon, takken en stam.
 Verder wordt hierbij ook getracht een oorzaak te bepalen.
 
 De symptomen worden opgemeten in volgende vormen:
@@ -133,7 +134,7 @@ Beschreven oorzaken:
 - onderzocht maar niet geïdentificeerd
 
 
-In het begin van het meetnet werd een bodemanalyse uitgevoerd op de toen in het meetnet aanwezige proefvlakken. Mogelijks wordt dit in de toekomst nog eens herhaald. Daarnaast is het gemakkelijk alle klimaatdata te verkrijgen van meteostations in de buurt van de meetpunten. Het dichtsbijzijnde meteostation wordt ook bewaard in de databank voor elk van de proefvlakken.
+In het begin van het meetnet werd een bodemanalyse uitgevoerd op de toen in het meetnet aanwezige proefvlakken. Mogelijks wordt dit in de toekomst nog eens herhaald. Daarnaast is het gemakkelijk alle klimaatdata te verkrijgen van meteostations in de buurt van de meetpunten. Het dichtsbijzijnde meteostation voor elk proefvlak is bewaard in de databank.
 
 ### Verbruiksgoederen
 
@@ -190,13 +191,13 @@ Zo kunnen de gegevens gebruikt worden in verschillende onderzoeken in Vlaanderen
 
 ### Veiligheid
 
-Er wordt nooit een proefvlak bezocht zonder expliciete toestemming van de eigenaar. Dit houdt in dat privé bossen iets minder in de steekproef zitten.
+Er wordt nooit een proefvlak bezocht zonder expliciete toestemming van de eigenaar. Dit houdt in dat privé bossen minder in de steekproef aanwezig zijn.
 
-Doordat het werk vrij belastend is voor de rug, doordat veel met een verrekijker hoog in de bomen moet gekeken worden, is het aangeraden dat er specifieke ondersteuning voor de rug gebruikt wordt om medische problemen te voorkomen.
+Het werk is vrij belastend voor de rug, doordat veel met een verrekijker hoog in de bomen moet gekeken worden. Daarom is het aangeraden dat er specifieke ondersteuning voor de rug gebruikt wordt om medische problemen te voorkomen.
 
 ### Doelpopulatie
 
-De doelpopulatie zijn de bossen in Vlaanderen, maar door verschillende redenen die aan bod komen later dan de tekst wijkt de populatie die de steekproef bestrijkt af van de vooropgestelde doelpopulatie. 
+De doelpopulatie zijn de bossen in Vlaanderen, maar door verschillende redenen die later aan bod komen, wijkt de populatie die de steekproef bestrijkt af van de vooropgestelde doelpopulatie. 
 
 #### Representativiteit
 
@@ -204,7 +205,7 @@ De steekproef is niet volledig representatief voor de bossen in Vlaanderen:
 
 De proefvlakken worden verplaatst zodat ze volledig in een bos vallen, waardoor er geen uitspraak gedaan wordt over alles wat bos is in Vlaanderen, omdat bosranden niet in de steekproef voorkomen. 
 
-Daarnaast worden er sedert 1995 steekproefpunten extra bemonsterd om bepaalde soorten beter mee te hebben (voornamelijk voor beuk), waardoor de steekproef niet meer volledig representatief is voor Vlaanderen.
+Daarnaast worden sedert 1995 extra steekproefpunten bemonsterd om bepaalde soorten beter mee te hebben (voornamelijk voor beuk), waardoor de steekproef niet meer volledig representatief is voor Vlaanderen.
 Vergelijking met de [bosinventarisatie](https://www.natuurenbos.be/sites/default/files/vlaamse-bosinventaris/WEBSITE_Boomsoortensamenstelling.html) (zie figuur \@ref(fig:soortenvgl)):
 
 ```{r soortenvgl, echo = FALSE, fig.cap= "Vergelijking aantal bomen in bosvitaliteitsmeetnet (punten) en de meest recente data uit de Vlaamse bosinventarisatie (balken)"}
@@ -281,9 +282,8 @@ Hoe meer bomen per plot beoordeeld worden, hoe zekerder we kunnen zijn over hoe 
 Doordat we uitmiddelen over de bomen in een proefvlak heen, zal de inschatting op proefvlakniveau in de buurt komen van een continue variabele.
 Het grootste nadeel is dat een dode boom heel het proefvlak sterk kan duwen in de richting van slechtere vitaliteit, omdat dit een bladverlies van 100% is terwijl de rest meestal beneden de 50% ligt.
 
-```{r invloedaantalbomen, echo = FALSE, warning = FALSE, fig.cap="Schets van hoe onzeker het gemiddeld bladverlies per proefvlak wanneer het gemiddelde op meer bomen berekend wordt. Dit wordt gedaan voor een meetfout op het bladverlies op de boom van 0.5,0.1 en 0.15, waarbij het bladverlies gecodeerd is van 0 tot 1 (100%)."}
-set.seed(733)
-
+```{r invloedaantalbomen, echo = FALSE, warning = FALSE, fig.cap = "Schets van hoe onzeker het gemiddeld bladverlies per proefvlak wanneer het gemiddelde op meer bomen berekend wordt. Dit wordt gedaan voor een meetfout op het bladverlies op de boom van 0.5,0.1 en 0.15, waarbij het bladverlies gecodeerd is van 0 tot 1 (100 procent)."}
+set.seed(734)
 avg <- 0.25
 plotdata <- expand.grid(sd = c(0.05, 0.10, 0.15),
                         aantal_bomen = c(1, 3, 5, 10, 15, 20, 25, 30)) %>%
@@ -357,7 +357,7 @@ knitr::include_graphics("data/pixel.png")
 
 #### Vergelijking met Europa
 
-In vergelijking met andere landen is ons meetnet veel dichter.
+In vergelijking met andere landen is het Vlaamse meetnet veel dichter.
 Dit  heeft vooral te maken met de geringe oppervlakte van Vlaanderen, waarbij de bebossingsgraad ook nog eens heel berperkt is. 
 Andere Europese landen berperkten zich tot het 16x16km grid.
 Het meetnet in Wallonië is daarentegen nog veel dichter dan in Vlaanderen.
@@ -462,6 +462,8 @@ Er wordt gebruik gemaakt van verschillende R pakketten voor de analyses: `nlme`,
 - brms: bayesiaanse methode, zeer traag, maar wel onmiddellijk zonder extra berekeningen betrouwbaarheidsintervallen.
 
 Om de berekeningen te laten convergeren en snel genoeg te laten verlopen zal in de poweranalyse net zoals in de Mandall-Tau test hierboven de waarden uitmiddelen per proeflak en zullen de metingen van de verschillende bomen vooral bijdragen aan hoe nauwkeurig we dit gemiddelde per proefvlak kunnen kennen.
+
+Voor de eenvoud wordt voor de powerberekeningen gewerkt met een model waarbij alle data geaggregeerd wordt op plotniveau. er wordt via een random slope model toegelaten dat alle plots een eigen trend kunnen volgen.
 
 #### Lineair mixed effect model op fractie beschadigde bomen
 

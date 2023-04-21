@@ -6,7 +6,9 @@ In eerste instantie willen we zien welke verschil het huidige meetnet kan aanton
 
 ### Op de volledige dataset
 
-```{r, cache = TRUE, fig.cap = "verdeling variaties data in opeenvolgende jaren. Rode lijn is de gekozen parameter voor de simulaties."}
+Voor de volledige dataset hebben ze een variatie (uitgedrukt als standaarddeviatie) tussen de proefvlakken van ongeveer 0.07 (zie figuur \@ref(fig:vcfull)), wat ook toevallig hetzelfde cijfer is voor de residuele variatie. De variatie tussen de bomen bedraagt rond de 0.09.
+
+```{r vcfull, cache = TRUE, fig.cap = "verdeling variaties data in opeenvolgende jaren. Rode lijn is de gekozen parameter voor de simulaties."}
 modeljpj <- NULL
 for (i in 1995:2021) {
 modeljpj[[i-1994]] <- lmer(nnv ~ factor(jaar) + (1|plot/tree), 
@@ -17,20 +19,21 @@ sd_tree <- sapply(modeljpj, function(x) sqrt(VarCorr(x)$`tree:plot`[1,1]))
 sd_resi <- sapply(modeljpj, function(x) attr(VarCorr(x), "sc"))
 
 
-ggplot(data = bind_rows(data.frame(type = "plot", 
+ggplot(data = bind_rows(data.frame(type = "proefvlak", 
                                    sd = sd_plot, 
                                    chosen = ceiling(median(sd_plot)*100)/100),
-                        data.frame(type = "tree", 
+                        data.frame(type = "boom", 
                                    sd = sd_tree,
                                    chosen = ceiling(median(sd_tree)*100)/100),
-                        data.frame(type = "resi", 
+                        data.frame(type = "residu's", 
                                    sd = sd_resi,
                                    chosen = ceiling(median(sd_resi)*100)/100)), 
        aes(x = sd)) + 
   geom_histogram(bins = 20) + 
   geom_vline(aes(xintercept = chosen), 
              color = "red") + 
-  facet_wrap(~type, ncol = 1)
+  facet_wrap(~type, ncol = 1) + 
+  xlab("standaarddeviatie") + ylab("aantal")
 
 #sd_plot = 0.07
 #sd_tree = 0.09
@@ -40,7 +43,9 @@ ggplot(data = bind_rows(data.frame(type = "plot",
 
 ### Op geaggregeerde dataset
 
-```{r jpjagg}
+Indien we aggregeren op plotniveau blijft dit voor de variatie tussen de plots in dezelfde grootte-orde met 0.06 (zie figuur \@fig(fig:jpjagg)). De residuele standdaardeviatie bedraagt rond de 0.03 (nu is dit een combiatie van de variatie per boom en de residuele variatie van het vorige model).
+
+```{r jpjagg, fig.cap="Variatie tussen de plots en residuele variatie in het geaggregeerde model die 2 jaar met elkaar vergelijkt."}
 modeljpj <- NULL
 for (i in 1995:2021) {
   modeljpj[[i-1994]] <- 
@@ -51,17 +56,18 @@ sd_plot <- sapply(modeljpj, function(x) sqrt(VarCorr(x)$plot[1,1]))
 sd_resi <- sapply(modeljpj, function(x) attr(VarCorr(x), "sc"))
 
 
-ggplot(data = bind_rows(data.frame(type = "plot", 
+ggplot(data = bind_rows(data.frame(type = "proefvlak", 
                                    sd = sd_plot, 
                                    chosen = ceiling(median(sd_plot)*100)/100),
-                        data.frame(type = "resi", 
+                        data.frame(type = "residu's", 
                                    sd = sd_resi,
                                    chosen = ceiling(median(sd_resi)*100)/100)), 
        aes(x = sd)) + 
   geom_histogram(bins = 20) + 
   geom_vline(aes(xintercept = chosen), 
              color = "red") + 
-  facet_wrap(~type, ncol = 1)
+  facet_wrap(~type, ncol = 1) +
+  xlab("standaarddeviatie") + ylab("aantal")
 
 #sd_plot = 0.06
 #sd_resi = 0.03
@@ -69,7 +75,7 @@ ggplot(data = bind_rows(data.frame(type = "plot",
 
 
 
-```{r jpjpwr, cache = TRUE, message = FALSE}
+```{r jpjpwr, fig.cap="Powercurve voor het detecteren van een effect tussen 2 jaren",   cache = TRUE, message = FALSE}
 
 datajpj <- read_csv2('data/power_jpj.csv')
 
@@ -79,7 +85,7 @@ ggplot(datajpj, aes(x = jaarlijkse_trend, y = jaarlijkse_power)) +
 ```
 
 
-De berekeningen gebeuren in het script _*simulaties_jpj.R*_
+De berekeningen gebeuren in het script _*rscript_simulaties_jpj.R*_
 Een trend van ongeveer 0.12 kan aangetoond worden met 80% power. Dat wil zeggen dat een bladverlies die stijgt van 0.25 naar 0.262 aangetoond (ofwel een stijging van 5%) kan worden aangetoond tussen 2 verschillende jaren.
 
 
@@ -102,7 +108,7 @@ De verschillende trends wordten bekeken op de basisinstelvariabelen en niet op d
 
 Deze powerberekeningen gebeuren op basis van een extern R script, die als aparte scripts bij het document gevoegd worden.
 
-```{r simrfixedvars, message = FALSE, fig.cap="Powerberekening voor de berekende instelvariabelen voor 20 tot 120 proefvlakken voor detectie van 12% op 12 jaar en 20% op 20 jaar"}
+```{r simrfixedvars, message = FALSE, fig.cap="Powerberekening voor de berekende instelvariabelen voor 20 tot 120 proefvlakken voor detectie van 12 procent op 12 jaar en 20 procent op 20 jaar"}
 powers1 <- read_csv2('data/modelsim_fixed.csv')
 ggplot(powers1, 
        aes(x = N_plots, y = power, ymin = lcl, ymax = ucl,
@@ -134,23 +140,23 @@ ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_tree")),
 
 ```
 
-Het aantal bomen in de steekproef heeft impact op de variabiliteit op het gemiddeld bladverlies per plot. Minder bomen opmeten betekent meer onzekerheid op dat gemiddelde en een lagere power.
+Het aantal bomen in de steekproef heeft impact op de variabiliteit op het gemiddeld bladverlies per plot. Minder bomen opmeten betekent meer onzekerheid op dat gemiddelde en een lagere power (figuur \@ref(fig:rsiminstelvarstrees)).
 
 De verplaatsing naar ieder proefvlak is de meest doorslaggevende factor in de tijd die het duurt om een meetnet op te meten. Het bladverlies inschatten voor iedere boom vergt ook redelijk wat tijd, maar het verminderen van de bomen kan een beperkte tijdsbesparking opleveren, maar de vraag is of het waard is om niet meer te houden aan de protocolafspraken voor deze vrij beperkte tijdswinst.
 
 
-```{r rsiminstelvarstrend, fig.cap = "Power in functie van de te detecteren trend, gebaseerd op een basiswaarde van 25% bladverlies per proefvlak. 12% op 12 jaar komt overeen met een trend van 0.0025 per jaar, 24% op 12 jaar komt overeen met een trend van 0.0050 per jaar. De steekproef bestaat hier uit 80 proefvlakken met 20 bomen per proefvlak."}
+```{r rsiminstelvarstrend, fig.cap = "Power in functie van de te detecteren trend, gebaseerd op een basiswaarde van 25 procent bladverlies per proefvlak. 12 procent op 12 jaar komt overeen met een trend van 0.0025 per jaar, 24 procent op 12 jaar komt overeen met een trend van 0.0050 per jaar. De steekproef bestaat hier uit 80 proefvlakken met 20 bomen per proefvlak."}
 
 ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_trend")), 
        aes(x = trend, y = power, ymin = lcl, ymax = ucl, 
            color = Mtype == "Fix")) + 
   geom_point() + geom_errorbar() + 
-  labs(x = "Te detecteren trend (12% op 12 jaar of 24% op 12 jaar)", 
+  labs(x = "Te detecteren trend (12 of 24 procent op 12 jaar)", 
        y = "Power", color = "Referentie")
 
 ```
 
-Zoals verwacht heeft de te detecteren trend een heel grote invloed op de kracht. Hoe groter het effect is dat ten minste gedetecteerd moet worden, hoe meer kans en dus kracht dat het model dit effect zal kunnen detecteren.
+Zoals verwacht blijkt uit figuur \@ref(fig:rsiminstelvarstrend) heeft de te detecteren trend een heel grote invloed op de kracht. Hoe groter het effect is dat ten minste gedetecteerd moet worden, hoe meer kans en dus kracht dat het model dit effect zal kunnen detecteren.
 
 ```{r rsiminstelvarsbp, fig.cap = "Power in functie van hoe groot de variatie tussen de verschillende proefvlakken is. Ook hier vertrekken we van een steekproef van 80 proefvlakken met 20 bomen per proefvlak"}
 
@@ -163,7 +169,7 @@ ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_bp")),
 
 ```
 
-Hoe groot de variatie is tussen de plots heeft ook een impact op de power, maar is heel verwaarloosbaar. Het is ook onduidelijk in welke richting dit invloed heeft, langs de ene kant is er meer variatie dus verwacht je een lagere power, langs de andere kant heeft ieder plot meer informatie, zeker omdat er per plot ook nog een random helling aanwezig is. In bovenstaande figuur lijkt meer variatie contra-intuïtief te leiden tot een hogere power.
+Hoe groot de variatie is tussen de plots heeft ook een impact op de power, maar die blijkt in figuur \@ref(fig:rsiminstelvarsbp) vrij klein . Het is ook onduidelijk in welke richting dit invloed heeft, langs de ene kant is er meer variatie dus verwacht je een lagere power, langs de andere kant heeft ieder plot meer informatie, zeker omdat er per plot ook nog een random helling aanwezig is. In bovenstaande figuur lijkt meer variatie contra-intuïtief te leiden tot een hogere power.
 
 ```{r rsiminstelvarscor, fig.cap = "Power in functie van hoe groot de correlatie is tussen de inschatting van de random intercept en random slope van het model. Ook hier vertrekken we van een steekproef van 80 proefvlakken met 20 bomen per proefvlak"}
 
@@ -175,7 +181,7 @@ ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_cor")),
        y = "Power", color = "Referentie")
 ```
 
-De correlatie tussen intercept en helling op tijd, lijkt een verwaarloosbare invloed te hebben op de power in de huidige setup.
+Uit figuur \@ref(fig:rsiminstelvarscor) blijkt dat de correlatie tussen intercept en helling in de tijd een verwaarloosbare invloed te hebben op de power in de huidige setup.
 
 ```{r rsiminstelvarssdstrend, fig.cap = "Power in functie van hoe groot de variatie op de trend is tussen de verschillende proefvlakken. Ook hier vertrekken we van een steekproef van 80 proefvlakken met 20 bomen per proefvlak"}
 
