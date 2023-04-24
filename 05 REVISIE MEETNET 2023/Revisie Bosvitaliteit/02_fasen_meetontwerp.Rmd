@@ -14,7 +14,7 @@ De monitoring wordt begeleid door verschillende expertengroepen van het internat
 
 #### ICP Forests verplichting
 
-Alle gridpunten die in bos vallen in een 16x16km Europees grid moeten jaarlijks gerapporteerd worden in termen van  blad- of naadverlies (Level-I meetnet) en in detail voor andere kenmerken zoals bv. stikstof- en koolstofdepositie (Level-II meetnet).
+Alle gridpunten die in bos vallen in een 16 x 16 km Europees grid moeten jaarlijks gerapporteerd worden in termen van  blad- of naadverlies (Level-I meetnet) en in detail voor andere kenmerken zoals bv. stikstof- en koolstofdepositie (Level-II meetnet).
 
 Hiervoor moet de door ICP forest opgelegde methodologie gebruikt worden waarbij gebruik gemaakt wordt van visuele kroonbeoordelingen.
 
@@ -24,7 +24,7 @@ De hoofdvraag voor het meetnet is: hoe evolueert de gezondheidstoestand van de b
 
 Er zijn hier geen normen of concreet meetbare doelstellingen aan verbonden. Dit is een hiaat die moet worden aangepakt, omdat juist deze doelstellingen heel belangrijk zijn om het meetnet te kunnen dimensioneren. Ook een ruimere kadering zou nuttig zijn: wat is het belang voor de maatschappij, voor de natuur in kader van klimaatverandering.
 
-Een mogelijke vraag, in lijn met andere meetnetten op het INBO, zou hier kunnen zijn dat een verslechtering van de toestand van 12% gedecteerd kan worden na een periode van 12 jaar, of 20% op 20 jaar.
+Een mogelijke vraag, in lijn met andere meetnetten op het INBO, zou hier kunnen zijn dat een verslechtering van de toestand van 12% gedetecteerd kan worden na een periode van 12 jaar, of 20% op 20 jaar.
 Daarnaast is het ook interessant om te zien welk verschil gedetecteerd kan worden tussen 2 opeenvolgende jaren, want hoe krachtiger dit is, hoe krachtiger ook het meetnet zal zijn op langere termijn.
 
 Een andere belangrijk aspect is om een onderscheid te maken of we een uitspraak willen doen over de volledige bosgemeenschap in Vlaanderen of dat dit per soort of regio apart moet kunnen.
@@ -33,7 +33,7 @@ Om hiervoor uitspraken te onderbouwen, zal een aangepast aantal steekproefpunten
 ### Aanbod
 
 Een groot verschil met dit meetnet ten opzichte van het merendeel van andere INBO meetnetten is dat hier voor alle proefvlakken een jaarlijkse beoordeling gebeurt.
-In veel meetnetten wordt gewerkt met een meetcyclus van meerdere jaren en wordt enkel gemeten in het begin en einde van de cyclus.
+In veel meetnetten wordt gewerkt met een meetcyclus van meerdere jaren en wordt enkel gemeten in het begin en einde van de cyclus of volgens een roterend schema waarbij elk jaar een deel van de proefvlakken wordt onderzoc.
 
 Voor alle proefvlakken zijn locatiegegevens beschikbaar, alsook enkele afgeleide variabelen zoals het type eigenaar.
 Voor de laatste nieuwe plots zitten de coördinaten eind 2022 nog niet in de bosvitaliteitsdatabank, maar die zullen toegevoegd worden.
@@ -54,10 +54,10 @@ Hiervoor is een meetprotocol uitgewerkt door ICP forests.
 De manual kan gevonden worden op de [handleidingenwebsite van ICP forests](http://icp-forests.net/page/icp-forests-manual).
 
 Dit beoordelen van de kroon is het meest tijdsintensieve van de verschillende metingen per boom, omdat de bomen regelmatig vanuit verschillende hoeken moeten beoordeeld worden.
-Aangezien de visuele beoordeling gedaan in klassen van 5%, wat vrij gedetailleerd is, is het belangrijk de bomen grondig te bekijken, zodat de metingen relevant zijn en niet teveel afwijkingen vertonen. 
+Aangezien de visuele beoordeling gedaan wordt in klassen van 5%, wat vrij gedetailleerd is, is het belangrijk de bomen grondig te bekijken, zodat de metingen relevant zijn en niet teveel afwijkingen vertonen. 
 
 Het bladverlies geldt als proxy voor de vitaliteit van de bomen.
-Er wordt met een grens van 25% gewerkt , waarbij bomen met 25% of minder bladverlies als gezond worden aanzien en bomen met meer als beschadigd.
+Er wordt met een grens van 25% gewerkt, waarbij bomen met 25% of minder bladverlies als gezond worden aanzien en bomen met meer als beschadigd.
 
 Andere indicatieve metingen voor de vitaliteit:
 
