@@ -16,6 +16,10 @@ De monitoring wordt begeleid door verschillende expertengroepen van het internat
 
 Alle gridpunten die in bos vallen in een 16 x 16 km Europees grid moeten jaarlijks gerapporteerd worden in termen van  blad- of naadverlies (Level-I meetnet) en in detail voor andere kenmerken zoals bv. stikstof- en koolstofdepositie (Level-II meetnet).
 
+<!--hvc: dus naar EU worden enkel de data van de proefvlakken die op 16 x 16 km doorgegeven? Hoeveel zijn dit er in Vlaanderen en in België. Kan je dat toevoegen?-->
+
+<!--Liggen de level I proefvlakken vast? Of wordt het steekproefkader om de x jaar aangepast: als er nieuw bos komt of als er bos verdwijnt?-->
+
 Hiervoor moet de door ICP forest opgelegde methodologie gebruikt worden waarbij gebruik gemaakt wordt van visuele kroonbeoordelingen.
 
 #### Interne vraag
@@ -24,19 +28,25 @@ De hoofdvraag voor het meetnet is: hoe evolueert de gezondheidstoestand van de b
 
 Er zijn hier geen normen of concreet meetbare doelstellingen aan verbonden. Dit is een hiaat die moet worden aangepakt, omdat juist deze doelstellingen heel belangrijk zijn om het meetnet te kunnen dimensioneren. Ook een ruimere kadering zou nuttig zijn: wat is het belang voor de maatschappij, voor de natuur in kader van klimaatverandering.
 
+<!--hvc: wordt de 25% grens voor bladverlies op plotniveau ook gebruikt op steekproefniveau? Gemiddelde bladverlies van meer of minder dan 25%?-->
+
 Een mogelijke vraag, in lijn met andere meetnetten op het INBO, zou hier kunnen zijn dat een verslechtering van de toestand van 12% gedetecteerd kan worden na een periode van 12 jaar, of 20% op 20 jaar.
 Daarnaast is het ook interessant om te zien welk verschil gedetecteerd kan worden tussen 2 opeenvolgende jaren, want hoe krachtiger dit is, hoe krachtiger ook het meetnet zal zijn op langere termijn.
 
-Een andere belangrijk aspect is om een onderscheid te maken of we een uitspraak willen doen over de volledige bosgemeenschap in Vlaanderen of dat dit per soort of regio apart moet kunnen.
+<!--hvc: of eerder 24% na 24 jaar nemen ipv 20/20?-->
+
+Een andere belangrijk aspect is om een onderscheid te maken of we een uitspraak willen doen over de volledige bosgemeenschap in Vlaanderen of dat dit per soort, soortengroep (naald- versus loofbomen) of regio apart moet kunnen.
 Om hiervoor uitspraken te onderbouwen, zal een aangepast aantal steekproefpunten nodig zijn. Enkel Grove den en zomereik komen in de steekproef veel voor (>= 20 plots).
 
 ### Aanbod
 
 Een groot verschil met dit meetnet ten opzichte van het merendeel van andere INBO meetnetten is dat hier voor alle proefvlakken een jaarlijkse beoordeling gebeurt.
-In veel meetnetten wordt gewerkt met een meetcyclus van meerdere jaren en wordt enkel gemeten in het begin en einde van de cyclus of volgens een roterend schema waarbij elk jaar een deel van de proefvlakken wordt onderzoc.
+In veel meetnetten wordt gewerkt met een meetcyclus van meerdere jaren en wordt enkel gemeten in het begin en einde van de cyclus of volgens een roterend schema waarbij elk jaar een deel van de proefvlakken wordt onderzocht.
 
 Voor alle proefvlakken zijn locatiegegevens beschikbaar, alsook enkele afgeleide variabelen zoals het type eigenaar.
 Voor de laatste nieuwe plots zitten de coördinaten eind 2022 nog niet in de bosvitaliteitsdatabank, maar die zullen toegevoegd worden.
+
+<!--hvc is deze vorige zin nog nodig?-->
 
 Per plot wordt opgemeten : 
 
@@ -55,6 +65,8 @@ De manual kan gevonden worden op de [handleidingenwebsite van ICP forests](http:
 
 Dit beoordelen van de kroon is het meest tijdsintensieve van de verschillende metingen per boom, omdat de bomen regelmatig vanuit verschillende hoeken moeten beoordeeld worden.
 Aangezien de visuele beoordeling gedaan wordt in klassen van 5%, wat vrij gedetailleerd is, is het belangrijk de bomen grondig te bekijken, zodat de metingen relevant zijn en niet teveel afwijkingen vertonen. 
+
+<!--hvc: Kan je hier toevoegen hoeveel proefvlakken per dag beoordeeld kunnen worden?-->
 
 Het bladverlies geldt als proxy voor de vitaliteit van de bomen.
 Er wordt met een grens van 25% gewerkt, waarbij bomen met 25% of minder bladverlies als gezond worden aanzien en bomen met meer als beschadigd.
@@ -162,16 +174,21 @@ Er zijn 5 eindgebruikers voor dit meetnet:
 Er wordt jaarlijks een gedetailleerd INBO rapport gemaakt die de data bespreekt, zowel over de bevindingen van het laatste jaar, als vergelijkingen tussen de laatste jaren en een trendanalyse.
 De laatste jaren zijn ook op een gelijkaardige manier specifiek de essen opgevolgd in een ander INBO project.
 
+<!--hvc: kan je hier enkele voorbeelden van de rapporten citeren?-->
+
 #### Statistiek Vlaanderen
 
 Er is een INBO indicator `beschadigde bosbomen` die het resultaat is van deze data, en deze indicator wordt ook overgenomen door statistiek Vlaanderen.
+
+<!--hvc: kan je hier verwijzen naar de indicatorenwebsite waar deze indicatoren getoond wordt?-->
 
 #### ICP forests
 
 Jaarlijks is er ook een rapportage naar ICP forests, welke bestaat uit 2 belangrijke onderdelen.
 Het eerste deel is over een klein aantal vooropgestelde proefvlakken, het tweede deel omvat de data van alle proefvlakken en wordt gebruikt voor de statistische analyse van ICP forests.
-De resultaten van ICP forests worden  doorgcommuniceerd aan de Europese commissie.
+De resultaten van ICP forests worden bezorgd aan de Europese commissie.
 
+<!--hvc: en hier een citatie van zo'n ICP forest rapport-->
 
 #### Pers
 
@@ -180,7 +197,7 @@ Geregeld komt er ook een vraag van de pers rond deze gegevens.
 
 #### Doctoraats- en thesisstudenten en studiebureau's
 
-De gegevens worden voorlopig nog niet gepubliceerd, maar als er een degelijke vraag is om de gegevens te willen gebruiken, wordt dit altijd toegestaan.
+De gegevens worden voorlopig nog niet open gepubliceerd, maar als er een degelijke vraag is om de gegevens te willen gebruiken, wordt dit altijd toegestaan.
 Zo kunnen de gegevens gebruikt worden in verschillende onderzoeken in Vlaanderen, voornamelijk voor thesissen en doctoraten, maar ook studiebureau's kunnen de data opvragen.
 
 <!------------------------------------------------------>
