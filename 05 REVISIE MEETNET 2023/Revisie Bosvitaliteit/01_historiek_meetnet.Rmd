@@ -13,7 +13,7 @@ De doelstelling zijn (1) het bekomen van een goed gedocumenteerd meetnet, waarbi
 ## Historiek meetnet
 
 Halverwege de jaren 80 van vorige eeuw is in opdracht van de  Europese comissie een expertenpanel opgericht om de gezondheidstoestand van de Europese bossen op te volgen.
-Dit panel werd gedoopt als *ICP Forests* waarin de Europese landen vertegenwoordigd zijn
+Dit panel werd gedoopt als *ICP Forests* waarin de Europese landen vertegenwoordigd zijn.
 
 Vanuit ICP Forests werd een Europees meetnet ontworpen die deze gezondheidstoestand opvolgt doormiddel van kroonbeoordelingen waar het blad- en naaldverlies  van (co)-dominante bomen in klassen van 5% visueel wordt beoordeeld. 
 Bomen worden als beschadigd aanzien vanaf een bladverlies groter dan 25%.
@@ -22,7 +22,7 @@ Het bosvitaliteitsmeetnet - ook gekend als het Level-1 meetnet - is hiervan het 
 Het is intussen een heel langlopend meetnet, vermoedelijk een van de oudste meetnetten op het INBO, waarbij de eerste gegevens reeds van 1987 dateren.
 
 Het huidige meetnet bevat 78 proefvlakpunten (zie figuur \@ref(fig:plotloc) ) waar dezelfde  20-25 bomen jaarlijks bemonsterd worden.
-Oorspronkelijk was het meetnet veel kleiner, en werden enkel punten gelegen in bossen in een 16x16km grid over Europa meegenomen. In Vlaanderen werd dat al snel uitgebreid tot 8x8km en vanaf 1995 zelfs nog denser in punten op een grid van 4x4km.
+Oorspronkelijk was het meetnet veel kleiner, en werden enkel punten gelegen in bossen in een 16 x 16 km grid over Europa meegenomen. In Vlaanderen werd dat al snel uitgebreid tot 8 x 8 km en vanaf 1995 zelfs nog denser in punten op een grid van 4 x 4 km.
 
 ![](data/punten_in_vlaanderen.png)
 
