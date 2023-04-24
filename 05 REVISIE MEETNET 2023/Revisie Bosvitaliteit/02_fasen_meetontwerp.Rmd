@@ -5,8 +5,6 @@ Het team BMK op het INBO heeft in 2008 een leidraad voor meetnetontwerp ontwikke
 Hier wordt het meetnetontwerp in verschillende fasen opgedeeld en geïllustreerd wat de belangrijkste vragen zijn die in iedere fase opgelost moeten worden.
 Op basis van deze leidraad wordt het meetnet in dit hoofdstuk bekeken.
 
-In eerste instantie wil ik Geert Sioen bedanken dat hij heel transparant alle gevraagde gegevens wou geven rond het meetnet en dat hij tijd heeft genomen mij eens mee te nemen op het veld om te zien wat ik me moet voorstellen bij de metingen die in het kader van het Level-I meetnet gebeuren.
-
 ## Fase I: Prioritering van de informatiebehoeften
 
 Het meetnet is gedragen door een overkoepelende organisatie (ICP-Forests) die de kapstok vormt voor het meetnet.
