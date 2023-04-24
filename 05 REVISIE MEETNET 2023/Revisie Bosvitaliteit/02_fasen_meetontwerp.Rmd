@@ -18,7 +18,12 @@ Alle gridpunten die in bos vallen in een 16 x 16 km Europees grid moeten jaarlij
 
 <!--hvc: dus naar EU worden enkel de data van de proefvlakken die op 16 x 16 km doorgegeven? Hoeveel zijn dit er in Vlaanderen en in België. Kan je dat toevoegen?-->
 
-<!--Liggen de level I proefvlakken vast? Of wordt het steekproefkader om de x jaar aangepast: als er nieuw bos komt of als er bos verdwijnt?-->
+<!--Liggen de level I proefvlakken vast? Of wordt het steekproefkader om de x jaar aangepast: als er nieuw bos komt of als er bos verdwijnt? In de manual lees ik hierover: If the stand is cut, wind thrown or destroyed in any other way, there are two
+possibilities to continue monitoring: (i) no crown condition data will be submitted until a new
+stand has developed in the same location, or (ii) establish a new plot in a stand nearby (see
+Manual Part II Basic Design Principles for details). A periodic revision of the Level I grid for
+adaptation to changes of forest area has to be conducted and reported to PCC by the
+submission of data on respective new or revised plots.-->
 
 Hiervoor moet de door ICP forest opgelegde methodologie gebruikt worden waarbij gebruik gemaakt wordt van visuele kroonbeoordelingen.
 
@@ -34,6 +39,7 @@ Een mogelijke vraag, in lijn met andere meetnetten op het INBO, zou hier kunnen 
 Daarnaast is het ook interessant om te zien welk verschil gedetecteerd kan worden tussen 2 opeenvolgende jaren, want hoe krachtiger dit is, hoe krachtiger ook het meetnet zal zijn op langere termijn.
 
 <!--hvc: of eerder 24% na 24 jaar nemen ipv 20/20?-->
+<!--hvc: toestand van wat juist? In de ICP forest rapporten gaat het vaak over gemiddeld bladverlies-->
 
 Een andere belangrijk aspect is om een onderscheid te maken of we een uitspraak willen doen over de volledige bosgemeenschap in Vlaanderen of dat dit per soort, soortengroep (naald- versus loofbomen) of regio apart moet kunnen.
 Om hiervoor uitspraken te onderbouwen, zal een aangepast aantal steekproefpunten nodig zijn. Enkel Grove den en zomereik komen in de steekproef veel voor (>= 20 plots).
@@ -206,7 +212,7 @@ Zo kunnen de gegevens gebruikt worden in verschillende onderzoeken in Vlaanderen
 
 ### Veiligheid
 
-Er wordt nooit een proefvlak bezocht zonder expliciete toestemming van de eigenaar. Dit houdt in dat privé bossen minder in de steekproef aanwezig zijn.
+Er wordt nooit een proefvlak bezocht zonder expliciete toestemming van de eigenaar.
 
 Het werk is vrij belastend voor de rug, doordat veel met een verrekijker hoog in de bomen moet gekeken worden. Daarom is het aangeraden dat er specifieke ondersteuning voor de rug gebruikt wordt om medische problemen te voorkomen.
 
@@ -251,18 +257,20 @@ ggplot(data = soorten_2022 %>%
   theme(axis.text.x=element_text(angle=90))
 ```
 
-In het bosvitaliteitsmeetnet zijn duidelijk heel wat meer grove dennen, inlandse eiken en beuken aanwezig, en is er een duidelijke ondermaat in berken, elsen en Amerikaanse vogelkersen.
+<!--hvc indien relevant ook de low & high van de balken in de figuur verklaren-->
+
+In het bosvitaliteitsmeetnet zijn duidelijk heel wat meer grove dennen, inlandse eiken en beuken aanwezig, en is er een duidelijke ondervertegenwoordiging van berken, elsen en Amerikaanse vogelkersen.
 Op zich is dit niet onlogisch omdat de manier van bomen selecteren helemaal anders is, waarbij het bosvitaliteitsmeetnet vooral de hogere en dikkere en dus ook oudere bomen zal bevoordelen, en de bosranden niet meegenomen worden.
 
 Verder zijn vooral proefvlakken bemonsterd waar geen speciale toestemmingen voor nodig zijn, en liggen deze veelal in openbaar gebied.
 
-De proefvlakken worden al heel lang opgevolgd, wat een mooie tijdreeks oplevert, maar intussen is de tijdsreeks al zo lang dat ook de leeftijd een rol begint te spelen in de vitaliteit van de proefvlakken, wat eveneens niet meer representatief is voor de volledige bosgemeenschap.
+De proefvlakken worden al heel lang opgevolgd, wat een mooie tijdreeks oplevert, maar intussen is de tijdsreeks al zo lang dat ook de leeftijd van de bomen een rol begint te spelen in de vitaliteit van de proefvlakken, wat eveneens niet meer representatief is voor de volledige bosgemeenschap.
 
 #### Uitspraakeenheid
 
 De steekproefgrootte is oorspronkelijk gekozen om uitspraak te doen in Vlaanderen over alle soorten heen, voor analyse per soort of per regio zal een aangepaste en grotere steekproef nodig zijn om dezelfde evoluties als in Vlaanderen te kunnen vaststellen.
 
-Voor het huidige meetnet is het doenbaar om alle metingen in optimale omstandigheden te uit te voeren, namelijk in de zomer wanneer het kroondak het beste gesloten is en enkel op dagen waar het weer voldoende goed is, zodat alle metingen zonder problemen uitgevoerd kunnen worden.
+Voor het huidige meetnet is het doenbaar om alle metingen in optimale omstandigheden uit te voeren, namelijk in de zomer wanneer het kroondak het beste gesloten is en enkel op dagen waar het weer voldoende goed is, zodat alle metingen zonder problemen uitgevoerd kunnen worden.
 Hierdoor is de hoeveelheid uitval van metingen door overmacht heel beperkt.
 
 
@@ -275,8 +283,8 @@ Dit kwam al eerder aan bod bij de beschrijving van het aanbod. De hoofdvariabele
 #### Extra variabelen
 
 Naast bladverlies worden veel andere zaken gemeten zoals de symptomen van verminderde vitaliteit en oorzaken van deze symptomen.
-In kader van het meetnet zelf kan niet veel gedaan worden met deze extra variabelen.
-Voor de jaarlijkse rapportage zijn deze wel interessant omdat die symptomen ook kunnen wijzen op bredere problemen, die gelinkt kunnen worden aan veranderingen van het klimaat, of kunnengrote verschillen in bladverlies tussen 2 jaren illustreren. Voor het meetnet zelf waarbij enkel de hoofdvariabele van belang is, zouden deze kunnen weggelaten worden, maar omdat deze in vergelijking met de kroonbeoordeling veel minder tijdsinvestering vereisen, zal dit niet leiden dat er meer proefvlakken per dag bezocht kunnen worden, dus kan het ook geen kwaad om deze te meten.
+In kader van het meetnet zelf kan niet veel gedaan worden met deze extra variabelen. <!--hvc: waarom? Ik zou dit niet zo schrijven. In de volgende zin geef je net aan waarom dit nuttig is.-->
+Voor de jaarlijkse rapportage zijn deze wel interessant omdat die symptomen ook kunnen wijzen op bredere problemen, die gelinkt kunnen worden aan bijvoorbeeld veranderingen van het klimaat. Ze kunnen ook grote verschillen in bladverlies tussen twee jaren illustreren. Voor het meetnet zelf waarbij enkel de hoofdvariabele van belang is, zouden deze kunnen weggelaten worden, maar omdat deze in vergelijking met de kroonbeoordeling veel minder tijdsinvestering vereisen, zal dit niet leiden dat er meer proefvlakken per dag bezocht kunnen worden, dus kan het ook geen kwaad om deze te meten.
 
 
 ### Statistisch eenheid
