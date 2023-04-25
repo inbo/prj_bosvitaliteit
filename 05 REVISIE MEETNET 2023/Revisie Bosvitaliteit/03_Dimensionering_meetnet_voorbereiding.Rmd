@@ -9,6 +9,9 @@ Er worden 3 basisscenario's gebruikt:
 - Een detectie van 20% verandering in 20 jaar
 - Hoeveel verschil kan gedetecteerd worden in 2 opeenvolgende jaren.
 
+In dit hoofdstuk leggen we uit wat er nodig is om de powerberekening uit te voeren en berekenen we welke instelwaarden relevant zijn voor de powerberekeningen.
+De eigenlijke powerberekeningen komen aan bod in het volgende hoofdstuk.
+
 ### Modellen
 
 De hele dataset kan worden gebruikt voor de modellen, waarbij elke individuele boom een observatie is in het meetnet en waarbij iedere afhankelijkheid tussen boom, proefvlak en tijd kan worden meegenomen.
@@ -21,15 +24,15 @@ In plaats van de veelgebruikte Mann-Kendall Tau-test, zoals vaak gebruikt door I
 De focus ligt op het modelleren van de trend van gemiddeld bladverlies, in tegenstelling tot het berekenen van het aantal beschadigde bomen zoals vroeger.
 Dit omdat toegenomen rekenkracht dit toelaat.
 
-De huidige tijdreeks is bijna 40 jaar, dus het is niet relevant om lineaire trends te berekenen voor de hele periode. Daarom ligt de focus op meetnetten van 12 of 20 jaar.
+De huidige tijdreeks is bijna 40 jaar, dus het is niet relevant om lineaire trends te berekenen voor de hele periode. Daarom ligt de focus op een tijdvenster van 12 of 20 jaar.
 
-Om de parameters voor het berekenen van de kracht in te schatten, zal een rollend gemiddelde worden berekend over periodes van 12 jaar.
-Het gemiddelde hiervan wordt gebruikt als basis voor een instelparameter voor de poweranalyse, en de bijbehorende standaarddeviatie zal bepalen welke scenario's relevant zijn om de kracht voor te berekenen.
+Om de parameters voor het berekenen van het onderscheidend vermogen in te schatten, zal een rollend gemiddelde worden berekend over periodes van 12 jaar.
+Het gemiddelde hiervan wordt gebruikt als basis voor een instelparameter voor de poweranalyse, en de bijbehorende standaarddeviatie zal bepalen welke scenario's relevant zijn om het onderscheidend vermogen voor te berekenen.
 
-### Kracht (Power)
+### Onderscheidend vermogen (Power)
 
-De kracht van het meetnet wordt berekend door middel van simulatie om te bepalen hoe goed een scenario is ontworpen om een trend op te pikken over de soorten.
-Voor een uitspraak per soort zal de kracht lager zijn en zal voor elke soort afzonderlijk een ongeveer even groot meetnet nodig zijn als voor alle soorten samen.
+Het onderscheidend vermogen van het meetnet wordt berekend door middel van simulatie om te bepalen hoe goed een scenario is ontworpen om een trend op te pikken over de soorten.
+Voor een uitspraak per soort zal het onderscheidend vermogen lager zijn en zal voor elke soort afzonderlijk een ongeveer even groot meetnet nodig zijn als voor alle soorten samen.
 
 In dit document, waarbij we alle data aggregeren per proefvlak, zullen volgende instelparameters belangrijk zijn om de power te berekenen:
 
@@ -38,8 +41,8 @@ In dit document, waarbij we alle data aggregeren per proefvlak, zullen volgende 
 - Aantal jaren in het meetnet: Hoe langer het meetnet loopt, hoe fijner de trend ingeschat kan worden
 - Gewenste te detecteren effectgrootte: een trend van 12% na 12 jaar is moeilijker te detecteren dan een trend van 20% na 20 jaar
 - Variatie tussen plots: hoe minder verschillende plots verschillen, hoe nauwkeuriger het model
-- Variatie binnen een plot in hetzelfde jaar: ook hier zal een kleinere variatie leiden  tot een nauwkeurigere inschatting. De variatie binnen een plot wordt bepaald door de variatie tussen de verschillende bomen in het plot, Hoe meer bomen hoe kleiner de variatie op de inschatting van het bladverlies op het plotniveau.
-- Variatie  binnen een plot tussen verschillende jaren: hoe  hoger de autocorrelatie tussen opeenvolgende jaren hoe minder informatie de dataset bevat en hoe meer data nodig is voor eenzelfde uitspraak.
+- Variatie binnen een plot in hetzelfde jaar: ook hier zal een kleinere variatie leiden  tot een nauwkeurigere inschatting. De variatie binnen een plot wordt bepaald door de variatie tussen de verschillende bomen in het plot. Hoe meer bomen hoe kleiner de variatie op de inschatting van het bladverlies op het plotniveau.
+- Variatie  binnen een plot tussen verschillende jaren: hoe  hoger de autocorrelatie tussen opeenvolgende jaren hoe minder informatie de dataset bevat en hoe meer data nodig is voor eenzelfde uitspraak. <!--hvc of nog anders gezegd: hoe hoger de autocorrelatie hoe langer de tijdreeks moet zijn en hoe groter het tijdsverschil tussen twee jaren moet zijn om ze als onafhankelijk van elkaar te kunnen beschouwen. Is ook een argument pro belang van lange tijdreeks.-->
 
 ## Bepalen van de responsvariabele in het model
 
@@ -50,7 +53,7 @@ Deze gereduceerde periode omvat nog steeds een tijdreeks van 28 jaar.
 
 Omdat een normale verdeling voor een respons het gemakkelijkst en snelste werkt, wordt in eerste instantie onderzocht dat een normale benadering in het model acceptabel is.
 
-In figuur \@ref(fig:verdelingbladverlies) blijkt dat eens een boom begint veel beschadiging te vertonen, dat de toestand sterk verslechterd, en dat  hierdoor heel weinig observaties zijn met een bladverlies hoger dan 50%. 
+In figuur \@ref(fig:verdelingbladverlies) blijkt dat eens een boom begint veel beschadiging te vertonen, dat de toestand sterk verslechterd, en dat er hierdoor heel weinig observaties zijn met een bladverlies hoger dan 50%. 
 Dit op de dode bomen na, die 100% bladverliesscore krijgen. Deze verdwijnen echter een jaar na sterfte uit de dataset.
 Een normale verdeling als benadering zal een onderschatting geven van de responsvariatie, maar relatief gezien gaat dit over heel weinig bomen die ook snel verdwijnen uit de steekproef.
 
@@ -99,23 +102,28 @@ Er wordt natuurlijk wel impact verwacht op de betrouwbaarheid van de schattingen
     geom_point() + geom_line() + 
     geom_point(data = tr_tree, color = "green4") + 
     geom_line(data = tr_tree, color = "green4") +
-    ylab("Gemiddeld naaldverlies")
+    scale_y_continuous(labels = scales::percent) +
+    ylab("Gemiddeld bladverlies")
 ```
 
 
-Daarnaast is er veel verschil is tussen de plots in figuur \@ref(fig:evolutieperplot).
+Daarnaast is er veel verschil tussen de plots in figuur \@ref(fig:evolutieperplot).
 
 ```{r evolutieperplot, fig.cap = "Evolutie bladverlies geaggregeerd per plot. Groene lijn is gemiddeld bladverlies over de dataset", echo = FALSE}
 
 ggplot(df_plots, aes(x = jaar, y = nnv, groups = plot)) + 
   geom_line() + 
   geom_hline(yintercept = mean(df_plots$nnv), color = "darkgreen", linewidth = 1) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  scale_y_continuous(labels = scales::percent) +
+  ylab("Aandeel bladverlies")
 
 ```
 
 
-Omdat we in deze studie vooral geïnteresseerd zijn in trends over een periode van 12 jaar, zullen we voor de trendanalyses de modellen opsplitsen in rollende 12 jaar. Dat betekent dat we een model gaan fitten van 1995 tot en met 2007, een volgend model van 1996 tot en met 2008, enzovoort, tot en met 2010 tot en met 2022. Een inschatting van de variantieparameters zal dan gebeuren op basis van de resultaten van al deze modellen. De schattingen hiervan komen aan bod in het punt rond bepalen van correlaties. Deze berekende parameters worden ook gebruikt voor de modellen die de power voor kortere en langere tijdsperiodes berekenen. Dus er is geen speciale betekenis van een rollend gemiddelde op 12 jaar, maar dit laat toe een nauwkeurigere schatting te maken ven de instelparameters, en ook een zicht te hebben hoe die variëren in de tijd.
+Omdat we in deze studie vooral geïnteresseerd zijn in trends over een periode van 12 jaar, zullen we voor de trendanalyses de modellen opsplitsen in rollende 12 jaar. Dat betekent dat we een model gaan fitten van 1995 tot en met 2007, een volgend model van 1996 tot en met 2008, enzovoort, tot en met 2010 tot en met 2022. Een inschatting van de variantieparameters zal dan gebeuren op basis van de resultaten van al deze modellen. De schattingen hiervan komen aan bod in het punt rond bepalen van correlaties. Deze berekende parameters worden ook gebruikt voor de modellen die de power voor kortere en langere tijdperiodes berekenen. Dus er is geen speciale betekenis van een rollend gemiddelde op 12 jaar, maar dit laat toe een nauwkeurigere schatting te maken ven de instelparameters, en ook een zicht te hebben hoe die variëren in de tijd.
+
+<!--hvc ik vraag me af of het mogelijk is om het rollend gemiddelde te schatten op basis van één model op de volledige tijdreeks (jaar als factor) en dan predicties voor de jaren en hierop rollend gemiddelde berekenen -->
 
 ### Bepalen van het geschikte model
 
@@ -131,20 +139,20 @@ Hoewel de normale benadering over het algemeen vrij goed is, zal dit in extreme 
 
 Er zijn veel invloedsfactoren die de trend drastisch kunnen beïnvloeden, zoals droogte en warmte in het voorjaar, stormschade en insectenschade, het al dan niet mastjaar zijn, antropogene invloeden zoals kappingen. Dit is ook een van de hoofdredenen dat een jaarlijkse meting aangewezen is. Indien geen jaarlijkse meting, kan je tot heel rare conclusies komen, als het ene jaar toevallig een warm mastjaar is en de meting 10 jaar later in een koud zaadarm jaar voorkomt.
 
-Voor een meetnet kunnen we echter al deze variabelen niet in rekening brengen en mag enkel de jaarlijkse trend gebruikt worden als verklarende variabele.
+Voor een meetnet kunnen we echter al deze variabelen niet in rekening brengen en mag enkel de jaarlijkse trend gebruikt worden als verklarende variabele. <!--hvc dat is een eerder strikte interpretatie van wat je met een meetnet mag. Zelf zie ik dat minder strikt.-->
 
 #### Het model voor de volledige dataset
 
-Het meest complexe model dat ik me kan voorstellen, maar dat onmogelijk te gebruiken is voor een poweranalyse omdat het model moeilijk zal convergeren of meerdere uren zal moeten rekenen per iteratie, is:
+Het model dat het best aansluit bij het meetnetontwerp en data-generatief process, is te complex om te gebruiken voor een poweranalyse omdat het model moeilijk zal convergeren of meerdere uren zal moeten rekenen per iteratie:
 
 $$
 Bladverlies \sim 1 + Jaar + (Jaar | Plot / Boom) + ar(Exp_{n,r}(\sim Jaar | Plot / Boom))
 $$
 
-Deze formule modelleert het bladverlies aan een inschatting van een globaal gemiddelde (intercept `1+`) en een jaarlijkse trend (`Jaar`). Daarnaast kan de jaarlijkse trend verschillend zijn per proefvlak en per boom in het proefvlak (`Jaar|Plot/Boom`). Daarnaast is voor iedere boom in ieder plot, de meting van het opeeenvolgende jaar, sterk gerelateerd aan het huidige jaar. Dit wordt opgevangen met een exponentiële autocorrelatie (`ar(...)`).
+Deze formule modelleert het bladverlies aan een inschatting van een globaal gemiddelde (intercept `1+`) en een jaarlijkse trend (`Jaar`). Daarnaast kan de jaarlijkse trend verschillend zijn per proefvlak en per boom in het proefvlak (`Jaar|Plot/Boom`). Daarnaast is voor iedere boom in ieder plot, de meting van het huidige jaar, sterk gerelateerd aan de voorgaande jaren waarbij de correlatie afneemt met het aantal jaren verschil. Dit wordt opgevangen met een exponentiële autocorrelatie (`ar(...)`).
 
 Als voorbeeld gebruiken we dit model hier om de trend te bepalen over de laatste periode van 12 jaar (2010 tem 2022). 
-De autocorrelatieparameters zijn hier reeds ingevuld (die heb ik buiten dit document bepaald).
+De autocorrelatieparameters zijn hier reeds ingevuld en werden apart bepaald.
 Dit model is natuurlijk niet ideaal omdat er een grote stijging is in het bladverlies halverwege de jaren '10
 
 Enkele anomalieën kunnen niet vermeden worden door de normale benadering, waardoor het bladverlies in een beperkt aantal gevallen boven de 100% wordt geschat, maar dit gaat over zo weinig datapunten dat dit niet echt een probleem is voor de conclusies.
@@ -245,7 +253,7 @@ ggplot(resids) + geom_density(aes(x = resn )) +
 ```
 --->
 
-Op basis van bovenstaand plot \@ref(fig:verdelingbladverlies) blijkt dat de meeste bomen een bladverlies hebben onder de 50% en dat binnen het bereik 0-50% de verdeling er vrij normaal uit ziet. Om dit iets exacter te bekijken is er figuur \@ref(fig:normaleverdeling) waaruit blijkt dat het eenvoudige model (mixed effect model met fixed effect op Jaar en random effect PlotNr met daarin BoomNr genest) leidt tot een vrij goed een gaussiaanse distributie te benaderen.
+Op basis van bovenstaand plot \@ref(fig:verdelingbladverlies) blijkt dat de meeste bomen een bladverlies hebben onder de 50% en dat binnen het bereik 0-50% de verdeling er vrij normaal uit ziet. Om dit iets exacter te bekijken is er figuur \@ref(fig:normaleverdeling) waaruit blijkt dat het model (mixed effect model met fixed effect op Jaar en random effect PlotNr met daarin BoomNr genest) met een Gaussiaanse distributie een goede benadering geeft.
 
 Dus ondanks enkele mogelijke artefacten aan de uiteinden 0% en > 50% zal een normale benadering bruikbaar zijn.
 
@@ -309,15 +317,17 @@ plotdata_red <- data.frame(
 
 De schattingen tussen het ingewikkelde en vereenvoudigde model zijn compatibel met elkaar, en ook de standaardfout op de schatting van jaar is vergelijkbaar (ergens een 10% verschil), dus ook de power tussen beide modellen is hierdoor vergelijkbaar, omdat de power nu eenmaal bepaald wordt door de standaardfout, waardoor het eenvoudigere model gebruikt kan worden.
 
+<!--hvc hier nog cross-ref toevoegen naar de twee figuren-->
+
 ## Inschatten van correlaties en variaties
 
-Op basis van de dataset kunnen we zo goed mogelijke instelwaarden vinden om later een poweranalyse uit te voeren die toch iets van betekenis heeft.
+Op basis van de dataset kunnen we zo goed mogelijke instelwaarden vinden om later een realistische poweranalyse uit te voeren.
 
 ## Inschattingen per soort
 
 Als we naast een algemeen beeld over de soorten heen ook per soort een inschatting willen kunnen maken moet dit voor iedere soort apart in kaart  gebracht worden, wat we in dit document niet gaan doen. Maar op zich is dit vergelijkbaar met een meetnet met het aantal proefvlakken iedere soort te vinden is, als we aannemen dat de variatie van trend voor iedere soort vergelijkbaar is met over alle soorten heen
 
-```{r soortenevaluatie, fig.cap = "Aantal plots waar de soort minstens 3 bomen beslaat", cache=TRUE, include = TRUE, message = FALSE, warning = FALSE}
+```{r soortenevaluatie, fig.cap = "Aantal plots waar de soort minstens 3 bomen beslaat", cache=TRUE, include = TRUE, message = FALSE, warning = FALSE, fig.width = 150/22.4}
 
 voorkomen_soorten <- df_trees %>% 
   group_by(jaar, soort ) %>% 
@@ -343,7 +353,14 @@ ggplot(voorkomen_aantal_plots %>%
          filter(soort %in% c("Amerikaanse eik", "beuk", "Corsicaanse den", "es",
                              "esdoorn", "grove den", "ruwe berk", "zomereik")) , 
                 aes(x = jaar, y = aantal_plots, color = soort)) +
-  geom_line() + geom_point() + ylab("aantal proefvlakken")
+  geom_line() + geom_point() + ylab("aantal proefvlakken") +
+  geom_text(
+    aes(x = 2022, label = soort),
+    data = voorkomen_aantal_plots %>% 
+      filter(soort %in% c("Amerikaanse eik", "beuk", "Corsicaanse den", "es",
+                          "esdoorn", "grove den", "ruwe berk", "zomereik"),
+             jaar == 2022), nudge_x = -1) +
+  theme(legend.position = "none")
 ```
 
 
@@ -430,7 +447,7 @@ for (startjaar in startjaren20) {
 ### Inschatten variabiliteit tussen proefvlakken
 
 Eerst bekijken we op basis van de ruwe data wat de variatie tussen de plots is.
-We kijken over alle jaren sedert 1995 wat de standaarddeviatie van het bladverlies is tussen de plots in de data geaggregeerd per plot. Dit is te vindein in figuur \@ref(fig:sdbetweenplotsraw).
+We kijken over alle jaren sedert 1995 wat de standaarddeviatie van het bladverlies is tussen de plots in de data geaggregeerd per plot. Dit is te vinden in figuur \@ref(fig:sdbetweenplotsraw).
 
 ```{r sdbetweenplotsraw, echo = FALSE, fig.cap="Verdeling op basis van ruwe gegevens"}
 sd_between_plots <- 
@@ -492,7 +509,7 @@ ggplot(sd_between_trees, aes(x = sd_between_trees)) +
 
 ```
 
-Om de variabiliteit tussen bomen in een proefvlak te onderzoeken wordt op dezelfde manier te werk gegaan als voor de variabiliteit tussen plots, eerst op basis van de ruwe data (figuur \@ref(fig:sdbetweentreesraw) ) en daarna op basis van dezelfde modellen als bij tussen de proefvlakken \@ref(fig:sdbetweentreesmodel) ).
+Om de variabiliteit tussen bomen in een proefvlak te onderzoeken wordt op dezelfde manier te werk gegaan als voor de variabiliteit tussen plots, eerst op basis van de ruwe data (figuur \@ref(fig:sdbetweentreesraw) ) en daarna op basis van dezelfde modellen als bij de proefvlakken \@ref(fig:sdbetweentreesmodel) ).
 
 ```{r sdbetweentreesmodel, echo = FALSE, fig.cap="Verdeling standaarddeviatie tussen bomen in een plot op basis van het vooropgestelde model."}
 df_bt <- data.frame(
@@ -514,8 +531,7 @@ Ook hier is de inschatting verschillend voor verschillende startjaren van het mo
 ### Inschatten van de variabiliteit van de trends tussen de plots
 
 Voor de inschatting van de random helling die ieder plot volgt rond de globale trend wordt op een vergelijkbare manier als voor de andere parameters gewerkt.
-Nu wordt enkel nog berekend op basis van het model, niet meer op de ruwe data.
-Hezelfde procedé als voorheen, maar nu niet meer apart op de ruwe data berekend, maar nu is het de inschatting van de random helling tussen de plots (figuur \@ref(fig:sdtrendmodel) ).
+De modellen tonen nu de inschatting van de random helling tussen de plots (figuur \@ref(fig:sdtrendmodel) ).
 
 ```{r sdtrendmodel, echo = FALSE, fig.cap="Variatie van de trends per plot"}
 
@@ -539,7 +555,7 @@ ggplot(bind_rows(sd_trend, sd_trend20),
 
 ```
 
-De standaardarwijking op de trend is voor de middelste startjaren heel wat sterker dan de rest. Dit heeft veel te maken met de extreme stijgiging in bladverlies in de jaren 2011 en 2012. In de latere jaren wordt de invloed van deze jaren veel minder en zwakt de standaardafwijking tussen de trend terug af. Als instelwaarde gebruiken we `r sd_trend_chosen`. Als de variabiliteit op de trend over 20 jaar zordt bekeken is die wat lager, wat wijst dat de plots over lange tijd minder afwijken van de globale trend. Toch is dit verschil vrij klein en mogelijks niet relevant.
+De standaardafwijking op de trend is voor de middelste startjaren heel wat sterker dan de rest. Dit heeft veel te maken met de extreme stijgiging in bladverlies in de jaren 2011 en 2012. In de latere jaren wordt de invloed van deze jaren veel minder en zwakt de standaardafwijking tussen de trend terug af. Als instelwaarde gebruiken we `r sd_trend_chosen`. Als de variabiliteit op de trend over 20 jaar wordt bekeken is die wat lager, wat erop wijst dat de plots over lange tijd minder afwijken van de globale trend. Toch is dit verschil vrij klein en mogelijk niet relevant.
 
 ### Inschatten van correlatie tussen random intercept van plot met trend per plot
 
@@ -553,8 +569,9 @@ cor_chosen <- 0.40
 ggplot(cor_slope, aes(x = startjaar, y = cor_slope)) + geom_point()
 ```
 
-Ook hier is een groot verschil tussen modellen met de beginjaren en de modellen die de middelste jaren gebruiken (figuur \@ref(fig:correlatietrndplot) ). Omdat correlatie tussen random trend en intercept belangrijk kunnen zijn, gaan we hier eerder een worst-case scenario gebruiken, en gebruiken we als instelwaarde `r cor_chosen`
+Ook hier is een groot verschil tussen modellen met de beginjaren en de modellen die de middelste jaren gebruiken (figuur \@ref(fig:correlatietrndplot) ). Omdat correlatie tussen random trend en intercept belangrijk kunnen zijn, gaan we hier eerder een worst-case scenario gebruiken, en gebruiken we als instelwaarde `r cor_chosen`.
 
+<!--hvc één van de figuren in pdf is de y-as titel deels afgeknipt. Dus best fig.height aanpassen of een \n in de titel zetten-->
 
 ### Inschatting autocorrelatie op plotniveau
 
@@ -645,7 +662,7 @@ ggplot(corrs, aes(x = lag, y = cor)) + geom_point() +
 
 ```
 
-Rekening houden met autocorrelatie zorgt dat modellen fitten heel ingewikkeld worden. Daarom dat voor de poweranalyse deze niet expiciet meegerekend zal worden. Er wordt echter wel een impliciete correlatie tussen metingen van eenzelfde plot in rekening gebracht, omdat een random intercept op plotniveau wel in het model opgenomen is. Het verschil tussen een autocorrelatie door een random intercept geïmpliceerd en een autocorrelatie is dat bij een random effect de correlatie even hoog verondersteld wordt ongeacht hoevel jaren er verstreken zijn, in tegenstelling tot een tijdsvariërende autocorrelatie.
+Rekening houden met autocorrelatie zorgt dat modellen fitten heel ingewikkeld worden. Daarom dat voor de poweranalyse deze niet expliciet meegerekend zal worden. Er wordt echter wel een impliciete correlatie tussen metingen van eenzelfde plot in rekening gebracht, omdat een random intercept op plotniveau wel in het model opgenomen is. Het verschil tussen een autocorrelatie door een random intercept geïmpliceerd en een autocorrelatie is dat bij een random effect de correlatie even hoog verondersteld wordt ongeacht hoeveel jaren er verstreken zijn, in tegenstelling tot een tijdsvariërende autocorrelatie.
 
 Omdat de autocorrelatie ook na 12 jaar nog vrij hoog is, zal een random intercept zonder autocorrelatie toch nog een vrij goede benadering zijn.
 
