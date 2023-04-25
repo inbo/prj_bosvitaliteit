@@ -428,9 +428,11 @@ Er is nog geen data management plan (DMP) gepubliceerd, maar er is een DMP in on
 
 #### Data opslag
 
-De data wordt bewaard in een door het team databeheer beheerde databank D0004_Bosvitaliteit wat een SQL Server databank is, die op Amazon Web services (AWS) draait op de INBO server `inbo-sql07-prd.inbo.be`. De databank is optimaal en genormaliseerd opgezet door `team data` en is vlot raadpleegbaar vanuit het INBO door INBO personeelsleden.
+De data wordt bewaard in een door het team databeheer beheerde SQL Server databank (D0004_Bosvitaliteit), die op Amazon Web services (AWS) draait op de INBO server `inbo-sql07-prd.inbo.be`. De databank is optimaal en genormaliseerd opgezet door `team data` en is vlot raadpleegbaar vanuit het INBO door INBO personeelsleden.
 
 Ieder jaar worden de nieuwe data nog toegevoegd aan de dataset, maar ook niet veel meer dan dat. Zo zijn de nieuwste proefvlakken die bemonsterd worden nog niet toegevoegd aan de databank.
+
+<!--hvc: hoe komt het dat de nieuwste proefvlakken nog niet werder toegevoegd?-->
 
 #### FAIR principe
 
@@ -438,7 +440,7 @@ Ieder jaar worden de nieuwe data nog toegevoegd aan de dataset, maar ook niet ve
 
 Voorlopig is de data nog niet vindbaar, en moet als iemand de data wil, dit aan de betrokken partij vragen.
 
-Op zich zijn er geen bezwaren om in de toekomst de jaarlijkse data op Zenodo te publiceren, zodat deze wel vindbaar en gemakkelijk bruikbaar zijn voor externen
+Op zich zijn er geen bezwaren om in de toekomst de jaarlijkse data op Zenodo te publiceren, zodat deze wel vindbaar en gemakkelijk bruikbaar zijn voor externen.
 
 ##### Accessible: 
 
@@ -450,11 +452,13 @@ Er wordt nog volop gewerkt aan de metadata, en die zou in orde moeten zijn eens 
 
 De data is bewaard in een goed gestructureerde databank, dus de data kan gemakkelijk gebruikt worden door verschillende applicaties.
 
-Eens het DMP afgerond is zullen ook de nodige gegevens om dit publiek nuttig bruikbaar te maken aanwezig zijn
+Eens het DMP afgerond is zullen ook de nodige gegevens om dit publiek nuttig bruikbaar te maken aanwezig zijn.
 
 ##### Reusable: 
 
 Er moet nog worden bepaald onder welke licentie de data zal gepubliceerd worden. De aanleveraars van de data zouden graag weten wie hun data gebruikt.
+
+<!--hvc: zie https://www.vlaanderen.be/inbo/en-gb/open-data-policy/ dus voorkeur gaat sterk uit naar CC0-->
 
 Doordat de data volgens een vast protocol ingezameld is op een methode die gedragen wordt door verschillende Europese landen binnen ICP forests, is de herbruikbaarheid van de data gegarandeerd.
 
@@ -462,44 +466,47 @@ Doordat de data volgens een vast protocol ingezameld is op een methode die gedra
 
 De powerberekeningen voor de dimensionering van het meetnet komt in een later hoofdstuk meer in detail aan bod.
 
-De 2 belangrijkste analysemethoden zijn de robuuste Mann-Kendall Tau test en een lineair mixed effect model. Vooral op dit laatse zal gefocust worden in dit rapport.
+<!--hvc: in voorgaande zin best cross-ref naar hoofdstuk toevoegen-->
+
+De 2 belangrijkste analysemethoden zijn de robuuste Mann-Kendall Tau test en een lineair mixed effect model. Vooral op dit laatste zal gefocust worden in dit rapport.
 
 
 #### Mann-Kendall Tau
 
-In de omgeving van bosorganisaties  wordt vaak gekozen voor de Mann-Kendall tau test en de daarvan afgeleide sen-slope om een robuuste monotone trend te bepalen. In R kan dit gedaan worden met het pakket `rkt` [@mannkendall]. De analyse hiervoor is enkel mogelijk voor een enkele tijdreeks, maar het laat wel toe om bv. seizoenen als blokeffect mee te nemen. We gaan hier deze mogelijkheid gebruiken om de verschillende plots als blokeffect in rekening te brengen.
+Vaak wordt gekozen voor de Mann-Kendall tau test en de daarvan afgeleide sen-slope om een robuuste monotone trend te bepalen. In R kan dit gedaan worden met het pakket `rkt` [@mannkendall]. De analyse hiervoor is enkel mogelijk voor een enkele tijdreeks, maar het laat wel toe om bv. seizoenen als blokeffect mee te nemen. We gaan hier deze mogelijkheid gebruiken om de verschillende plots als blokeffect in rekening te brengen.
 
 Om de test te kunnen gebruiken zullen eerst alle bladverlieswaarden per plot per jaar uitgemiddeld worden.
 
-Naast de sen-helling wordt ook een soort sen-intercept berekend om de resultaten van dit model gemakkelijk grafisch voor te stellen.
+Naast de sen-helling wordt ook een sen-intercept berekend om de resultaten van dit model gemakkelijk grafisch voor te stellen.
 
 Omdat de fout op de sen-helling niet berekend wordt, zullen we dit kwantificeren door een bootstrap procedure te gebruiken met een 200-tal samples.
 
 
 #### Lineair mixed effect model op bladverlies
 
-Doordat de tijdreeks reeds heel lang is, is het moeilijk uit te gaan van een vaste trend over de hele periode, dus zal beperkt worden tot analyses over een rollende 12 jaar.
+Doordat de tijdreeks reeds heel lang is, is het moeilijk uit te gaan van een vaste trend over de hele periode, dus zal beperkt worden tot analyses over een rollend 12 jarig tijdvenster.
 
-Daarnaast wordt ook een mixed effect model gebruikt om de datatrends te analyseren. Hoewel het bladerlies binnen een range van 0% tot 100% ligt, liggen de meeste waarden eerder in het midden van het bereik en is een normale benadering niet onlogisch. Het vooropgestelde model is een random slope per proefvlak en een random intercept per boom met autocorelatie voor de metingen van dezelfde boom over de tijd.
+Daarnaast wordt ook een mixed effect model gebruikt om de datatrends te analyseren. Hoewel het bladerlies binnen een range van 0% tot 100% ligt, liggen de meeste waarden eerder in het midden van het bereik en is een normale benadering niet onlogisch. Het voorkeursmodel is een random slope per proefvlak en een random intercept per boom met autocorrelatie voor de metingen van dezelfde boom over de tijd, maar voor de powerberekeningen zullen we dit vereenvoudigen.
 
-Er wordt gebruik gemaakt van verschillende R pakketten voor de analyses: `nlme`, `lme4` en  `brms` (brms is Bayesiaans en werkt met `stan`). Elk van de packages hebben hun specifieke voor- en nadelen:
+Er wordt gebruik gemaakt van verschillende R pakketten voor de analyses: `nlme`, `lme4` en  `brms` (`brms` is Bayesiaans en werkt met `stan`). Elk van de packages hebben hun specifieke voor- en nadelen:
 
-- nlme: nested random effects met autocorrelatie
-- lme4: modernere methode, die nested en crossed random effects toelaat, maar geen autocorrelatie. Het pakket `simr` werkt met dit pakket om power analyses te simuleren.
-- brms: bayesiaanse methode, zeer traag, maar wel onmiddellijk zonder extra berekeningen betrouwbaarheidsintervallen.
+- `nlme`: nested random effects met autocorrelatie
+- `lme4`: modernere methode, die nested en crossed random effects toelaat, maar geen autocorrelatie. Het pakket `simr` werkt met dit pakket om power analyses te simuleren.
+- `brms`: Bayesiaanse methode, die in vergelijking met voorgaande pakketten zeer traag is, maar wel onmiddellijk zonder extra berekeningen betrouwbaarheidsintervallen oplevert.
 
-Om de berekeningen te laten convergeren en snel genoeg te laten verlopen zal in de poweranalyse net zoals in de Mandall-Tau test hierboven de waarden uitmiddelen per proeflak en zullen de metingen van de verschillende bomen vooral bijdragen aan hoe nauwkeurig we dit gemiddelde per proefvlak kunnen kennen.
+Om de berekeningen te laten convergeren en snel genoeg te laten verlopen zullen we in de poweranalyse net zoals in de Mandall-Tau test hierboven de waarden uitmiddelen per proeflak en zullen de metingen van de verschillende bomen vooral bijdragen aan hoe nauwkeurig we dit gemiddelde per proefvlak kunnen kennen.
 
-Voor de eenvoud wordt voor de powerberekeningen gewerkt met een model waarbij alle data geaggregeerd wordt op plotniveau. er wordt via een random slope model toegelaten dat alle plots een eigen trend kunnen volgen.
+Voor de eenvoud wordt voor de powerberekeningen gewerkt met een model waarbij alle data geaggregeerd wordt op plotniveau. Er wordt via een random slope model toegelaten dat alle plots een eigen trend kunnen volgen.
 
 #### Lineair mixed effect model op fractie beschadigde bomen
 
-In plaats van het modelleren van het gemiddeld bladverlies, kan ook gekozen om de gemiddelde beschadiging per plot te modelleren, waar de fractie bomen met een bladverlies groter dan 25% per plot wordt bepaald. Dit model is heel wat minder krachtig maar misschien iets minder gevoelig voor anekdotische gevallen.
+In plaats van het modelleren van het gemiddeld bladverlies, kunnen we ook kiezen om de gemiddelde beschadiging per plot te modelleren, waar de fractie bomen met een bladverlies groter dan 25% per plot wordt bepaald. Dit model is heel wat minder krachtig maar misschien iets minder gevoelig voor anekdotische gevallen.
 
 #### Periodieke detailanalyses
 
 Vroeger is er eens een verklarend model gemaakt om de oorzaken van patronen in het blad- of naaldverlies te achterhalen. Misschien is het een idee om dit periodiek eens te herhalen, maar voorlopig is daar nog niets voor gepland.
 
+<!--hvc tenzij je kan verwijzen naar een rapport, zou ik de eerste zin van deze sectie herschrijven: We kunnen ook een verklarend model maken om ...-->
 
 ## Fase IV: Ontwerp rapportering en communicatie
 
@@ -512,16 +519,20 @@ Vroeger is er eens een verklarend model gemaakt om de oorzaken van patronen in h
 - Er is een natuurindicator "beschadigde bosbomen" die dit meetnet gebruikt
 - Verder nog publicaties naar de Vlaamse statistieken, INBO-nieuwsbrief, ...
 
+<!--hvc hier ook best voorbeeldrapportjes, website, etc citeren-->
+
 ## Fase V: Implementatie
 
 Dit is een lopend meetnet en is dus reeds geïmplementeerd, dus veel verdere implementatie is niet meer nodig.
 
-Het wel aangewezen om training te voorzien om metingen te doen voor dit meetnet omdat de pool van gekwalificeerde mensen op dit moment heel beperkt is.
+Het is wel aangewezen om training te voorzien om metingen te doen voor dit meetnet omdat de pool van gekwalificeerde mensen op dit moment heel beperkt is.
+
+<!--hvc volgende zinnen kunnen weg denk ik. Horen hier niet echt thuis en zijn al elders geschreven:
 
 Een groot probleem dat op dit moment nog niet aangepakt is, is hoe verouderende en gekapte plots te vervangen door nieuwere plots.
 
 Verder zal best ook wat aandacht gaan naar de representativiteit van de steekproef.
-
+-->
 
 ## Samenvattende SWOT analyse en generieke aanbevelingen
 
@@ -541,7 +552,7 @@ Hieronder een samenvatting van de tekst hierboven. De effectieve dimensionering 
     - keuze van meetpunten oorspronkelijk gebaseerd op een systematisch raster
 - Heel langlopend meetnet
     - reeds 35 jaar in Vlaanderen en zelfs 40 jaar in Duitsland
-    - waardevolle tijdsreeks
+    - waardevolle tijdreeks
 - Zelfde punten telkens opnieuw bezocht
     - informatief voor de evolutie in de tijd
 - Alle data is volledig gedigitaliseerd in een goed uitgewerkte en genormaliseerde SQL server databank
@@ -552,17 +563,17 @@ Hieronder een samenvatting van de tekst hierboven. De effectieve dimensionering 
 - Enkel basisinformatie: de kroonbeoordeling en symptoombeschrijving
     - geen link met andere invloedsfactoren zoals bodem, klimaat en andere abiotische invloeden
     - deze exta invloedsfactoren zijn enkel in 5 van de 8 level-2 meetnetlocaties ter beschikking
-    - deze zwakte is hetzelfde in de voleldige Europese context
+    - deze zwakte is hetzelfde in de volledige Europese context
 - mogelijks modernere manieren om de gezondheidstoestand op te volgen
 - kroonbeoordeling is intens werk waar iedere boom toch enkele minuten bekeken moet worden
     - voorlopig nog niet direct een betere methode
-- Representativiteit bij keuze van proefvlqkken
+- Representativiteit bij keuze van proefvlakken
     - oorspronkelijk een systematisch grid
     - bij selectie extra steekproefpunten in 1995 soorten als beuk bevoordeeld
 - Niet alle bosvormen vertegenwoordigd
     - geen informatie over bosranden, omdat punten verlegd worden tot in een bos
-    - vooral proefvlakken met vooral grote en oudere bomen
-- De proefvlakken worden ouder door de lange duur van h et meetnet
+    - vooral proefvlakken met grote en oudere bomen
+- De proefvlakken worden ouder door de lange duur van het meetnet
     - veroudering begint invloed op vitaliteit te hebben
     - en verslechterende trend kan door ouderdom komen in plaats van algemene vitaliteit in Vlaanderen
 - Metingen kunnen enkel gebeuren in de zomer met een vol bladerdek
@@ -579,6 +590,7 @@ Hieronder een samenvatting van de tekst hierboven. De effectieve dimensionering 
 - Nieuwe proefvlakken nog niet opgenomen in Fieldmap sinds 2010.
 - Perspectieven voor verbanden tussen vitaliteit en beheervormen, afstand tussen bomen, enzovoort als dendrometrische gegevens worden toegevoegd aan Fieldmap.
 - Mogelijkheden voor kennisuitwisseling met recent uitgebreid netwerk voor monitoring van bosvitaliteit in Wallonië.
+- De invloed van klimaatverandering op de bosvitaliteit kan met dit meetnet (en de Europese uitbreiding) gemonitord worden door klimaatgegevens te betrekken in de analyses samen met andere oorzaken van verandering.
 
 
 ### Bedreigingen
@@ -588,6 +600,6 @@ Hieronder een samenvatting van de tekst hierboven. De effectieve dimensionering 
 - Veldwerk, data-invoer en rapportage van meetnet door 1 persoon gedaan, wat niet voordelig is voor kennisdeling.
 - Budget is nodig voor continuering monitoring.
 - Monitoring is bedreigd omdat meetnet naar vraaggestuurd onderzoek geplaatst is in plaats van wettelijk vastgelegde taken.
-- Rapportageverplichting van ICP forest beperkter dan dit meetnet.
+- Rapportageverplichting van ICP forests beperkter dan dit meetnet.
 - Mogelijkheid voor Vlaanderen om uit ICP forests te stappen.
 
