@@ -287,21 +287,21 @@ In kader van het meetnet zelf kan niet veel gedaan worden met deze extra variabe
 Voor de jaarlijkse rapportage zijn deze wel interessant omdat die symptomen ook kunnen wijzen op bredere problemen, die gelinkt kunnen worden aan bijvoorbeeld veranderingen van het klimaat. Ze kunnen ook grote verschillen in bladverlies tussen twee jaren illustreren. Voor het meetnet zelf waarbij enkel de hoofdvariabele van belang is, zouden deze kunnen weggelaten worden, maar omdat deze in vergelijking met de kroonbeoordeling veel minder tijdsinvestering vereisen, zal dit niet leiden dat er meer proefvlakken per dag bezocht kunnen worden, dus kan het ook geen kwaad om deze te meten.
 
 
-### Statistisch eenheid
+### Statistische eenheid
 
-De metingen gebeuren per boom en ook het statistisch model zal op boomniveau worden berekend in eerste instantie, maar omdat er zoveel individele bomen aanwezig zijn in dit meetnet leidt dit tot convergentieproblemen.
+De metingen gebeuren per boom en ook het statistisch model zal op boomniveau worden berekend in eerste instantie, maar omdat er zoveel individuele bomen aanwezig zijn in dit meetnet leidt dit tot convergentieproblemen.
 Daarom zal vooral gefocust worden op het plotniveau als statistische eenheid.
 
 De bomen kunnen eerder gezien worden als verschillende replicates binnen een plot om een goede inschatting te maken van de kwaliteit van het proefvlak, omdat dit het meest informatieve niveau is.
 De meeste variatie wordt immers verwacht tussen de plots.
-Als een plot over het algemeen minder of beter presteert heeft dit meer betekenis dat dat 1 boom in een plot beter of minder presteert. Het opmeten van meerdere bomen per plot leidt vooral dat de inschatting van het bladverlies op plotniveau veel nauwkeuriger is. De nauwkeurigheid verbetert a rato van de vierkantswortel van het aantal bomen in een plot.
+Als een plot over het algemeen minder of beter presteert heeft dit meer betekenis dan dat 1 boom in een plot beter of minder presteert. Het opmeten van meerdere bomen per plot maakt dat de inschatting van het bladverlies op plotniveau veel nauwkeuriger is. De nauwkeurigheid verbetert a rato van de vierkantswortel van het aantal bomen in een plot.
 
 ### Beperkingen rond de metingen
 
-Dit is eerder een opinie dan feit, vooral gevoed door eens mee te gaan op het veld. 
-Volgens mij is het heel moeilijk om een correcte objectieve beoordeling van de kroon te krijgen in klassen van 5%, maar ook zal de beoordeling niet meerdere klassen afwijken van de realiteit.
-Op zich is dit geen probleem, en is eigen aan ieder meetnet, dit is dus enkel een extra mogelijk meetfout die in het model in rekening gebracht wordt.
-Hoe meer bomen per plot beoordeeld worden, hoe zekerder we kunnen zijn over hoe het met het plot gesteld is, zelfs is niet elke beoordeling volledig nauwkeurig (zie figuur \@ref(fig:invloedaantalbomen).
+De visuele inschatting van het bladverlies in klassen van 5% is niet perfect, maar we kunnen vrij zeker zijn dat de beoordeling niet meer dan 1 of 2 klassen zal afwijken van de realiteit.
+Op zich is dit geen probleem, en is eigen aan iedere meting, dit is dus enkel een extra mogelijk meetfout die in het model in rekening kan gebracht worden.
+
+Hoe meer bomen per plot beoordeeld worden, hoe zekerder we kunnen zijn over hoe het met het plot gesteld is, zelfs als niet elke beoordeling volledig nauwkeurig is (zie figuur \@ref(fig:invloedaantalbomen).
 Doordat we uitmiddelen over de bomen in een proefvlak heen, zal de inschatting op proefvlakniveau in de buurt komen van een continue variabele.
 Het grootste nadeel is dat een dode boom heel het proefvlak sterk kan duwen in de richting van slechtere vitaliteit, omdat dit een bladverlies van 100% is terwijl de rest meestal beneden de 50% ligt.
 
@@ -328,18 +328,21 @@ ggplot(plotdata, aes(x = aantal_bomen, y = se, color = factor(sd))) +
 
 ### Keuze van plots
 
-In de loop van de tijd is het meetnet geëvolueerd. Bij de opstart in 1987 is gestart met het selecteren van proefvlakken op een raster van 16x16km opgelegd door de Europese Commissie [@bosvitaliteit2022]. Deze steekproef werd onmiddellijk uitgebreid tot een grid van 8x8km in Vlaanderen. 
-Het opvolgen van de 8 proefvlakken die op het 16x16km grid vallen, werden verplicht door Europa via een verordening, waar naast Level-1 ook Level-2 metingen werden uitgevoerd. Deze level-2 metingen bekijken de proefvlakken in groot detail naar bijvoorbeeld stikstofdeposities. Van deze 8 Level-2 proefvlakken worden er nu nog 5 goed opgevolgd.
+In de loop van de tijd is het meetnet geëvolueerd. Bij de opstart in 1987 is gestart met het selecteren van proefvlakken op een raster van 16 x 16 km opgelegd door de Europese Commissie [@bosvitaliteit2022]. Deze steekproef werd onmiddellijk uitgebreid tot een grid van 8 x 8 km in Vlaanderen. 
+Het opvolgen van de 8 proefvlakken die op het 16 x 16 km grid vallen, werd verplicht door Europa via een verordening, waar naast Level-1 ook Level-2 metingen werden uitgevoerd. Deze level-2 metingen bekijken de proefvlakken in groot detail naar bijvoorbeeld stikstofdeposities. Van deze 8 Level-2 proefvlakken worden er nu nog 5 goed opgevolgd.
 
-In 1995 werden op basis van een 4x4km subraster extra proefvlakken toegevoegd. Daarnaast werden selectief ook proefvlakken toegevoegd voor belangrijke soorten zoals beuk die niet genoeg voorkwamen in de steekproef. Zo steeg de steekproef van 40 à 45 plots naar 72 plots vanaf het jaar 1995, waarvan 1 plot door kapping wegviel vanaf 2011.
+In 1995 werden op basis van een 4 x 4 km subraster extra proefvlakken toegevoegd. Daarnaast werden selectief ook proefvlakken toegevoegd voor belangrijke soorten zoals beuk die niet genoeg voorkwamen in de steekproef. Zo steeg de steekproef van 40 à 45 plots naar 72 plots vanaf het jaar 1995, waarvan 1 plot door kapping wegviel vanaf 2011.
 
-Vanaf 2018 is beslist om de jaren erna telkens nieuwe proefvlakken toe te voegen, omdat er blijven proefvlakken wegvallen door kappingen, herbestemmingen, stormschade, ... . 
+Vanaf 2018 is beslist om de jaren erna telkens nieuwe proefvlakken toe te voegen, omdat er proefvlakken blijven wegvallen door kappingen, herbestemmingen, stormschade, ... . 
 Daarnaast verouderen de bomen ook waardoor dit impact begint te hebben op hun vitaliteit. 
 Zo steeg het aantal proefvlakken jaar per jaar tot 78 in 2022, terwijl het aantal steekproefbomen geleidelijk af lijkt te nemen zelfs na toevoeging van deze extra proefvlakken (figuur \@ref(fig:aantalproefvlakken)).
 
-De basis voor deze laatste uitbreidingen is het 4x4m grid dat compatbiel is met het 1 x 0.5km grid dat in de bosinventarisatie gebruikt wordt, maar met extra voorwaarden dat er genoeg bomen moeten zijn, dat het plot volledig in bos ligt en minstens op 4km van een andere proefvlak. Er is echter wel nog geen duidelijk protocol welk geschikt gridpunt wordt genomen. Een  selectie gebaseerd op het `grts` ruimtelijk gebalanceerd grid van de bosinventarisatie lijkt hiervoor een goede keuze in de toekomst.
+De basis voor deze laatste uitbreidingen is het 4 x 4 km grid dat compatbiel is met het 1 x 0.5 km grid dat in de bosinventarisatie gebruikt wordt, maar met extra voorwaarden dat er genoeg bomen moeten zijn, dat het plot volledig in bos ligt en minstens op 4 km van een andere proefvlak. Er is echter wel nog geen duidelijk protocol welk geschikt gridpunt wordt genomen. Een  selectie gebaseerd op het `grts` ruimtelijk gebalanceerd grid van de bosinventarisatie lijkt hiervoor een goede keuze in de toekomst.
+Steekproefpunten aan de rand van een bos werden in alle tijdsperiodes verlegd naar een plaats binnen het bos.
 
-```{r aantalproefvlakken, message = FALSE, fig.cap="Jaarlijks aantal bemonsterde proefvlakken"}
+<!--hvc: bovenstaande paragraaf bevat een aanbeveling (protocol opstellen) die je kan toevoegen aan sectie 5.4.1-->
+
+```{r aantalproefvlakken, message = FALSE, fig.cap="Jaarlijks aantal bemonsterde proefvlakken en aantal opgemeten bomen"}
 df_trend <- read_csv2("data/inputdata.csv")
 df_trend %>%
   group_by(jaar) %>%
@@ -360,9 +363,10 @@ df_trend %>%
 ```
 
 
-Vanaf het jaar 2014 is ook de methode van het selecteren van bomen in een proefvlak gewijzigd. Voor dit doorgevoerd is, is er uitgebreid onderzoek gedaan door o.a. Paul Quataert <<<REFERENTIE>>> om de impact van deze wijziging te evalueren. In plaats vanuit het centrum van het proefvlak, 4 clusters (1 voor elke windrichting) telkens 6 bomen te selecteren, werd overgeschakeld naar proefvlakken met vaste steekproefcirkels met een straal van 18m waarin alle relevante bomen werden bekeken. Voorwaarden voor relevantie is dat de boom dominant (of minstens codominant) moet zijn en minstens een bepaalde dikte moest hebben. Hierdoor werden er in 2014 een 60-tal bomen minder opgemeten.
+<!-- hvc: dit deeltje hoort thuis bij het volgende punt, maar daar is het al besproken. Dus vermoedelijk mag deze paragraaf weg:
 
-Steekproefpunten aan de rand van een bos werden in alle tijdsperiodes verlegd naar een plaats binnen het bos.
+Vanaf het jaar 2014 is ook de methode van het selecteren van bomen in een proefvlak gewijzigd. Voor dit doorgevoerd is, is er uitgebreid onderzoek gedaan door o.a. Paul Quataert <<<REFERENTIE>>> om de impact van deze wijziging te evalueren. In plaats vanuit het centrum van het proefvlak, 4 clusters (1 voor elke windrichting) telkens 6 bomen te selecteren, werd overgeschakeld naar proefvlakken met vaste steekproefcirkels met een straal van 18m waarin alle relevante bomen werden bekeken. Voorwaarden voor relevantie is dat de boom dominant (of minstens codominant) moet zijn en minstens een bepaalde dikte moest hebben. Hierdoor werden er in 2014 een 60-tal bomen minder opgemeten.
+-->
 
 
 ### Keuze van bomen binnen een plot
@@ -382,18 +386,18 @@ knitr::include_graphics("data/pixel.png")
 
 In vergelijking met andere landen is het Vlaamse meetnet veel dichter.
 Dit  heeft vooral te maken met de geringe oppervlakte van Vlaanderen, waarbij de bebossingsgraad ook nog eens heel berperkt is. 
-Andere Europese landen berperkten zich tot het 16x16km grid.
+Andere Europese landen beperkten zich tot het 16 x 16 km grid.
 Het meetnet in Wallonië is daarentegen nog veel dichter dan in Vlaanderen.
 
-Andere Europesse landen kiezen, op Zweden na, er ook voor om telkens dezelfde proefvlakken jaarlijks te boezoeken. 
+Andere Europese landen kiezen, op Zweden na, er ook voor om telkens dezelfde proefvlakken jaarlijks te boezoeken. 
 
-De vorm van de proefvlakken en welke bomen gekozen worden verschilt van land per land, maar er is wel een basishandleiding van ICP forests uit waarop landen zich moeten baseren, maar waarbij lichte variaties toegelaten worden.
+De vorm van de proefvlakken en welke bomen gekozen worden verschilt van land per land, maar er is wel een basishandleiding van ICP forests waarop landen zich moeten baseren, maar waarbij lichte variaties toegelaten worden.
 
 ### Kostprijs
 
-De kostprijs is in 2022 gedetailleerd genoteerd. Dit omvat het aankomstuur en vertrekuur in ieder plot en de rij-afstanden die telkens met dezelfde wagen (Duster 1XRY100) zijn uitgevoerd
+De kostprijs is in 2022 gedetailleerd genoteerd. Dit omvat het aankomstuur en vertrekuur in iedere plot en de rij-afstanden die telkens met dezelfde wagen zijn uitgevoerd
 
-Voor een steekproef van 78 plots, kunnen er 2 steekproefpunten per dag opgemeten worden, met af en toe  eens een 3e plaats of slechts een enkele plaats, met als randvoorwaarde dat het weer de toegankelijkheid moet toelaten. Om die 78 plots te bezoeken is ongeveer 9000 km gereden op 38 mandagen.
+Voor een steekproef van 78 plots, kunnen er 2 steekproefpunten per dag opgemeten worden, met af en toe  eens een derde plaats of slechts een enkele plaats, met als randvoorwaarde dat het weer de toegankelijkheid moet toelaten. Om die 78 plots te bezoeken is ongeveer 9000 km gereden op 38 mandagen.
 
 In vergelijking met veel andere meetnetten lijkt de kostprijs van dit meetnet heel beperkt, en de zwaarste kost is duidelijk de personeelskost, omdat de werkingsmiddelen heel beperkt zijn. Naast de personeelskosten is enkel transport een significante kost.
 
@@ -406,7 +410,7 @@ Op zich is de kost van het meetnet op te delen als volgt:
     - schrijven van het INBO rapport, rapportage naar ICP forests, natuurindicator
 - veldwerk (40-tal mandagen)
     - materiaal: heel beperkte materiaalkost: verf, meetlint, verrekijker
-    - gereden afstanden tussen de proefvlakken in 2022: 9000km
+    - gereden afstanden tussen de proefvlakken in 2022: 9000 km
     - metingen op het proefvlak  in 2022: 38 mandagen
         - proefvlak bereiken: heel variabel afhankelijk van locatie
         - proefvlakcentrum vinden
