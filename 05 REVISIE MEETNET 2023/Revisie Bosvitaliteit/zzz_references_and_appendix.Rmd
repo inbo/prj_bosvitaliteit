@@ -6,7 +6,7 @@ INBOmd::references(appendix = TRUE)
 
 # R scripts ter ondersteuning van dit rapport
 
-Onderstaande scripts zijn te vinden in de github repository
+Onderstaande scripts zijn te vinden in de [github repository](https://github.com/inbo/prj_bosvitaliteit).
 
 ## rscript_data_import.R
 
@@ -18,4 +18,4 @@ Dit script bevat de code om de powerberekeningen uit te voeren wanneer 2 opeenvo
 
 ## rscript_simulaties_scenarios.R
 
-Dit script bevat de code om de power te berekenen voor de verschillende scenario's zoals voorgesteld in het hoofstuk rond powerberekeningen.
+Dit script bevat de code om de power te berekenen voor de verschillende scenario's zoals voorgesteld in het hoofdstuk over powerberekeningen.
