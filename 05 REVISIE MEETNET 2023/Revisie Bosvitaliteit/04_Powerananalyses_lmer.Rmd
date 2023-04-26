@@ -2,11 +2,11 @@
 
 ## Model jaar per jaar
 
-In eerste instantie willen we zien welke verschil het huidige meetnet kan aantonen tussen 2 opeenvolgende jaren. Hiervoor gaan we uit van een dataset met circa 75 plots met 20 bomen per plot.
+In eerste instantie willen we zien welk verschil het huidige meetnet kan aantonen tussen 2 opeenvolgende jaren. Hiervoor gaan we uit van een dataset met circa 75 plots met 20 bomen per plot.
 
 ### Op de volledige dataset
 
-Voor de volledige dataset hebben ze een variatie (uitgedrukt als standaarddeviatie) tussen de proefvlakken van ongeveer 0.07 (zie figuur \@ref(fig:vcfull)), wat ook toevallig hetzelfde cijfer is voor de residuele variatie. De variatie tussen de bomen bedraagt rond de 0.09.
+Voor de volledige dataset hebben we een variatie (uitgedrukt als standaarddeviatie) tussen de proefvlakken van ongeveer 0.07 (zie figuur \@ref(fig:vcfull)), wat ook toevallig hetzelfde cijfer is voor de residuele variatie. De variatie tussen de bomen bedraagt rond de 0.09.
 
 ```{r vcfull, cache = TRUE, fig.cap = "verdeling variaties data in opeenvolgende jaren. Rode lijn is de gekozen parameter voor de simulaties."}
 modeljpj <- NULL
@@ -43,7 +43,7 @@ ggplot(data = bind_rows(data.frame(type = "proefvlak",
 
 ### Op geaggregeerde dataset
 
-Indien we aggregeren op plotniveau blijft dit voor de variatie tussen de plots in dezelfde grootte-orde met 0.06 (zie figuur \@fig(fig:jpjagg)). De residuele standdaardeviatie bedraagt rond de 0.03 (nu is dit een combiatie van de variatie per boom en de residuele variatie van het vorige model).
+Indien we aggregeren op plotniveau blijft dit voor de variatie tussen de plots in dezelfde grootte-orde met 0.06 (zie figuur \@ref(fig:jpjagg)). De residuele standdaardeviatie bedraagt rond de 0.03 (nu is dit een combinatie van de variatie per boom en de residuele variatie van het vorige model).
 
 ```{r jpjagg, fig.cap="Variatie tussen de plots en residuele variatie in het geaggregeerde model die 2 jaar met elkaar vergelijkt."}
 modeljpj <- NULL
@@ -93,18 +93,18 @@ Een trend van ongeveer 0.12 kan aangetoond worden met 80% power. Dat wil zeggen 
 
 Instelvariabelen: 
 
-- Standaarddeviatie tussen plots is `0.07`, dus 0.05, 0.07 en 0.09 worden bekeken
-- Standaarddeviatie tussen  bomen in een plot is `0.175`, en varieert weinig, dus blijft behouden
-- Aantal plots is 20,40,60,80,100,120
+- Standaarddeviatie tussen plots is 0.07, dus 0.05, 0.07 en 0.09 worden bekeken
+- Standaarddeviatie tussen  bomen in een plot is 0.175, en varieert weinig, dus blijft behouden
+- Aantal plots is 20, 40, 60, 80, 100, 120
 - Aantal bomen is 5, 10, 15, 20 of 25, de standaarddeviatie tussen bomen wordt omgezet door de standaardfout op het plotgemiddelde door deze standaarddeviatie te delen door de vierkantswortel van het aantal bomen.
-- De standaardeviatie van de trend per plot is `0.065` en varieert tussen 0.04 en 0.09
-- De correlatie tussen trend en intercept per plot is `0.20`, en we zullen dit instellen op 0.00, 0.20 en 0.40.
+- De standaardeviatie van de trend per plot is 0.065 en varieert tussen 0.04 en 0.09
+- De correlatie tussen trend en intercept per plot is 0.20, en we zullen dit instellen op 0.00, 0.20 en 0.40.
 - De verschillende trends die we willen zien is 6,12,18 of 24 procent op 12 jaar en 5, 10, 15 en 20 procent op 20 jaar.
 
 Als basis zal ik werken met 12% op 12 jaar, dus de verschillende instelvariabelen van iedere variabele wordt enkel in dat scenario bekeken.
-De verschillende trends wordten bekeken op de basisinstelvariabelen en niet op de varianten daarop.
+De verschillende trends worden bekeken op de basisinstelvariabelen en niet op de varianten daarop.
 
-### Kracht met de huidige steekproef
+### Onderscheidend vermogen met de huidige steekproef
 
 Deze powerberekeningen gebeuren op basis van een extern R script, die als aparte scripts bij het document gevoegd worden.
 
@@ -115,14 +115,14 @@ ggplot(powers1,
            color = factor(N_years))) + 
   geom_point() + geom_line(linetype = "dashed") +  geom_errorbar() +
   geom_hline(yintercept = 0.8, color = "green4") + 
-  labs(x = "Aantal plots", y = "Kracht", color = "Jaren") + 
+  labs(x = "Aantal plots", y = "onderscheidend vermogen", color = "Jaren") + 
   scale_y_continuous(labels = scales::percent)
 ```
 
-Uit figuur \@ref(fig:simrfixedvars) blijkt dat de huidige dataset volstaat voor een trend van 20% over een periode van 20 jaar te vinden, maar met  deze resultaten moeten wel voorzichtig omgesprongen worden, want de invloed van de instelvariabelen is groot. 
+Uit figuur \@ref(fig:simrfixedvars) blijkt dat de huidige dataset volstaat voor een trend van 20% over een periode van 20 jaar te vinden, maar met deze resultaten moeten wel voorzichtig omgesprongen worden, want de invloed van de instelvariabelen is groot. 
 Het lijkt bijzonder dat er weinig verschil is in power tussen een periode van 12 jaar om 12% verschil te detecteren en een periode van 20 jaar om een verschil van 20% te detecteren.
 Hier ligt dit vermoedelijk door het gebruik van een random helling op jaar, dus over een langere periode zal ook de random helling leiden tot grotere verschillen tussen de plots. Indien geen random helling in het model wordt opgenomen dan blijkt duidelijk dat 20% over 20 jaar veel gemakkelijker gedetecteerd wordt dan 12% op 12 jaar.
-Om een correcte analyse te hebben zou de random helling ook eens op 20 jaar moeten berekend worden, en hier zal vermoedelijk het effect van deze helling een stuk kleiner zijn, en dus de steekproef veel krachtiger zijn. _*<<<Uit de gegevens blijkt dat op 20 jaar de standaarddeviatie op de trend nog ongeveer 0.005 is in plaats van 0.0065.Toch is dit niet overtuigend>>>*_
+Om een correcte analyse te hebben zou de random helling ook eens op 20 jaar moeten berekend worden, en hier zal vermoedelijk het effect van deze helling een stuk kleiner zijn, en dus de steekproef veel krachtiger zijn. _*<<<Uit de gegevens blijkt dat op 20 jaar de standaarddeviatie op de trend nog ongeveer 0.005 is in plaats van 0.0065. Toch is dit niet overtuigend>>>*_
 
 
 
@@ -156,7 +156,7 @@ ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_trend")),
 
 ```
 
-Zoals verwacht blijkt uit figuur \@ref(fig:rsiminstelvarstrend) heeft de te detecteren trend een heel grote invloed op de kracht. Hoe groter het effect is dat ten minste gedetecteerd moet worden, hoe meer kans en dus kracht dat het model dit effect zal kunnen detecteren.
+Zoals verwacht blijkt uit figuur \@ref(fig:rsiminstelvarstrend) dat de te detecteren trend een heel grote invloed op het onderscheidend vermogen heeft. Hoe groter het effect is dat ten minste gedetecteerd moet worden, hoe meer kans en dus onderscheidend vermogen dat het model dit effect zal kunnen detecteren.
 
 ```{r rsiminstelvarsbp, fig.cap = "Power in functie van hoe groot de variatie tussen de verschillende proefvlakken is. Ook hier vertrekken we van een steekproef van 80 proefvlakken met 20 bomen per proefvlak"}
 
@@ -169,7 +169,7 @@ ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_bp")),
 
 ```
 
-Hoe groot de variatie is tussen de plots heeft ook een impact op de power, maar die blijkt in figuur \@ref(fig:rsiminstelvarsbp) vrij klein . Het is ook onduidelijk in welke richting dit invloed heeft, langs de ene kant is er meer variatie dus verwacht je een lagere power, langs de andere kant heeft ieder plot meer informatie, zeker omdat er per plot ook nog een random helling aanwezig is. In bovenstaande figuur lijkt meer variatie contra-intuïtief te leiden tot een hogere power.
+Hoe groot de variatie is tussen de plots heeft ook een impact op de power, maar die blijkt in figuur \@ref(fig:rsiminstelvarsbp) vrij klein. Het is ook onduidelijk in welke richting dit invloed heeft, langs de ene kant is er meer variatie dus verwacht je een lagere power, langs de andere kant heeft ieder plot meer informatie, zeker omdat er per plot ook nog een random helling aanwezig is. In bovenstaande figuur lijkt meer variatie contra-intuïtief te leiden tot een hogere power.
 
 ```{r rsiminstelvarscor, fig.cap = "Power in functie van hoe groot de correlatie is tussen de inschatting van de random intercept en random slope van het model. Ook hier vertrekken we van een steekproef van 80 proefvlakken met 20 bomen per proefvlak"}
 
@@ -181,7 +181,7 @@ ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_cor")),
        y = "Power", color = "Referentie")
 ```
 
-Uit figuur \@ref(fig:rsiminstelvarscor) blijkt dat de correlatie tussen intercept en helling in de tijd een verwaarloosbare invloed te hebben op de power in de huidige setup.
+Uit figuur \@ref(fig:rsiminstelvarscor) blijkt de correlatie tussen intercept en helling in de tijd een verwaarloosbare invloed te hebben op de power in de huidige setup.
 
 ```{r rsiminstelvarssdstrend, fig.cap = "Power in functie van hoe groot de variatie op de trend is tussen de verschillende proefvlakken. Ook hier vertrekken we van een steekproef van 80 proefvlakken met 20 bomen per proefvlak"}
 
@@ -193,7 +193,7 @@ ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_sdt")),
        y = "Power", color = "Referentie")
 ```
 
-Deze invloed van de random variatie van de trend per plot heeft een gigantische impact op de power. Hoe meer ieder plot een andere trend volgt, hoe lager de power om een specifieke trend te detecteren. 
+Deze invloed van de random variatie van de trend per plot heeft een grote impact op de power. Hoe meer ieder plot een andere trend volgt, hoe lager de power om een specifieke trend te detecteren. 
 
 
 ## Berekenen kostenefficiëntie
@@ -221,6 +221,9 @@ Het grootste werk rond het meetnet gaat naar de taken buiten het veldwerk, in de
     - Persartikel
     - Indicator beschadigde bosbomen
     
+<!--hvc deze sectie kan denk ik volledig weg, want staat al in hs 2 dacht ik. Tenzij je hier nog effectief een berekening van kosteneffectiviteit zou toevoegen.-->
+    
+
 <!--
 Vanuit gaande van volgende parameters:
 
