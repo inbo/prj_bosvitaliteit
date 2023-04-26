@@ -38,7 +38,7 @@ Om ruimtelijke balancering te garanderen kan een ruimtelijk gebalanceerde steekp
 
 ### Verouderende proefvlakken
 
-Doordat het verouderen van de bomen zelf een steeds belangrijkere factor wordt in de evolutie van het bladverlies zelf, dekt dit meetnet niet meer volledig de doelstelling, daarom moet een goede vervangingstrategie worden uitgewerkt over hoelang proefvlakken in de dataset blijven en hoe die vervangen moeten worden, zodat de bosvitaliteit representatief blijft voor de gezondheidstoestand van de bomen in Vlaanderen.
+Doordat het verouderen van de bomen zelf een steeds belangrijkere factor wordt in de evolutie van het bladverlies zelf, dekt dit meetnet niet meer volledig de doelstelling, daarom moet een goede vervangingstrategie worden uitgewerkt over hoelang proefvlakken in de dataset blijven en hoe die vervangen moeten worden, zodat de bosvitaliteit representatief blijft voor de gezondheidstoestand van de bomen in Vlaanderen. Nieuwe steekproefpunten selecteren op basis van een ruimtelijk gebalanceerde trekking (grtsà lijkt alvast een goede start.
 
 ### Trend over heel lange tijdreeks
 

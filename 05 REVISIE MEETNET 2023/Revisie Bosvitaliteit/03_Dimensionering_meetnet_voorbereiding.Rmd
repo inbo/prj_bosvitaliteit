@@ -42,7 +42,7 @@ In dit document, waarbij we alle data aggregeren per proefvlak, zullen volgende 
 - Gewenste te detecteren effectgrootte: een trend van 12% na 12 jaar is moeilijker te detecteren dan een trend van 20% na 20 jaar
 - Variatie tussen plots: hoe minder verschillende plots verschillen, hoe nauwkeuriger het model
 - Variatie binnen een plot in hetzelfde jaar: ook hier zal een kleinere variatie leiden  tot een nauwkeurigere inschatting. De variatie binnen een plot wordt bepaald door de variatie tussen de verschillende bomen in het plot. Hoe meer bomen hoe kleiner de variatie op de inschatting van het bladverlies op het plotniveau.
-- Variatie  binnen een plot tussen verschillende jaren: hoe  hoger de autocorrelatie tussen opeenvolgende jaren hoe minder informatie de dataset bevat en hoe meer data nodig is voor eenzelfde uitspraak. <!--hvc of nog anders gezegd: hoe hoger de autocorrelatie hoe langer de tijdreeks moet zijn en hoe groter het tijdsverschil tussen twee jaren moet zijn om ze als onafhankelijk van elkaar te kunnen beschouwen. Is ook een argument pro belang van lange tijdreeks.-->
+- Variatie  binnen een plot tussen verschillende jaren: hoe  hoger de autocorrelatie tussen opeenvolgende jaren hoe minder informatie de dataset bevat en hoe meer data nodig is voor eenzelfde uitspraak. Dit wil ook zeggen dat hoe hoger de autocorrelatie is, hoe langer de tijdsreeks moet zijn om een effect te detecteren, omdat de jaren niet als onafhankelijk kunnen worden beschouwd. 
 
 ## Bepalen van de responsvariabele in het model
 
@@ -297,11 +297,17 @@ plotdata_red <- data.frame(
   fit = fitted(model), 
   resid = resid(model, type = "pe"),
   jaar = df_trees_agg %>% filter(jaar >= 2010) %>% pull(jaar))
+```
 
+```{r vereenvoudigdplot1, fig.cap = "Residu's versus fit voor het vereenvoudigd model", echo = FALSE, message=FALSE, warning = FALSE, message=FALSE, cache = TRUE}
   ggplot(plotdata_red, aes(x = fit, y = resid, color = jaar)) + 
   geom_point(pch = 1) + labs(x = "Gefitte waarden", 
                              y = "Genormaliseerde residu's", 
                              color = "Jaar")
+```
+
+
+```{r vereenvoudigdplot2, fig.cap = "Histogram van de pearson residu's voor het vereenvoudigd model", echo = FALSE, message=FALSE, warning = FALSE, message=FALSE, cache = TRUE}
   ggplot(plotdata_red, aes(x = resid)) + geom_histogram(binwidth = 0.0025)
 
 #  e1 <- coef(summary(base_lme))
@@ -312,12 +318,9 @@ plotdata_red <- data.frame(
 #                   ucl = c(e1[2,1] + 2 * e1[2,2], e2[2,1] + 2 * e2[2,2]))
 # ggplot(dt, aes(x = model, y = est, ymin = lcl, ymax = ucl)) + 
 #   geom_point() + geom_errorbar()
-
 ```
 
-De schattingen tussen het ingewikkelde en vereenvoudigde model zijn compatibel met elkaar, en ook de standaardfout op de schatting van jaar is vergelijkbaar (ergens een 10% verschil), dus ook de power tussen beide modellen is hierdoor vergelijkbaar, omdat de power nu eenmaal bepaald wordt door de standaardfout, waardoor het eenvoudigere model gebruikt kan worden.
-
-<!--hvc hier nog cross-ref toevoegen naar de twee figuren-->
+De schattingen tussen het ingewikkelde en vereenvoudigde model zijn compatibel met elkaar (figuur \@ref{vereenvoudigdplot1}), en ook de standaardfout op de schatting van jaar is vergelijkbaar (ergens een 10% verschil, zie figuur \@ref{vereenvoudigdmodel2}), dus ook de power tussen beide modellen is hierdoor vergelijkbaar, omdat de power nu eenmaal bepaald wordt door de standaardfout, waardoor het eenvoudigere model gebruikt kan worden.
 
 ## Inschatten van correlaties en variaties
 
@@ -550,7 +553,7 @@ sd_trend20 <- data.frame(
 
 ggplot(bind_rows(sd_trend, sd_trend20), 
        aes(x = startjaar, y = sd_trend, color = periode)) + geom_point() + 
-  ylab("standaardafwijking van de hellingen tussen de plots")
+  ylab("stdev van de hellingen tussen de plots")
 
 
 ```
@@ -570,8 +573,6 @@ ggplot(cor_slope, aes(x = startjaar, y = cor_slope)) + geom_point()
 ```
 
 Ook hier is een groot verschil tussen modellen met de beginjaren en de modellen die de middelste jaren gebruiken (figuur \@ref(fig:correlatietrndplot) ). Omdat correlatie tussen random trend en intercept belangrijk kunnen zijn, gaan we hier eerder een worst-case scenario gebruiken, en gebruiken we als instelwaarde `r cor_chosen`.
-
-<!--hvc één van de figuren in pdf is de y-as titel deels afgeknipt. Dus best fig.height aanpassen of een \n in de titel zetten-->
 
 ### Inschatting autocorrelatie op plotniveau
 

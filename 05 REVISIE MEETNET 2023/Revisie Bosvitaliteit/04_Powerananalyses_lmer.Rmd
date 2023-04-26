@@ -1,4 +1,4 @@
-# Poweranalyes via een mixed effect model
+# Poweranalyes via een mixed effect model {#powerchapter}
 
 ## Model jaar per jaar
 
@@ -220,8 +220,6 @@ Het grootste werk rond het meetnet gaat naar de taken buiten het veldwerk, in de
     - Rapport naar ICP forests
     - Persartikel
     - Indicator beschadigde bosbomen
-    
-<!--hvc deze sectie kan denk ik volledig weg, want staat al in hs 2 dacht ik. Tenzij je hier nog effectief een berekening van kosteneffectiviteit zou toevoegen.-->
     
 
 <!--
