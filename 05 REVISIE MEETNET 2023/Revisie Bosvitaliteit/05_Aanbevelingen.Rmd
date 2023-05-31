@@ -7,7 +7,7 @@ Daarnaast kan er ook meer werk gemaakt worden van analyses waarbij de meetnetgeg
 
 ## Synergieën met andere meetnetten
 
-Hoewel de bosvitaliteitsinventaris gestart is met een grid opgelegd door ICP-forests, en verdicht is door subgrids hiervan te gebruiken om voor het Vlaamse onderzoek meer informatie te verzamelen, is sedert 2014-2015 gekozen om in synergie met de bosinventarisatie te werken met steekproefcirkels van 18 meter, en worden nieuwe plots gekozen op basis van het raster van de bosinventaris. Dus nieuwe bosvitaliteitsplots zijn steekproefpunten die ook door de bosinventaris bezocht worden.
+Hoewel de bosvitaliteitsinventaris gestart is met een grid opgelegd door ICP-forests, en verdicht is door subgrids hiervan te gebruiken om voor het Vlaamse onderzoek meer informatie te verzamelen, is sedert 2012 gekozen om in synergie met de bosinventarisatie te werken met steekproefcirkels van 18 meter, en worden nieuwe plots gekozen op basis van het raster van de bosinventaris. Dus nieuwe bosvitaliteitsplots zijn steekproefpunten die ook door de bosinventaris bezocht worden.
 
 ## Kostprijs meetnet
 
@@ -26,7 +26,7 @@ Qua veldwerk heeft het aantal plots de grootste impact op de kost en nodige tijd
 
 Mogelijks zijn er ook winsten te halen door de rapportage iets beperkter te houden, aangezien het jaarlijkse rapport veel overlap heeft met rapporten uit de voorgaande jaren. Er is al veel tijdswinst geboekt doordat de meeste tabellen en figuren reeds via een R script automatisch aangemaakt worden.
 
-Deels overlappend met dit meetnet en met dezelfde methodologie wordt ook de essenziekte onderzocht, maar het plan is dit heel binnenkort stop te zetten wegens de grote uitval door het aantal bomen die sterft aan de gevolgen van de ziekte. Dit neemt heel extreme proporties aan, waar in enkele jaren tijd reeds 1/3 van de bomen dood zijn.
+Deels overlappend met dit meetnet en met dezelfde methodologie wordt ook de essenziekte onderzocht, maar het plan is dit heel binnenkort stop te zetten wegens de grote uitval door het aantal bomen dat sterft aan de gevolgen van de ziekte. Dit neemt heel extreme proporties aan, waar in enkele jaren tijd reeds één derde van de bomen dood is.
 
 ## Technische verbeteringen voor de toekomst
 

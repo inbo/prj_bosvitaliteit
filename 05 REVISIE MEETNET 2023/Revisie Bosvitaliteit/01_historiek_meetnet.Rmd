@@ -8,7 +8,7 @@
 Het managementteam van het INBO wil de meetnetten die het INBO beheert laten reviseren om te onderzoeken of er winsten kunnen gehaald worden in efficiëntie en effectiviteit.
 Dit meetnet is een van de eerste meetnetten die gereviseerd worden.
 
-De doelstelling zijn (1) het bekomen van een goed gedocumenteerd meetnet, waarbij de keuzes over wat, hoe, waarom en hoeveel er gemeten wordt, duidelijk zijn, (2) kijken waar er winsten kunnen gehaald worden in efficiëntie en effectiviteit, en (3) deze eerste evaluatie- en bijsturing van het meetnet inbedden in een adaptieve cyclus met periodieke meetnetrevisies die aangestuurd worden door de meetnetbeheerder.
+De doelstelling zijn (1) het bekomen van een goed gedocumenteerd meetnet, waarbij de keuzes over wat, hoe, waarom en hoeveel er gemeten wordt, duidelijk zijn, (2) kijken waar er winsten kunnen gehaald worden in efficiëntie en effectiviteit, en (3) deze eerste evaluatie en bijsturing van het meetnet inbedden in een adaptieve cyclus met periodieke meetnetrevisies die aangestuurd worden door de meetnetbeheerder.
 
 ## Historiek meetnet
 
@@ -21,7 +21,7 @@ Bomen worden als beschadigd aanzien vanaf een bladverlies groter dan 25%.
 Het bosvitaliteitsmeetnet - ook gekend als het Level-1 meetnet - is hiervan het resultaat. 
 Het is intussen een heel langlopend meetnet, vermoedelijk een van de oudste meetnetten op het INBO, waarbij de eerste gegevens reeds van 1987 dateren.
 
-Het huidige meetnet bevat 78 proefvlakpunten (zie figuur \@ref(fig:plotloc) ) waar dezelfde  20-25 bomen jaarlijks bemonsterd worden.
+Het huidige meetnet bevat 78 proefvlakpunten (zie figuur \@ref(fig:plotloc) ) waar dezelfde bomen jaarlijks bemonsterd worden. Gemiddeld genomen zijn dat er een 20-25 tal, maar de variatie op het aantal bomen is groot.
 Oorspronkelijk was het meetnet veel kleiner, en werden enkel punten gelegen in bossen in een 16 x 16 km grid over Europa meegenomen. In Vlaanderen werd dat al snel uitgebreid tot 8 x 8 km en vanaf 1995 zelfs nog denser in punten op een grid van 4 x 4 km.
 
 ![](data/punten_in_vlaanderen.png)

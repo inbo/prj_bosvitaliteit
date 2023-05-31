@@ -86,7 +86,7 @@ ggplot(datajpj, aes(x = jaarlijkse_trend, y = jaarlijkse_power)) +
 
 
 De berekeningen gebeuren in het script _*rscript_simulaties_jpj.R*_
-Een trend van ongeveer 0.12 kan aangetoond worden met 80% power. Dat wil zeggen dat een bladverlies die stijgt van 0.25 naar 0.262 aangetoond (ofwel een stijging van 5%) kan worden aangetoond tussen 2 verschillende jaren.
+Een trend van ongeveer 0.12 kan aangetoond worden met 80% power. Dat wil zeggen dat een bladverlies dat stijgt van 0.25 naar 0.262 aangetoond (ofwel een stijging van 5%) kan worden aangetoond tussen 2 verschillende jaren.
 
 
 ## Berekening power op de geaggregeerde dataset voor een langere periode
@@ -106,7 +106,7 @@ De verschillende trends worden bekeken op de basisinstelvariabelen en niet op de
 
 ### Onderscheidend vermogen met de huidige steekproef
 
-Deze powerberekeningen gebeuren op basis van een extern R script, die als aparte scripts bij het document gevoegd worden.
+Deze powerberekeningen gebeuren op basis van externe R scripts, die als aparte scripts bij het document gevoegd worden.
 
 ```{r simrfixedvars, message = FALSE, fig.cap="Powerberekening voor de berekende instelvariabelen voor 20 tot 120 proefvlakken voor detectie van 12 procent op 12 jaar en 20 procent op 20 jaar"}
 powers1 <- read_csv2('data/modelsim_fixed.csv')
@@ -119,10 +119,10 @@ ggplot(powers1,
   scale_y_continuous(labels = scales::percent)
 ```
 
-Uit figuur \@ref(fig:simrfixedvars) blijkt dat de huidige dataset volstaat voor een trend van 20% over een periode van 20 jaar te vinden, maar met deze resultaten moeten wel voorzichtig omgesprongen worden, want de invloed van de instelvariabelen is groot. 
+Uit figuur \@ref(fig:simrfixedvars) blijkt dat de huidige dataset volstaat voor een trend van 20% over een periode van 20 jaar te vinden, maar met deze resultaten moet wel voorzichtig omgesprongen worden, want de invloed van de instelvariabelen is groot. 
 Het lijkt bijzonder dat er weinig verschil is in power tussen een periode van 12 jaar om 12% verschil te detecteren en een periode van 20 jaar om een verschil van 20% te detecteren.
 Hier ligt dit vermoedelijk door het gebruik van een random helling op jaar, dus over een langere periode zal ook de random helling leiden tot grotere verschillen tussen de plots. Indien geen random helling in het model wordt opgenomen dan blijkt duidelijk dat 20% over 20 jaar veel gemakkelijker gedetecteerd wordt dan 12% op 12 jaar.
-Om een correcte analyse te hebben zou de random helling ook eens op 20 jaar moeten berekend worden, en hier zal vermoedelijk het effect van deze helling een stuk kleiner zijn, en dus de steekproef veel krachtiger zijn. _*<<<Uit de gegevens blijkt dat op 20 jaar de standaarddeviatie op de trend nog ongeveer 0.005 is in plaats van 0.0065. Toch is dit niet overtuigend>>>*_
+Om een correcte analyse te hebben zou de random helling ook eens op 20 jaar moeten berekend worden, en hier zal vermoedelijk het effect van deze helling een stuk kleiner zijn, en dus de steekproef veel krachtiger zijn. Dit blijkt wel niet uit de gegevens waarbij de standaarddeviatie op de trend ongeveer 0.005 is op 20 jaar, in plaats van de 0.0065.
 
 
 
@@ -142,7 +142,7 @@ ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_tree")),
 
 Het aantal bomen in de steekproef heeft impact op de variabiliteit op het gemiddeld bladverlies per plot. Minder bomen opmeten betekent meer onzekerheid op dat gemiddelde en een lagere power (figuur \@ref(fig:rsiminstelvarstrees)).
 
-De verplaatsing naar ieder proefvlak is de meest doorslaggevende factor in de tijd die het duurt om een meetnet op te meten. Het bladverlies inschatten voor iedere boom vergt ook redelijk wat tijd, maar het verminderen van de bomen kan een beperkte tijdsbesparking opleveren, maar de vraag is of het waard is om niet meer te houden aan de protocolafspraken voor deze vrij beperkte tijdswinst.
+De verplaatsing naar ieder proefvlak is de meest doorslaggevende factor in de tijd die het duurt om een meetnet op te meten. Het bladverlies inschatten voor iedere boom vergt ook redelijk wat tijd, maar het verminderen van de bomen kan een beperkte tijdsbesparing opleveren, maar de vraag is of het waard is om niet meer te houden aan de protocolafspraken voor deze vrij beperkte tijdswinst.
 
 
 ```{r rsiminstelvarstrend, fig.cap = "Power in functie van de te detecteren trend, gebaseerd op een basiswaarde van 25 procent bladverlies per proefvlak. 12 procent op 12 jaar komt overeen met een trend van 0.0025 per jaar, 24 procent op 12 jaar komt overeen met een trend van 0.0050 per jaar. De steekproef bestaat hier uit 80 proefvlakken met 20 bomen per proefvlak."}
@@ -214,7 +214,7 @@ Het grootste werk rond het meetnet gaat naar de taken buiten het veldwerk, in de
     - eigenaars contacteren
 - veldwerk (zie hierboven)
 - data ingeven in database
-- Nieuwe resultaten op basis van de nieuwe data (scripts Pieter) checken
+- nieuwe resultaten op basis van de nieuwe data (scripts Pieter) checken
 - data rapporteren:
     - INBO rapport
     - Rapport naar ICP forests

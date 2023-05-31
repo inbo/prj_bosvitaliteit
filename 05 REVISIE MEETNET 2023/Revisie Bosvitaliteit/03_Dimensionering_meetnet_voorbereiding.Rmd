@@ -17,7 +17,7 @@ De eigenlijke powerberekeningen komen aan bod in het volgende hoofdstuk.
 De hele dataset kan worden gebruikt voor de modellen, waarbij elke individuele boom een observatie is in het meetnet en waarbij iedere afhankelijkheid tussen boom, proefvlak en tijd kan worden meegenomen.
 Dit vergt echter enorm veel rekentijd voor weinig winst; daarom wordt uitgegaan van een vereenvoudigd model op data geaggregeerd op proefvlakniveau.
 
-De impact van het aantal opgemeten bomen per proefvlak zal zich vooral laten gelden op de hoeveelheid variatie rond het proefvlakgemiddelde die verwacht wordt.
+De impact van het aantal opgemeten bomen per proefvlak zal zich vooral laten gelden op de hoeveelheid variatie rond het proefvlakgemiddelde dat verwacht wordt.
 Een vierdeling van het aantal bomen leidt tot een halvering van de standaarddeviatie binnen de plot, omdat deze kwadratisch gerelateerd zijn.
 
 In plaats van de veelgebruikte Mann-Kendall Tau-test, zoals vaak gebruikt door ICP Forests, wordt hier een lineair mixed effect model gekozen om de invloed van de steekproef op de trend te berekenen.
@@ -153,7 +153,7 @@ Deze formule modelleert het bladverlies aan een inschatting van een globaal gemi
 
 Als voorbeeld gebruiken we dit model hier om de trend te bepalen over de laatste periode van 12 jaar (2010 tem 2022). 
 De autocorrelatieparameters zijn hier reeds ingevuld en werden apart bepaald.
-Dit model is natuurlijk niet ideaal omdat er een grote stijging is in het bladverlies halverwege de jaren '10
+Dit model is natuurlijk niet ideaal omdat er een grote stijging is in het bladverlies halverwege de jaren '10.
 
 Enkele anomalieën kunnen niet vermeden worden door de normale benadering, waardoor het bladverlies in een beperkt aantal gevallen boven de 100% wordt geschat, maar dit gaat over zo weinig datapunten dat dit niet echt een probleem is voor de conclusies.
 
@@ -328,7 +328,7 @@ Op basis van de dataset kunnen we zo goed mogelijke instelwaarden vinden om late
 
 ## Inschattingen per soort
 
-Als we naast een algemeen beeld over de soorten heen ook per soort een inschatting willen kunnen maken moet dit voor iedere soort apart in kaart  gebracht worden, wat we in dit document niet gaan doen. Maar op zich is dit vergelijkbaar met een meetnet met het aantal proefvlakken iedere soort te vinden is, als we aannemen dat de variatie van trend voor iedere soort vergelijkbaar is met over alle soorten heen
+Als we naast een algemeen beeld over de soorten heen ook per soort een inschatting willen kunnen maken moet dit voor iedere soort apart in kaart  gebracht worden, wat we in dit document niet gaan doen. Maar op zich is dit vergelijkbaar met een meetnet met het aantal proefvlakken iedere soort te vinden is, als we aannemen dat de variatie van trend voor iedere soort vergelijkbaar is met over alle soorten heen.
 
 ```{r soortenevaluatie, fig.cap = "Aantal plots waar de soort minstens 3 bomen beslaat", cache=TRUE, include = TRUE, message = FALSE, warning = FALSE, fig.width = 150/22.4}
 
@@ -472,7 +472,7 @@ ggplot(sd_between_plots, aes(x = sd_between_plots)) +
 
 In een tweede methode, maken we een model op de geaggregeerde data per plot voor iedere rollende 13 (trend na 12 jaar: startjaar + 12 jaar) jaar beginnende vanaf 1995. Dus het eerste model is de periode 1995-2007, het tweede van 1996-2008 tot tenslotte 2010-2022. De resultaten hiervan staan in figuur  \@ref(fig:sdbetweenplotsmodel).
 
-De variatie tussen al deze modellen zullen een inzicht geven op wat te verwachten is van de standdaarddeviatie tussen de plots. Hiervoor wordt de random intercept schatting gebruikt. Als model gebruiken we het vereenvoudigde model zoals hogerop beschreven. Voor iedere dataset van 13 jaar, centreren we jaar in het midden van iedere 13 jaar, dus de dataset die in 1995 begint wordt gecentreerd op 2001, die in 1996 op 2002, enz ... 
+De variatie tussen al deze modellen zullen een inzicht geven op wat te verwachten is van de standaarddeviatie tussen de plots. Hiervoor wordt de random intercept schatting gebruikt. Als model gebruiken we het vereenvoudigde model zoals hogerop beschreven. Voor iedere dataset van 13 jaar, centreren we jaar in het midden van iedere 13 jaar, dus de dataset die in 1995 begint wordt gecentreerd op 2001, die in 1996 op 2002, enz ... 
 
 ```{r sdbetweenplotsmodel, echo = FALSE, dependson="inputmodels", fig.cap="Verdeling geschatte random intercept op plotniveau als het model over een rollende 13 jaar gefit wordt"}
 
@@ -512,7 +512,7 @@ ggplot(sd_between_trees, aes(x = sd_between_trees)) +
 
 ```
 
-Om de variabiliteit tussen bomen in een proefvlak te onderzoeken wordt op dezelfde manier te werk gegaan als voor de variabiliteit tussen plots, eerst op basis van de ruwe data (figuur \@ref(fig:sdbetweentreesraw) ) en daarna op basis van dezelfde modellen als bij de proefvlakken \@ref(fig:sdbetweentreesmodel) ).
+Om de variabiliteit tussen bomen in een proefvlak te onderzoeken wordt op dezelfde manier te werk gegaan als voor de variabiliteit tussen plots, eerst op basis van de ruwe data (figuur \@ref(fig:sdbetweentreesraw) ) en daarna op basis van dezelfde modellen als bij de proefvlakken (figuur \@ref(fig:sdbetweentreesmodel) ).
 
 ```{r sdbetweentreesmodel, echo = FALSE, fig.cap="Verdeling standaarddeviatie tussen bomen in een plot op basis van het vooropgestelde model."}
 df_bt <- data.frame(
@@ -663,7 +663,7 @@ ggplot(corrs, aes(x = lag, y = cor)) + geom_point() +
 
 ```
 
-Rekening houden met autocorrelatie zorgt dat modellen fitten heel ingewikkeld worden. Daarom dat voor de poweranalyse deze niet expliciet meegerekend zal worden. Er wordt echter wel een impliciete correlatie tussen metingen van eenzelfde plot in rekening gebracht, omdat een random intercept op plotniveau wel in het model opgenomen is. Het verschil tussen een autocorrelatie door een random intercept geïmpliceerd en een autocorrelatie is dat bij een random effect de correlatie even hoog verondersteld wordt ongeacht hoeveel jaren er verstreken zijn, in tegenstelling tot een tijdsvariërende autocorrelatie.
+Rekening houden met autocorrelatie zorgt dat modellen fitten heel ingewikkeld wordt. Daarom dat voor de poweranalyse deze niet expliciet meegerekend zal worden. Er wordt echter wel een impliciete correlatie tussen metingen van eenzelfde plot in rekening gebracht, omdat een random intercept op plotniveau wel in het model opgenomen is. Het verschil tussen een autocorrelatie door een random intercept geïmpliceerd en een autocorrelatie is dat bij een random effect de correlatie even hoog verondersteld wordt ongeacht hoeveel jaren er verstreken zijn, in tegenstelling tot een tijdsvariërende autocorrelatie.
 
 Omdat de autocorrelatie ook na 12 jaar nog vrij hoog is, zal een random intercept zonder autocorrelatie toch nog een vrij goede benadering zijn.
 

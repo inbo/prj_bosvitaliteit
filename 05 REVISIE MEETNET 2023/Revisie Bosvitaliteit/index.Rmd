@@ -63,8 +63,7 @@ output:
 
 # Dankwoord {-}
 
-Bedankt aan Geert Sioen om me mee te nemen op een veldmeting en de nodige informatie te verschaffen om dit document te kunnen maken.
-Daarnaast een bedankje aan OpenAI GPT-4 om mijn tekst te controleren op grammatica en spelling.
+Bedankt aan Geert Sioen om me mee te nemen op een veldmeting en de nodige informatie te verschaffen om dit document te kunnen maken.Ook dank aan Hans Van Calster om de tekst na te lezen.
 
 <!--
 # Voorwoord {-}
@@ -76,7 +75,7 @@ De tekst voor het optionele voorwoord.
 
 Dit rapport brengt het bosvitaliteitsmeetnet in kaart en onderzoekt of het meetnet goed gedimensioneerd is voor de vragen die het wil beantwoorden.
 
-Het bosvitaliteitsmeetnet is een langlopend meetnet waarbij de vitaliteit van bomen wordt beoordeeld door een visuele inschatting van het percentage kroonverlies in stappen van 5%.
+Het bosvitaliteitsmeetnet is een langlopend meetnet waarbij de vitaliteit van bomen wordt beoordeeld door een visuele inschatting van het percentage bladverlies in stappen van 5%.
 
 Dit rapport zoekt eerst de sterke en zwakke punten van het meetnet op basis van de leidraad voor meetnetten.
 Daarna worden powerberekeningen uitgevoerd op een lineair trendmodel om te bepalen welke effecten gedetecteerd kunnen worden met de huidige steekproef en wat de impact zou zijn bij wijzigingen in de steekproefdimensies.
