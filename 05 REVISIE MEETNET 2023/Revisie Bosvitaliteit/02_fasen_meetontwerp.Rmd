@@ -19,7 +19,7 @@ Alle gridpunten die in bos vallen in een 16 x 16 km Europees grid moeten jaarlij
 Voor de basisrapportage van ICP forest worden enkel deze proefvlakken meegenomen. In Vlaanderen gaat dit nog over 5 proefvlakken. 
 Hiervoor moet de door ICP forest opgelegde methodologie gebruikt worden waarbij gebruik gemaakt wordt van visuele kroonbeoordelingen.
 
-De data uit de andere meetpunten wordt ook door ICP forests gebruikt in hun detailbespreking en modelbouw (\citep{icpforesttechreport}).
+De data uit de andere meetpunten wordt ook door ICP forests gebruikt in hun detailbespreking en modelbouw [@icpforesttechreport]).
 
 
 
@@ -168,7 +168,7 @@ Er zijn 5 eindgebruikers voor dit meetnet:
 
 #### INBO
 
-Er wordt jaarlijks een gedetailleerd INBO rapport gemaakt die de data bespreekt, zowel over de bevindingen van het laatste jaar, als vergelijkingen tussen de laatste jaren en een trendanalyse (\citep{bosvitaliteit2022}).
+Er wordt jaarlijks een gedetailleerd INBO rapport gemaakt die de data bespreekt, zowel over de bevindingen van het laatste jaar, als vergelijkingen tussen de laatste jaren en een trendanalyse ([@bosvitaliteit2022]).
 De laatste jaren zijn ook op een gelijkaardige manier specifiek de essen opgevolgd in een ander INBO project. De toestand van de es wordt ook in het bosvitaliteitsrapport meegenomen.
 
 #### Statistiek Vlaanderen
@@ -180,7 +180,7 @@ Er is een INBO indicator `beschadigde bosbomen` die het resultaat is van deze da
 
 Jaarlijks is er ook een rapportage naar ICP forests, welke bestaat uit 2 belangrijke onderdelen.
 Het eerste deel is over een klein aantal vooropgestelde proefvlakken, het tweede deel omvat de data van alle proefvlakken en wordt gebruikt voor de statistische analyse van ICP forests.
-De resultaten van ICP forests worden bezorgd aan de Europese commissie (\citep{icpforesttechreport}).
+De resultaten van ICP forests worden bezorgd aan de Europese commissie ([@icpforesttechreport]).
 
 #### Pers
 
@@ -482,17 +482,17 @@ In plaats van het modelleren van het gemiddeld bladverlies, kunnen we ook kiezen
 
 #### Periodieke detailanalyses
 
-Vroeger is er eens een verklarend model gemaakt om de oorzaken van patronen in het blad- of naaldverlies te achterhalen \citep{bosvitaliteitmodelmatig}. Misschien is het een idee om dit periodiek eens te herhalen, maar voorlopig is daar nog niets voor gepland.
+Vroeger is er eens een verklarend model gemaakt om de oorzaken van patronen in het blad- of naaldverlies te achterhalen [@bosvitaliteitmodelmatig]. Misschien is het een idee om dit periodiek eens te herhalen, maar voorlopig is daar nog niets voor gepland.
 
 
 ## Fase IV: Ontwerp rapportering en communicatie
 
-- Het hoofdrapport \citep{bosvitaliteit2022} is een jaarlijks INBO-rapport
+- Het hoofdrapport [@bosvitaliteit2022] is een jaarlijks INBO-rapport
     - Beschrijft de proefvlakken in detail
     - Via R scripts wordt een beperkte analyse gedaan rond de trend
 - Jaarlijks wordt ook gerapporteerd naar ICP forests
     - de verplichte rapportage in de door ICP-forests opgelegde plots
-    - rapportage van alle proefvlakken voor ICP-forests jaarlijkse statistische analyse   \citep{icpforesttechreport} over de bosvitaliteit in Europa
+    - rapportage van alle proefvlakken voor ICP-forests jaarlijkse statistische analyse   [@icpforesttechreport] over de bosvitaliteit in Europa
 - Er is een natuurindicator "beschadigde bosbomen" die dit meetnet gebruikt (https://www.vlaanderen.be/inbo/indicatoren/aandeel-beschadigde-bosbomen)
 - Verder nog publicaties naar de Vlaamse statistieken, INBO-nieuwsbrief, ...
 
