@@ -8,14 +8,15 @@
 Het managementteam van het INBO wil de meetnetten die het INBO beheert laten reviseren om te onderzoeken of er winsten kunnen gehaald worden in efficiëntie en effectiviteit.
 Dit meetnet is een van de eerste meetnetten die gereviseerd worden.
 
-De doelstelling zijn (1) het bekomen van een goed gedocumenteerd meetnet, waarbij de keuzes over wat, hoe, waarom en hoeveel er gemeten wordt, duidelijk zijn, (2) kijken waar er winsten kunnen gehaald worden in efficiëntie en effectiviteit, en (3) deze eerste evaluatie en bijsturing van het meetnet inbedden in een adaptieve cyclus met periodieke meetnetrevisies die aangestuurd worden door de meetnetbeheerder.
+De doelstelling zijn (1) het bekomen van een goed gedocumenteerd meetnet, waarbij de keuzes over wat, hoe, waarom en hoeveel er gemeten wordt, duidelijk zijn; (2) kijken waar er winsten kunnen gehaald worden in efficiëntie en effectiviteit; en (3) deze eerste evaluatie en bijsturing van het meetnet inbedden in een adaptieve cyclus met periodieke meetnetrevisies die aangestuurd worden door de meetnetbeheerder.
 
 ## Historiek meetnet
 
 Halverwege de jaren 80 van vorige eeuw is in opdracht van de  Europese comissie een expertenpanel opgericht om de gezondheidstoestand van de Europese bossen op te volgen.
 Dit panel werd gedoopt als *ICP Forests* waarin de Europese landen vertegenwoordigd zijn.
 
-Vanuit ICP Forests werd een Europees meetnet ontworpen die deze gezondheidstoestand opvolgt doormiddel van kroonbeoordelingen waar het blad- en naaldverlies  van (co)-dominante bomen in klassen van 5% visueel wordt beoordeeld. 
+Vanuit ICP Forests werd een Europees meetnet ontworpen die deze gezondheidstoestand opvolgt doormiddel van kroonbeoordelingen waar het blad- en naaldverlies  van (co)-dominante bomen. 
+Dit gebeurt door een visuele beoordeling in klassen van 5%. 
 Bomen worden als beschadigd aanzien vanaf een bladverlies groter dan 25%.
 
 Het bosvitaliteitsmeetnet - ook gekend als het Level-1 meetnet - is hiervan het resultaat. 
@@ -26,7 +27,7 @@ Oorspronkelijk was het meetnet veel kleiner, en werden enkel punten gelegen in b
 
 ![](data/punten_in_vlaanderen.png)
 
-```{r plotloc, echo=FALSE, out.width="5%", out.height="5%", fig.cap="Ligging van de punten in VLaanderen (paars vanaf 1987 (34), blauw vanaf 1988-1992 (5), groen vanaf 1995 (30) en geel later dan 2018 (9)). Enkele proefvlakken zijn intussen verdwenen."}
+```{r plotloc, echo=FALSE, out.width="5%", out.height="5%", fig.cap="Ligging van de punten in Vlaanderen (paars tussen 1987 en 2018 (69) en geel later dan 2018 (9)). Dit zijn de huidige proefvlakken die opgemeten werden in 2022."}
 knitr::include_graphics("data/pixel.png")
 ```
 

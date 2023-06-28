@@ -1,4 +1,4 @@
-# Ontwerp van een meetnet met mixed effects model
+# Meetnetontwerp met een mixed effect model
 
 ## Inleiding
 
@@ -7,7 +7,7 @@ Er worden 3 basisscenario's gebruikt:
 
 - Standaard: een detectie van 12% verandering in 12 jaar, zoals in enkele andere meetnetten
 - Een detectie van 20% verandering in 20 jaar
-- Hoeveel verschil kan gedetecteerd worden in 2 opeenvolgende jaren.
+- Detecteerbaar verschil in 2 opeenvolgende jaren
 
 In dit hoofdstuk leggen we uit wat er nodig is om de powerberekening uit te voeren en berekenen we welke instelwaarden relevant zijn voor de powerberekeningen.
 De eigenlijke powerberekeningen komen aan bod in het volgende hoofdstuk.
@@ -18,11 +18,11 @@ De hele dataset kan worden gebruikt voor de modellen, waarbij elke individuele b
 Dit vergt echter enorm veel rekentijd voor weinig winst; daarom wordt uitgegaan van een vereenvoudigd model op data geaggregeerd op proefvlakniveau.
 
 De impact van het aantal opgemeten bomen per proefvlak zal zich vooral laten gelden op de hoeveelheid variatie rond het proefvlakgemiddelde dat verwacht wordt.
-Een vierdeling van het aantal bomen leidt tot een halvering van de standaarddeviatie binnen de plot, omdat deze kwadratisch gerelateerd zijn.
+Een vierdeling van het aantal bomen leidt tot een halvering van de standaarddeviatie binnen een plot, omdat deze kwadratisch gerelateerd zijn.
 
 In plaats van de veelgebruikte Mann-Kendall Tau-test, zoals vaak gebruikt door ICP Forests, wordt hier een lineair mixed effect model gekozen om de invloed van de steekproef op de trend te berekenen.
-De focus ligt op het modelleren van de trend van gemiddeld bladverlies, in tegenstelling tot het berekenen van het aantal beschadigde bomen zoals vroeger.
-Dit omdat toegenomen rekenkracht dit toelaat.
+De focus ligt op het modelleren van de trend van gemiddeld bladverlies, in tegenstelling tot het berekenen van het aantal beschadigde bomen zoals vroeger bij ICP-Forests.
+Dit omdat toegenomen rekenkracht van de computers dit toelaat.
 
 De huidige tijdreeks is bijna 40 jaar, dus het is niet relevant om lineaire trends te berekenen voor de hele periode. Daarom ligt de focus op een tijdvenster van 12 of 20 jaar.
 
@@ -31,16 +31,16 @@ Het gemiddelde hiervan wordt gebruikt als basis voor een instelparameter voor de
 
 ### Onderscheidend vermogen (Power)
 
-Het onderscheidend vermogen van het meetnet wordt berekend door middel van simulatie om te bepalen hoe goed een scenario is ontworpen om een trend op te pikken over de soorten.
+Het onderscheidend vermogen van het meetnet wordt berekend door middel van simulatie om te bepalen hoe goed een scenario is ontworpen om een trend op te pikken over de soorten heen.
 Voor een uitspraak per soort zal het onderscheidend vermogen lager zijn en zal voor elke soort afzonderlijk een ongeveer even groot meetnet nodig zijn als voor alle soorten samen.
 
 In dit document, waarbij we alle data aggregeren per proefvlak, zullen volgende instelparameters belangrijk zijn om de power te berekenen:
 
-- Aantal plots:  hoe meer plots, hoe meer nauwkeurig we bladverlies kunnen inschatten
-- Aantal bomen per plot:  hoe meer bomen hoe nauwkeuriger de schatting per plot is
-- Aantal jaren in het meetnet: Hoe langer het meetnet loopt, hoe fijner de trend ingeschat kan worden
-- Gewenste te detecteren effectgrootte: een trend van 12% na 12 jaar is moeilijker te detecteren dan een trend van 20% na 20 jaar
-- Variatie tussen plots: hoe minder verschillende plots verschillen, hoe nauwkeuriger het model
+- Aantal plots:  hoe meer plots, hoe nauwkeuriger we het bladverlies kunnen inschatten.
+- Aantal bomen per plot:  hoe meer bomen hoe nauwkeuriger de schatting op het gemiddelde bladverlies per plot is.
+- Aantal jaren in het meetnet: Hoe langer het meetnet loopt, hoe fijner de trend ingeschat kan worden.
+- Gewenste te detecteren effectgrootte: een trend van 12% na 12 jaar is moeilijker te detecteren dan een trend van 20% na 20 jaar.
+- Variatie tussen plots: hoe minder verschillende plots verschillen, hoe nauwkeuriger het model is.
 - Variatie binnen een plot in hetzelfde jaar: ook hier zal een kleinere variatie leiden  tot een nauwkeurigere inschatting. De variatie binnen een plot wordt bepaald door de variatie tussen de verschillende bomen in het plot. Hoe meer bomen hoe kleiner de variatie op de inschatting van het bladverlies op het plotniveau.
 - Variatie  binnen een plot tussen verschillende jaren: hoe  hoger de autocorrelatie tussen opeenvolgende jaren hoe minder informatie de dataset bevat en hoe meer data nodig is voor eenzelfde uitspraak. Dit wil ook zeggen dat hoe hoger de autocorrelatie is, hoe langer de tijdsreeks moet zijn om een effect te detecteren, omdat de jaren niet als onafhankelijk kunnen worden beschouwd. 
 
@@ -53,9 +53,9 @@ Deze gereduceerde periode omvat nog steeds een tijdreeks van 28 jaar.
 
 Omdat een normale verdeling voor een respons het gemakkelijkst en snelste werkt, wordt in eerste instantie onderzocht dat een normale benadering in het model acceptabel is.
 
-In figuur \@ref(fig:verdelingbladverlies) blijkt dat eens een boom begint veel beschadiging te vertonen, dat de toestand sterk verslechterd, en dat er hierdoor heel weinig observaties zijn met een bladverlies hoger dan 50%. 
+In figuur \@ref(fig:verdelingbladverlies) blijkt dat eens een boom begint veel beschadiging te vertonen, de toestand sterk verslechterd, en dat er hierdoor heel weinig observaties zijn met een bladverlies hoger dan 50%. 
 Dit op de dode bomen na, die 100% bladverliesscore krijgen. Deze verdwijnen echter een jaar na sterfte uit de dataset.
-Een normale verdeling als benadering zal een onderschatting geven van de responsvariatie, maar relatief gezien gaat dit over heel weinig bomen die ook snel verdwijnen uit de steekproef.
+Een normale verdeling als benadering zal een onderschatting geven van de responsvariatie, maar relatief gezien gaat dit over heel weinig bomen die ook snel verdwijnen uit de steekproef, dus is de verwachte bias niet groot.
 
 ```{r verdelingbladverlies, echo = FALSE, fig.cap="Range van de observaties in de ruwe data", warning = FALSE, message=FALSE}
 library(tidyverse)
@@ -109,7 +109,7 @@ Er wordt natuurlijk wel impact verwacht op de betrouwbaarheid van de schattingen
 
 Daarnaast is er veel verschil tussen de plots in figuur \@ref(fig:evolutieperplot).
 
-```{r evolutieperplot, fig.cap = "Evolutie bladverlies geaggregeerd per plot. Groene lijn is gemiddeld bladverlies over de dataset", echo = FALSE}
+```{r evolutieperplot, fig.cap = "Evolutie bladverlies geaggregeerd per plot. Groene lijn is gemiddeld bladverlies over de dataset.", echo = FALSE}
 
 ggplot(df_plots, aes(x = jaar, y = nnv, groups = plot)) + 
   geom_line() + 
@@ -309,18 +309,32 @@ plotdata_red <- data.frame(
 
 ```{r vereenvoudigdplot2, fig.cap = "Histogram van de pearson residu's voor het vereenvoudigd model", echo = FALSE, message=FALSE, warning = FALSE, message=FALSE, cache = TRUE}
   ggplot(plotdata_red, aes(x = resid)) + geom_histogram(binwidth = 0.0025)
-
-#  e1 <- coef(summary(base_lme))
-#  e2 <- coef(summary(model))
-#  dt <- data.frame(model = c("base", "simpler"), 
-#                   est = c(e1[2,1], e2[2,1]), 
-#                   lcl = c(e1[2,1] - 2 * e1[2,2], e2[2,1] - 2 * e2[2,2]),
-#                   ucl = c(e1[2,1] + 2 * e1[2,2], e2[2,1] + 2 * e2[2,2]))
-# ggplot(dt, aes(x = model, y = est, ymin = lcl, ymax = ucl)) + 
-#   geom_point() + geom_errorbar()
 ```
 
-De schattingen tussen het ingewikkelde en vereenvoudigde model zijn compatibel met elkaar (figuur \@ref{vereenvoudigdplot1}), en ook de standaardfout op de schatting van jaar is vergelijkbaar (ergens een 10% verschil, zie figuur \@ref{vereenvoudigdmodel2}), dus ook de power tussen beide modellen is hierdoor vergelijkbaar, omdat de power nu eenmaal bepaald wordt door de standaardfout, waardoor het eenvoudigere model gebruikt kan worden.
+
+De residu's van het vereenvoudigde model lijken geen anomalieën te vertonen (figuur \@ref(fig:vereenvoudigdplot1) en \@ref(fig:vereenvoudigdplot2)).  
+
+
+<!--- NOG EENS NAKIJKEN WAAROM DIT NIET KLOPT, EN OF DE UITLEG WEL SENSE MAAKT 
+```{r vglmodellen, fig.cap = "Verschil in gefitte waarden tussen het basismodel en het vereenvoudigd model" }
+e1 <- coef(summary(base_lme))
+e2 <- coef(summary(model))
+dt <- data.frame(model = c("base", "simpler"), 
+                 est = c(e1[2,1], e2[2,1]),
+                 cv = c(e1[2,1]/e1[2,2], e2[2,1]/e2[2,2]), 
+                 lcl = c(e1[2,1] - 2 * e1[2,2], e2[2,1] - 2 * e2[2,2]),
+                 ucl = c(e1[2,1] + 2 * e1[2,2], e2[2,1] + 2 * e2[2,2]))
+ggplot(dt, aes(x = model, y = est, ymin = lcl, ymax = ucl)) + 
+  geom_point() + geom_errorbar()
+```
+
+De schattingen van het ingewikkelde en vereenvoudigde model zijn compatibel met elkaar (figuur \@ref(fig:vglmodellen))
+De schatting van de trend is vergelijkbaar alsook de nauwkeurigheid van die schatting. Omdat de power berekend wordt als het te detecteren effect ten opzichte van de ruis op de schatting zal de power in dit geval ook vergelijkbaar zijn
+
+en ook de standaardfout op de schatting van jaar is vergelijkbaar (ergens een 10% verschil, dus ook de power tussen beide modellen is hierdoor vergelijkbaar, omdat de power nu eenmaal bepaald wordt door de standaardfout in vergelijking met het te detecteren effect, waardoor het eenvoudigere model gebruikt kan worden.
+
+--->
+
 
 ## Inschatten van correlaties en variaties
 

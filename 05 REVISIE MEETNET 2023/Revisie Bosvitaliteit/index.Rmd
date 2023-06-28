@@ -26,7 +26,8 @@ reviewer:
 year: 2023
 cover_photo: data/coverphoto.jpg
 cover_description: Kronen die beoordeeld worden in een proefvlak
-doi: 00.00000/inbor.dummydoi
+#doi: 00.00000/inbor.dummydoi
+doi: 0.0/0.0
 reportnr: XXXXXXXXX
 depotnr: XXXXXXXXX
 funder: Research Institute for Nature and Forest (INBO)
@@ -57,6 +58,7 @@ embargo: 2023-06-19
 bibliography: references.bib
 link-citations: TRUE
 site: bookdown::bookdown_site
+nocolophon: true
 
 output:
   INBOmd::gitbook: default
@@ -70,7 +72,8 @@ output:
 
 # Dankwoord {-}
 
-Bedankt aan Geert Sioen om me mee te nemen op een veldmeting en de nodige informatie te verschaffen om dit document te kunnen maken.Ook dank aan Hans Van Calster om de tekst na te lezen.
+Bedankt aan Geert Sioen om me mee te nemen op een veldmeting en de nodige informatie te verschaffen om dit document te kunnen maken. 
+Ook dank aan Hans Van Calster om de tekst na te lezen.
 
 <!--
 # Voorwoord {-}
@@ -84,13 +87,13 @@ Dit rapport brengt het bosvitaliteitsmeetnet in kaart en onderzoekt of het meetn
 
 Het bosvitaliteitsmeetnet is een langlopend meetnet waarbij de vitaliteit van bomen wordt beoordeeld door een visuele inschatting van het percentage bladverlies in stappen van 5%.
 
-Dit rapport zoekt eerst de sterke en zwakke punten van het meetnet op basis van de leidraad voor meetnetten.
-Daarna worden powerberekeningen uitgevoerd op een lineair trendmodel om te bepalen welke effecten gedetecteerd kunnen worden met de huidige steekproef en wat de impact zou zijn bij wijzigingen in de steekproefdimensies.
+Dit rapport zoekt eerst de sterke en zwakke punten van het meetnet op basis van de leidraad voor meetnetontwerp.
+Daarna worden powerberekeningen uitgevoerd op een lineaire trendmodel om te bepalen welke effecten gedetecteerd kunnen worden met de huidige steekproef en wat de impact zou zijn bij wijzigingen in de steekproefdimensies.
 Tot slot worden enkele aanbevelingen voor verbetering van het meetnet gedaan.
 
 Uit de huidige analyse blijkt dat het meetnet, ondanks enkele tekortkomingen, goed gedimensioneerd is om een effect van 12% verandering in bladverlies te kunnen detecteren over een periode van 12 jaar wanneer we alle soorten samen beschouwen.
 
-Het is echter belangrijk om geleidelijk aan steekproefpunten te vervangen door andere punten uit de Vlaamse bosinventarisatie, aangezien de huidige steekproefpunten verouderd raken en niet meer representatief zijn voor Vlaanderen.
+Het is echter belangrijk om geleidelijk aan steekproefpunten te vervangen door andere punten die samenvallen met punten in de Vlaamse bosinventarisatie, aangezien de huidige steekproefpunten verouderd raken en niet meer representatief zijn voor Vlaanderen.
 Omdat we een analyse uitvoeren over alle soorten heen, is het van belang dat deze niet te veel afwijken van de soortendistributie in Vlaanderen voor steekproefpunten die volledig in het bos liggen.
 
 <!--
