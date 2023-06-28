@@ -85,7 +85,7 @@ ggplot(datajpj, aes(x = jaarlijkse_trend, y = jaarlijkse_power)) +
 ```
 
 
-De berekeningen gebeuren in het script _*rscript_simulaties_jpj.R*_
+De berekeningen gebeuren in het script *rscript_simulaties_jpj.R*
 Een trend van ongeveer 0.12 kan aangetoond worden met 80% power. Dat wil zeggen dat een bladverlies dat stijgt van 0.25 naar 0.262 aangetoond (ofwel een stijging van 5%) kan worden aangetoond tussen 2 verschillende jaren.
 
 
@@ -142,7 +142,10 @@ ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_tree")),
 
 Het aantal bomen in de steekproef heeft impact op de variabiliteit op het gemiddeld bladverlies per plot. Minder bomen opmeten betekent meer onzekerheid op dat gemiddelde en een lagere power (figuur \@ref(fig:rsiminstelvarstrees)).
 
-De verplaatsing naar ieder proefvlak is de meest doorslaggevende factor in de tijd die het duurt om een meetnet op te meten. Het bladverlies inschatten voor iedere boom vergt ook redelijk wat tijd, maar het verminderen van de bomen kan een beperkte tijdsbesparing opleveren, maar de vraag is of het waard is om niet meer te houden aan de protocolafspraken voor deze vrij beperkte tijdswinst.
+De verplaatsing naar ieder proefvlak is de meest doorslaggevende factor qua tijd die het duurt om een meetnet op te meten.
+
+Het bladverlies inschatten voor iedere boom vergt ook redelijk wat tijd, dus een beperkte tijdsbesparing door het inperken van het aantal opgemeten bomen is mogelijk.
+De vraag is of deze beperkte tijdswinst het waard is om niet meer te voldoen aan de internationale protocolafspraken.
 
 
 ```{r rsiminstelvarstrend, fig.cap = "Power in functie van de te detecteren trend, gebaseerd op een basiswaarde van 25 procent bladverlies per proefvlak. 12 procent op 12 jaar komt overeen met een trend van 0.0025 per jaar, 24 procent op 12 jaar komt overeen met een trend van 0.0050 per jaar. De steekproef bestaat hier uit 80 proefvlakken met 20 bomen per proefvlak."}
@@ -156,7 +159,7 @@ ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_trend")),
 
 ```
 
-Zoals verwacht blijkt uit figuur \@ref(fig:rsiminstelvarstrend) dat de te detecteren trend een heel grote invloed op het onderscheidend vermogen heeft. Hoe groter het effect is dat ten minste gedetecteerd moet worden, hoe meer kans en dus onderscheidend vermogen dat het model dit effect zal kunnen detecteren.
+Zoals verwacht blijkt uit figuur \@ref(fig:rsiminstelvarstrend) dat de te detecteren trend een heel grote invloed op het onderscheidend vermogen heeft. Hoe groter het effect is dat ten minste gedetecteerd moet worden, hoe meer kans en dus hoe groter het onderscheidend vermogen voor het model.
 
 ```{r rsiminstelvarsbp, fig.cap = "Power in functie van hoe groot de variatie tussen de verschillende proefvlakken is. Ook hier vertrekken we van een steekproef van 80 proefvlakken met 20 bomen per proefvlak"}
 
@@ -177,7 +180,7 @@ ggplot(powers2 %>% filter(Mtype %in% c("Fix", "Var_cor")),
        aes(x = cor_is, y = power, ymin = lcl, ymax = ucl, 
            color = Mtype == "Fix")) + 
   geom_point() + geom_errorbar() + 
-  labs(x = "Correlatie tussen random intercept van ieder plot en random helling van ieder plot", 
+  labs(x = "Correlatie tussen random intercept en random helling van ieder plot", 
        y = "Power", color = "Referentie")
 ```
 
