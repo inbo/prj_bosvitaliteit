@@ -53,4 +53,6 @@ Het is belangrijk om ook nieuwe aanplantingen mee te hebben in de steekproef.
 
 Om de uitspraak zoals een gewoon meetnet te kunnen doen van een evolutie van 12% over 12 jaar wordt het meetnet eigenlijk een te lange tijdreeks met heel veel systematische subtrends en is het beter te focussen op de laatste 12 jaar in plaats van de hele tijdreeks te nemen voor de trend.
 
+Een alternatief is de trend niet meer parametrisch in te schatten, maar met behulp van een smoother. Er is dan minder informatie over de globale trend, maar er kan meer visueel ingezoomd worden op een trend in een deel van de tijdsperiode.
+
 <!--hvc dit laatste kan je best nog iets anders formuleren. Het is mij bv niet duidelijk waarom je enkel naar de laatste 12 jaar zou kijken. Het lijkt mij ook relevant om de trend van de laatste 12 jaar te kunnen vergelijken met alle vorige resultaten van het rollende gemiddelde voor de rest van de tijdreeks. En misschien ook suggereren om naast lineaire trend op 12 jaar ook te kijken naar smoothing technieken om de tijdreeks te analyseren.-->
