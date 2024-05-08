@@ -4,8 +4,21 @@ library(readxl)
 library(DBI)
 library(odbc)
 library(lme4)
+conflicted::conflicts_prefer(dplyr::filter)
+conflicted::conflicts_prefer(dplyr::lag)
+conflicted::conflicts_prefer(brms::ar)
+conflicted::conflicts_prefer(Matrix::expand)
+conflicted::conflicts_prefer(brms::lognormal)
+conflicted::conflicts_prefer(brms::ngrps)
+conflicted::conflicts_prefer(Matrix::pack)
+conflicted::conflicts_prefer(Matrix::unpack)
+
+if (!dir.exists("outputEs_levend")) dir.create("outputEs_levend")
+if (!dir.exists("outputEs_allebm")) dir.create("outputEs_allebm")
+if (!dir.exists("outputEs_trend")) dir.create("outputEs_trend")
+
 options(dplyr.summarise.inform = FALSE) #geen messages als je .groups niet gebruikt
-alleen_levende_bomen <- FALSE
+alleen_levende_bomen <- TRUE #LET OP, beiden runnen
 if (alleen_levende_bomen) {
   out <- "outputEs_levend/lv_"
 } else {
@@ -19,6 +32,9 @@ con <- DBI::dbConnect(odbc::odbc(),
                  database = "D0027_00_Essen")
 con
 DBI::dbListTables(con, table_type = "TABLE", schema_name = "dbo")
+
+prv_es_textuur_path <- 
+  "03 ESSENZIEKTE/data/PROEFVLAKKEN ES en TEXTUUR DRAINAGE.xlsx"
 
 sqlcodemeting <- "
 select
@@ -152,13 +168,19 @@ if(alleen_levende_bomen) {
   dfEsMeting <- dfEsMetingAlle
 }
 
-dfProefvlakEig <- 
-  read_excel("data/PROEFVLAKKEN ES en TEXTUUR DRAINAGE.xlsx") %>% 
+dfEsMeting %>% summarise(aantal_bomen = n(), .by  = c(ProefvlakNummer, Jaar)) %>% pivot_wider(id_cols = ProefvlakNummer, names_from = Jaar, values_from = aantal_bomen, values_fill = 0)
+
+
+dfProefvlakEig <- read_excel(prv_es_textuur_path) %>% 
   rename( "Drainagegroepering" = `Drainage-gegroepeerd`) %>%
-  mutate(Drainagegroepering = replace(Drainagegroepering, Nummer == "1121", "abcd"),
-         Drainagegroepering = replace(Drainagegroepering, Nummer == "413019", "abcd"),
-         Drainagegroepering = replace(Drainagegroepering, Nummer == "767", "efghi"),
-         Drainagegroepering = replace(Drainagegroepering, Nummer == "302", "efghi"))
+  mutate(Drainagegroepering = 
+           replace(Drainagegroepering, Nummer == "1121", "abcd"),
+         Drainagegroepering = 
+           replace(Drainagegroepering, Nummer == "413019", "abcd"),
+         Drainagegroepering = 
+           replace(Drainagegroepering, Nummer == "767", "efghi"),
+         Drainagegroepering = 
+           replace(Drainagegroepering, Nummer == "302", "efghi"))
 
 all(unique(dfEsMeting$ProefvlakNummer) %in% dfProefvlakEig$Nummer)
 
@@ -170,6 +192,13 @@ if(alleen_levende_bomen) {
   dfEsMeting <- dfEsMetingAlle
 }
 
+bm_prv_jr <- dfEsMeting %>% 
+  summarise(aantal_bomen = n(), 
+            .by  = c(ProefvlakNummer, Jaar)) %>% 
+  arrange(ProefvlakNummer, Jaar) %>% 
+  pivot_wider(id_cols = ProefvlakNummer, names_from = Jaar, values_from = aantal_bomen, values_fill = 0)
+write_csv2(bm_prv_jr, path = paste0(out, "aantal_bomen_proefvlak_jaar.csv"))
+
 
 #Lees de symptomendata in. Voeg kerngezonde bomen toe als symptoom "00" als ze niet in DB staan
 symptomen_zonder_graad <- c("10", "11", "12", "21", "22")
@@ -179,46 +208,63 @@ symptomen_voorwaardelijk_aantasting <- c("31", "32", "33", "34")
 dfEsSymptoomOrigAlle <- 
   DBI::dbGetQuery(con, sqlcodesymptoom) %>% 
   right_join(dfEsMetingAlle %>% 
-               select(ProefvlakID, ProefvlakNummer, Jaar, BoomID, MetingID, GS), 
+               select(ProefvlakID, ProefvlakNummer, Jaar, BoomID, MetingID, GS),
              by = c("MetingID", "BoomID", "ProefvlakNummer")) %>%
-  mutate(AantastingCode = replace(AantastingCode, is.na(MetingSymptoomID), "00"),
-         Aantasting = replace(Aantasting, is.na(MetingSymptoomID), "No symptoms on any part of tree"),
-         SymptoomCode = replace(SymptoomCode, AantastingCode == "00", "00"),
-         Symptoom = replace(Symptoom, AantastingCode == "00", "no symptoms"),
-         SymptoomGraadCode = replace(SymptoomGraadCode, AantastingCode == "00", "0"),
-         SymptoomGraad = replace(SymptoomGraad, AantastingCode == "00", "0%"),
-         SymptoomCode = replace(SymptoomCode, AantastingCode == "04", "99"),
-         SymptoomGraadCode = replace(SymptoomGraadCode, AantastingCode == "04", "7"),
-         SymptoomGraad = replace(SymptoomGraad, AantastingCode == "04", "100%"),
-         Symptoom = replace(Symptoom, AantastingCode == "04", "Dead Tree")) %>% 
-  mutate(SymptoomGraad = ifelse(SymptoomCode %in% symptomen_zonder_graad & is.na(SymptoomGraad), "aanwezig", SymptoomGraad),
-         SymptoomGraad = ifelse(SymptoomCode == symptomen_voorwaardelijk_graad & 
-                                  AantastingCode %in% symptomen_voorwaardelijk_aantasting & 
+  mutate(
+    AantastingCode = replace(AantastingCode, is.na(MetingSymptoomID), "00"),
+    Aantasting = replace(Aantasting, 
+                         is.na(MetingSymptoomID), 
+                         "No symptoms on any part of tree"),
+    SymptoomCode = replace(SymptoomCode, 
+                           AantastingCode == "00", 
+                           "00"),
+    Symptoom = replace(Symptoom, AantastingCode == "00", "no symptoms"),
+    SymptoomGraadCode = replace(SymptoomGraadCode, AantastingCode == "00", "0"),
+    SymptoomGraad = replace(SymptoomGraad, AantastingCode == "00", "0%"),
+    SymptoomCode = replace(SymptoomCode, AantastingCode == "04", "99"),
+    SymptoomGraadCode = replace(SymptoomGraadCode, AantastingCode == "04", "7"),
+    SymptoomGraad = replace(SymptoomGraad, AantastingCode == "04", "100%"),
+    Symptoom = replace(Symptoom, AantastingCode == "04", "Dead Tree")) %>% 
+  mutate(
+    SymptoomGraad = 
+      ifelse(SymptoomCode %in% symptomen_zonder_graad & 
+                    is.na(SymptoomGraad),
+                  "aanwezig", 
+                  SymptoomGraad),
+    SymptoomGraad = ifelse(SymptoomCode == symptomen_voorwaardelijk_graad & 
+                            AantastingCode %in%
+                             symptomen_voorwaardelijk_aantasting & 
                                   is.na(SymptoomGraad), 
-                                "aanwezig",
-                                SymptoomGraad),
-         SymptoomGraad = replace(SymptoomGraad, SymptoomGraadCode == "7", "volle 100%"))
+                           "aanwezig",
+                            SymptoomGraad),
+    SymptoomGraad = replace(SymptoomGraad, 
+                            SymptoomGraadCode == "7", 
+                            "volle 100%"))
 
-dfEsSymptoomOrigLevend <- dfEsSymptoomOrigAlle %>% filter(BoomID %in% overlevende_bomen)
+dfEsSymptoomOrigLevend <- dfEsSymptoomOrigAlle %>% 
+  filter(BoomID %in% overlevende_bomen)
 if(alleen_levende_bomen) {
   dfEsSymptoomOrig <- dfEsSymptoomOrigLevend
 } else {
   dfEsSymptoomOrig <- dfEsSymptoomOrigAlle
 }
 
-
-
 symptoomgraden <- 
-  DBI::dbGetQuery(con, "select Code, Beschrijving from SymptoomGraad order by SortOrder")
-symptoomgraden <- rbind(symptoomgraden, data.frame(Code = 100, Beschrijving = "aanwezig"))
+  DBI::dbGetQuery(
+    con, 
+    "select Code, Beschrijving from SymptoomGraad order by SortOrder")
+symptoomgraden <- rbind(symptoomgraden, 
+                        data.frame(Code = 100, Beschrijving = "aanwezig"))
 
 #Data met enkel deze waarbij er een symptoomoorzaak is gedefinieerd
 dfEsSymptoomOorzAlle <-
   DBI::dbGetQuery(con, sqlcodeorganisme) %>%
-  dplyr::inner_join(select(dfEsSymptoomOrigAlle, ProefvlakID, ProefvlakNummer, Jaar, BoomID, MetingID, MetingSymptoomID, GS), by = "MetingSymptoomID") %>%
+  dplyr::inner_join(select(dfEsSymptoomOrigAlle, ProefvlakID, ProefvlakNummer,
+                           Jaar, BoomID, MetingID, MetingSymptoomID, GS), by = "MetingSymptoomID") %>%
   filter(GS == TRUE) #niet meer relevant door de inner join
 
-dfEsSymptoomOorzLevend <- dfEsSymptoomOorzAlle %>% filter(BoomID %in% overlevende_bomen)
+dfEsSymptoomOorzLevend <- dfEsSymptoomOorzAlle %>% 
+  filter(BoomID %in% overlevende_bomen)
 if (alleen_levende_bomen) {
   dfEsSymptoomOorz <- dfEsSymptoomOorzLevend
 } else {
@@ -229,7 +275,7 @@ if (alleen_levende_bomen) {
 ############################################
 
 es_firstyear <- min(dfEsMeting$Jaar)
-es_lastyear <- 2019
+es_lastyear <- 2023
 es_prevyear <- es_lastyear - 1
 es_2yearsago <- es_lastyear - 2
 es_jaren <- es_firstyear:es_lastyear
@@ -242,7 +288,9 @@ unieke_bomen <- dfEsMeting %>%
   group_by(ProefvlakNummer, BoomID) %>% 
   summarize(omtrek_start = min(Omtrek, na.rm = TRUE),
             sterftejaar = min(Jaar[Bladverlies == 100]))
-dfEsMeting <- dfEsMeting %>% left_join(unieke_bomen) %>% mutate(gestorven = Jaar > sterftejaar)
+dfEsMeting <- dfEsMeting %>% 
+  left_join(unieke_bomen) %>% 
+  mutate(gestorven = Jaar > sterftejaar)
 
 if (alleen_levende_bomen) {
   saveRDS(dfEsMeting, file = "data/interim/dfEsMeting_levend.Rds")
@@ -287,60 +335,3 @@ ggplot(dfEsMeting %>% group_by(ProefvlakNummer, Jaar) %>% summarize(gem_bladverl
 
 ggplot(dfEsMeting %>% filter(Jaar %in% es_jaren, gestorven == FALSE) %>% group_by(ProefvlakNummer, Jaar) %>% summarize(gem_bladverlies = mean(Bladverlies)), 
        aes(x = Jaar, y = gem_bladverlies)) + facet_wrap(~ProefvlakNummer) + geom_point() + geom_line()
-
-
-
-
-#########################################################################################################
-#########################################################################################################
-
-# ### >>> Data cleaning (checks)
-# 
-# dfEsCheck <- dfEsSymptoom %>% 
-#   select(ProefvlakNummer, BoomID, Jaar, AantastingCode, SymptoomCode, SymptoomGraad) %>%
-#   arrange(ProefvlakNummer, BoomID, Jaar)
-# 
-# beschrijving <- "onterechte graad"
-# sympt_probleem <- c("10", "11", "12", "21", "22")
-# chk01 <- dfEsCheck %>%
-#   filter(SymptoomCode %in% c(sympt_probleem), !is.na(SymptoomGraad)) %>%
-#   mutate(beschrijving = beschrijving) 
-# 
-# beschrijving <- "onterechte graad"
-# sympt_probleem <- c("13") 
-# sympt_probleem_aantasting <- c("31", "32", "33", "34")
-# chk02 <-  dfEsCheck %>%
-#   filter(SymptoomCode %in% c(sympt_probleem), AantastingCode %in% c(sympt_probleem_aantasting), !is.na(SymptoomGraad)) %>% 
-#   mutate(beschrijving = beschrijving) 
-# 
-# beschrijving = "ongeldige combinatie"
-# sympt_probleem <- c("14") 
-# sympt_probleem_aantasting <- c("31", "32", "33", "34")
-# chk03 <- dfEsCheck %>% 
-#   filter(SymptoomCode %in% c(sympt_probleem), AantastingCode %in% c(sympt_probleem_aantasting)) %>%
-#   mutate(beschrijving = beschrijving) 
-# 
-# 
-# beschrijving <- "graad niet ingevuld"
-# sympt_probleem <- c("08", "17") 
-# chk04 <- dfEsCheck %>% 
-#   filter(SymptoomCode %in% c(sympt_probleem), is.na(SymptoomGraad)) %>% 
-#   mutate(beschrijving = beschrijving)
-# 
-# beschrijving <- "klopt het dat dit oude schade is?"
-# chk05 <- dfEsCheck %>% 
-#   filter(SymptoomCode == 13) %>% 
-#   group_by(ProefvlakNummer,  BoomID, SymptoomCode) %>%
-#   summarise(Jaar = NA, SymptoomGraad = sum(is.na(SymptoomGraad)) == length(es_jaren), beschrijving = beschrijving) %>%
-#   filter(SymptoomGraad == TRUE) %>%
-#   mutate(SymptoomGraad = NA)
-# 
-# beschrijving = "inconsistent zaad"
-# chk06 <- dfEsMeting %>%
-#   select(ProefvlakNummer, BoomID, Jaar, ZaadzettingCode, Zaadzetting, ZaadleeftijdCode, Zaadleeftijd) %>% 
-#   filter(ZaadzettingCode > 0 & (ZaadleeftijdCode == 0 | is.na(ZaadleeftijdCode))) %>% 
-#            transmute(ProefvlakNummer, BoomID, Jaar, beschrijving = beschrijving)
-#   
-# inconsistenties <- bind_rows(chk01, chk02, chk03, chk04, chk05, chk06) %>% 
-#   write.csv2(file = paste0(out, "inconsistenties.csv"))
-  

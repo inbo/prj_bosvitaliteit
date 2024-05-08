@@ -47,10 +47,14 @@ temp_files/
 *.RDS
 # Output
 output/
+outputEs_allebm/
+outputEs_levend/
+outputEs_trend/
 #*.png
 *.eps
 *.Rdata
 *.xlsx
+*.7z
 
 
 

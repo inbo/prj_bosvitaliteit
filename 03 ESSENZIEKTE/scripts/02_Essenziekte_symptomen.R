@@ -42,7 +42,7 @@ ggsave(filename = paste0(out, "symptomen_bomen_proefvlak.png"), width = fig_widt
   
 (p <- dfEsSymptoom %>% group_by(SymptoomCode, SymptoomGraad, AantastingCode) %>% summarize(aantal = n()) %>% 
   ggplot(aes(x = SymptoomGraad, y = aantal, fill = AantastingCode)) + 
-    scale_fill_manual(values = c(inbo_palette(), "#000000")) + 
+    scale_fill_manual(values = c(inbo_palette(), "#000000", "#CCCCCC")) + 
     geom_bar(stat = "identity") + 
     facet_wrap(~SymptoomCode, scales = "free_y", ncol = 3) + 
     theme(axis.text.x = element_text(vjust = 0.5, hjust = 0.5, angle = 90)) ) %>%
