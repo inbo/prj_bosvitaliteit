@@ -39,7 +39,7 @@ alleen_levende_bomen <- FALSE # LET OP, beiden runnen
 # } else {
 #   out <- "outputEs_allebm/all_"
 # }
-out <- "output_es"
+out <- "output_es/"
 
 
 con <- DBI::dbConnect(odbc::odbc(),
@@ -361,6 +361,61 @@ unieke_bomen <- df_esmeting %>%
 df_esmeting <- df_esmeting %>%
   left_join(unieke_bomen) %>%
   mutate(gestorven = jaar > sterftejaar)
+
+
+##############################################
+
+aantallen <-
+  df_esmeting_all |>
+  group_by(proefvlak_nummer) |>
+  summarize(
+    aantal_jaren = length(unique(jaar)),
+    aantal_bomen = length(unique(boom_id))
+  )
+
+df_es_ana <- df_esmeting_all |>
+  filter(proefvlak_nummer %in%
+    aantallen$proefvlak_nummer[aantallen$aantal_jaren >= 5]) |>
+  group_by(boom_id) |>
+  arrange(boom_id, jaar) |>
+  mutate(
+    bladverlies =
+      ifelse(lag(cumany(bladverlies == 100 & !is.na(bladverlies)), default = FALSE),
+        NA,
+        bladverlies
+      ),
+    sterftejaar = ifelse(bladverlies == 100, TRUE, FALSE)
+  ) |>
+  filter(!is.na(bladverlies)) |>
+  ungroup()
+
+dead_cases <- df_es_ana |>
+  filter(sterftejaar) |>
+  mutate(bladverlies = 100) |>
+  group_by(proefvlak_id, proefvlak_nummer, boom_id) |>
+  reframe(data.frame(
+    proefvlak_id = .data$proefvlak_id,
+    proefvlak_nummer = .data$proefvlak_nummer,
+    boom_id = .data$boom_id,
+    jaar = .data$jaar:2025,
+    bladverlies = 100
+  ))
+
+df_es_cc <- df_es_ana |>
+  filter(bladverlies < 100) |>
+  bind_rows(dead_cases) |>
+  arrange(proefvlak_nummer, boom_id, jaar)
+
+
+
+
+
+
+
+
+
+##############################################
+
 
 # if (alleen_levende_bomen) {
 #   saveRDS(dfEsMeting, file = "data/interim/dfEsMeting_levend.Rds")
